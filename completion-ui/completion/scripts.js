@@ -203,8 +203,6 @@ function FindElements() {
 
     elements.status                 = document.getElementById("status");
     elements.statusText             = document.getElementById("status-text");
-    //  elements.statusTime             = document.getElementById("status-time");
-    //  elements.statusTokens           = document.getElementById("status-tokens");
     elements.statusStart            = document.getElementById("status-start");
     elements.statusStop             = document.getElementById("status-stop");
     elements.statusUndo             = document.getElementById("status-undo");
@@ -449,7 +447,16 @@ function StopWordsSetFocus() {
 function Complete() {
     if (!script.completing && !script.replaying) {
         PushChange();
- 
+
+        script.statusMode = kStatusMode.evaluating;
+        script.completionStartedMS = Date.now();
+        script.completionEndedMS = 0;
+        script.evaluatingEtaMS = 0;
+        script.evaluatingTokensProcessed = 0;
+        script.evaluatingTokensTotal = 0;
+        script.stoppedByWord = "";
+        script.stoppedAfterTokens = 0;
+
         var workAreaText = elements.workAreaText.value;
 
         var temperature = parseFloat(elements.temperature.value);
@@ -727,7 +734,6 @@ function Replay(completed) {
         PushChange();
 
         SetReplaying(true);
-        // SetStatus("Replaying...");
         script.statusMode = kStatusMode.replaying;
  
         var workAreaText = elements.workAreaText.value;
@@ -830,53 +836,6 @@ function ShowHideStatusButtons() {
     }
     else {
         HideElement(elements.statusClear);
-    }
-}
-
-function SetStatus(status, elapsedMS = 0, etaMS = 0) {
-
-    let showTime = false;
-    let time = "";
-
-    if (elapsedMS > 0) {
-        time = GetElapsedTimeString(elapsedMS);
-    }
-
-    if (etaMS > 0) {
-        let etaMinutes = Math.round((etaMS / 1000) / 60);
-
-        if (elapsedMS > 0) {
-            time = time + " (";
-        }
-
-        if (etaMinutes == 1) {
-            time = time + "1 minute remaining";
-        }
-        else if (etaMinutes > 1) {
-            time = time + etaMinutes + " minutes remaining"
-            eta = "" + etaMinutes + " minutes."
-            showTime = true;
-        }
-
-        if (elapsedMS > 0){
-            time = time + ").";
-        }
-        else {
-            time = time + ".";
-        }
-    }
-    else {
-        time = time + ".";
-    }
-
-    elements.statusText.innerHTML = "<b>Status:</b>&nbsp;" + status;
-    elements.statusTime.innerHTML = "<b>Time:</b>&nbsp;" + time;
-
-    if (showTime) {
-        ShowElement(elements.statusTime);
-    }
-    else {
-        HideElement(elements.statusTime);
     }
 }
 
@@ -1041,15 +1000,6 @@ function WorkAreaTextKeyDown(event) {
             elements.workAreaText.setSelectionRange(workAreaLength, workAreaLength);
         }
         event.preventDefault();
-
-        script.statusMode = kStatusMode.evaluating;
-        script.completionStartedMS = Date.now();
-        script.completionEndedMS = 0;
-        script.evaluatingEtaMS = 0;
-        script.evaluatingTokensProcessed = 0;
-        script.evaluatingTokensTotal = 0;
-        script.stoppedByWord = "";
-        script.stoppedAfterTokens = 0;
 
         setTimeout(() => {
             Complete();
