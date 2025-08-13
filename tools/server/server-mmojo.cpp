@@ -293,7 +293,7 @@ struct server_task {
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         params.include_prompt_progress = json_value(data, "include_prompt_progress", false);
         // mmojo-server END
-
+                
         params.n_predict        = json_value(data, "n_predict",          json_value(data, "max_tokens", defaults.n_predict));
         params.n_indent         = json_value(data, "n_indent",           defaults.n_indent);
         params.n_keep           = json_value(data, "n_keep",             defaults.n_keep);
@@ -412,8 +412,12 @@ struct server_task {
             } else {
                 params.oaicompat_chat_syntax.format = defaults.oaicompat_chat_syntax.format;
             }
-            params.oaicompat_chat_syntax.reasoning_format = params_base.reasoning_format;
-            params.oaicompat_chat_syntax.reasoning_in_content = params.stream && (params_base.reasoning_format == COMMON_REASONING_FORMAT_DEEPSEEK_LEGACY);
+            common_reasoning_format reasoning_format = params_base.reasoning_format;
+            if (data.contains("reasoning_format")) {
+                reasoning_format = common_reasoning_format_from_name(data.at("reasoning_format").get<std::string>());
+            }
+            params.oaicompat_chat_syntax.reasoning_format = reasoning_format;
+            params.oaicompat_chat_syntax.reasoning_in_content = params.stream && (reasoning_format == COMMON_REASONING_FORMAT_DEEPSEEK_LEGACY);
             params.oaicompat_chat_syntax.thinking_forced_open = json_value(data, "thinking_forced_open", false);
             params.oaicompat_chat_syntax.parse_tool_calls = json_value(data, "parse_tool_calls", false);
         }
@@ -2063,6 +2067,10 @@ struct server_context {
             params_dft.cache_type_k = params_base.speculative.cache_type_k;
             params_dft.cache_type_v = params_base.speculative.cache_type_v;
 
+            params_dft.cpuparams.n_threads = params_base.speculative.cpuparams.n_threads;
+            params_dft.cpuparams_batch.n_threads = params_base.speculative.cpuparams_batch.n_threads;
+            params_dft.tensor_buft_overrides = params_base.speculative.tensor_buft_overrides;
+
             llama_init_dft = common_init_from_params(params_dft);
 
             model_dft = llama_init_dft.model.get();
@@ -3505,7 +3513,7 @@ struct server_context {
 
                         // Send incremental progress updates during token processing
                         // send_progress_response(slot);
-                        // mmojo-server END                        
+                        // mmojo-server END                                            
                     }
 
                     // SLT_INF(slot, "new cache_tokens: %s\n", slot.cache_tokens.str().c_str());
@@ -3513,6 +3521,7 @@ struct server_context {
                     SLT_INF(slot, "prompt processing progress, n_past = %d, n_tokens = %d, progress = %f\n", slot.n_past, batch.n_tokens, (float) slot.n_prompt_tokens_processed / slot.n_prompt_tokens);
 
                     // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
+                    // This is still the wrong spot. It sends BEFORE a batch is evaluated.
                     // Send progress response if requested
                     send_progress_response(slot);
 
@@ -3522,7 +3531,7 @@ struct server_context {
                         SLT_INF(slot, "%s", "Finished sleep after batch.\n");
                     }
                     // mmojo-server END
-                    
+
                     // entire prompt has been processed
                     if (slot.n_past == slot.n_prompt_tokens) {
                         slot.state = SLOT_STATE_DONE_PROMPT;
@@ -5113,7 +5122,7 @@ int main(int argc, char ** argv) {
         return false;
     });
     // mmojo-server END    
-    
+
     // register API routes
     svr->Get (params.api_prefix + "/health",              handle_health); // public endpoint (no API key check)
     svr->Get (params.api_prefix + "/metrics",             handle_metrics);
