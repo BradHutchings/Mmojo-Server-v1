@@ -18,16 +18,35 @@ const kModelsURL = kServerURL + "/v1/models"
 const kTokenizeURL = kServerURL + "/tokenize"
 
 const kMmojoCompletion = "Mmojo Completion";
-const kStatus_TypeSomething = "Awaiting your cue.";
-const kStatus_Ready = "Ready.";
-const kStatus_Evaluating = "Evaluating.";
-const kStatus_EvaluatingProgress = "Evaluating ";
-const kStatus_EvaulatingFinishing = "Finishing evaluating.";
-const kStatus_Completing = "Completing.";
-const kStatus_FinishedCompleting = "Finished completing in [elapsed_time].";
-const kStatus_StoppedByWord = "Stopped by \"[stopping_word]\".";
-const kStatus_StoppedAfterCompleting = "Stopped after completing [tokens_predicted] tokens.";
-const kStatus_StoppedByUser = "Stopped by you.";
+
+const kStatusMode = Object.freeze({
+    preparing:                          1,      // page loading, not ready for editing.
+    editing:                            2,      // work area is being edited.
+    evaluating:                         3,      // start of evaulating.
+    evaluating_progress:                4,      // evaluating has sent progress.
+    evaluating_finishing:               5,      // finishing with prompt - last batch?.
+    completing:                         6,      // generating new tokens.
+    completed:                          7,      // show completion time in status prior to any editing.
+    stopped_by_word:                    8,
+    stopped_after:                      9,
+    stopped_by_user:                    10,
+    replaying:                          11,
+});
+
+const kStatusText = Object.freeze({
+    preparing:              "Preparing.",
+    editing_typeSomething:  "Awaiting your cue.",
+    editing_ready:          "Ready.",
+    evaluating:             "Evaluating.",
+    evaluating_progress:    "Evaluating ",
+    evaluating_finishing:   "Finishing evaluating.",
+    completing:             "Completing.",
+    completed:              "Completed in [elapsed_time].",
+    stopped_by_word:        "Stopped by \"[word]\".",
+    stopped_after:          "Stopped after [tokens_predicted] tokens.",
+    stopped_by_user:        "Stopped by you.",
+    replaying:              "Replaying.",
+});
 
 const kModeCueLink = "cue-link";
 const kModeCueScript = "cue-script";
@@ -62,7 +81,15 @@ script.isMobile = (navigator.maxTouchPoints > 1) && (window.navigator.userAgent.
 script.manualStop = false;
 script.completedContent = '';
 script.completionStartedMS = 0;
+script.completionEndedMS = 0;
+script.evaluatingEtaMS = 0;
+script.evaluatingTokensProcessed = 0;
+script.evaluatingTokensTotal = 0;
+script.stoppedByWord = "";
+script.stoppedAfterTokens = 0;
 script.mmojoCompletionClicked = false;         //  This is that header showing Mmojo Completion (should be a contant kAppName) or the model name.
+script.statusMode = kStatusMode.editing;
+script.statusMessage = "";
 
 function ShowElement(elt) {
     if (elt.classList.contains("hidden")) {
@@ -107,7 +134,7 @@ function PageLoaded() {
         HideElement(elements.fullScreenIcon);
     }
 
-    SetStatusReady();
+    script.statusMode = kStatusMode.editing;
     ShowHideStatusButtons();
 
     UseHash();
@@ -121,6 +148,10 @@ function PageLoaded() {
         GetModelInfoFromServer();
         CountTokens();
     }, 500);
+
+    setInterval(function() {
+        UpdateStatus();
+    }, 200);
 }
 
 function PageResized() {
@@ -172,8 +203,8 @@ function FindElements() {
 
     elements.status                 = document.getElementById("status");
     elements.statusText             = document.getElementById("status-text");
-    elements.statusETA              = document.getElementById("status-eta");
-    elements.statusTokens           = document.getElementById("status-tokens");
+    //  elements.statusTime             = document.getElementById("status-time");
+    //  elements.statusTokens           = document.getElementById("status-tokens");
     elements.statusStart            = document.getElementById("status-start");
     elements.statusStop             = document.getElementById("status-stop");
     elements.statusUndo             = document.getElementById("status-undo");
@@ -368,7 +399,7 @@ function ClearWorkArea() {
 
     ClearUndoRedoStack();
     ShowHideStatusButtons();
-    SetStatusReady();
+    script.statusMode = kStatusMode.editing;
 }
 
 function EnableControls() {
@@ -411,7 +442,8 @@ function EnableCopyPaste() {
 
 function StopWordsSetFocus() {
     elements.stopWords.focus();
-    elements.stopWords.selectionStart = elements.stopWords.selectionEnd = elements.stopWords.value.length;
+    let stopWordsLength = elements.stopWords.value.length;
+    elements.stopWords.setSelectionRange(stopWordsLength, stopWordsLength);
 }
 
 function Complete() {
@@ -479,13 +511,6 @@ function SetCompleting(value) {
             // elements.workAreaText.style.borderColor = "var(--color2)";
             elements.workAreaText.focus();
 
-            /*
-            setTimeout(() => {
-                if (!script.completing) {
-                    SetStatusReady();
-                }
-            }, 5000);
-            */
             PushChange();
         }
     }
@@ -495,7 +520,7 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
     let logThis = false;
 
     // show that we're working??
-    SetStatus(kStatus_Evaluating);
+    script.statusMode = kStatusMode.evaluating;
 
     var success = true;
     var data = {
@@ -584,27 +609,26 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                         let n_prompt_tokens = lineData.data.prompt_processing.n_prompt_tokens;
 
                         let elapsedMS = Date.now() - script.completionStartedMS;
-                        let etaMS = ((elapsedMS * n_prompt_tokens) / n_past) - elapsedMS;
+                        script.evaluatingEtaMS = ((elapsedMS * n_prompt_tokens) / n_past) - elapsedMS;
+                        script.evaluatingTokensProcessed = n_past;
+                        script.evaluatingTokensTotal = n_prompt_tokens;
 
                         if (kLogging || logThis) console.log("n_past: " + n_past);
                         if (kLogging || logThis) console.log("n_prompt_tokens: " + n_prompt_tokens);
+                        if (kLogging || logThis) console.log("elapsedMS: " + elapsedMS);
+                        if (kLogging || logThis) console.log("evaluatingEtaMS: " + script.evaluatingEtaMS);
 
                         if (n_past < n_prompt_tokens) {
-                            let status = kStatus_EvaluatingProgress + " " + n_past + " / " + n_prompt_tokens;
-
-                            HideElement(elements.statusTokens);
-                            SetStatus(status, etaMS);
+                            script.statusMode = kStatusMode.evaluating_progress;
                         }
                         else {
-                            SetStatus(kStatus_EvaulatingFinishing);
-                            ShowElement(elements.statusTokens);
+                            script.statusMode = kStatusMode.evaluating_finishing;
                         }
                     }
                     else if (lineData.data.stop) {
                         if (lineData.data.stop_type == "word") {
-                            // if (kLogging) console.log("stopping_word: " + lineData.data.stopping_word);
-                            SetStatus(kStatus_StoppedByWord.replace('[stopping_word]', lineData.data.stopping_word));
-                            ShowElement(elements.statusTokens);
+                            script.statusMode = kStatusMode.stopped_by_word;
+                            script.stoppedByWord = lineData.data.stopping_word;
                 
                             content = content + lineData.data.stopping_word;
                             script.completedContent = script.completedContent + lineData.data.stopping_word;
@@ -617,38 +641,27 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                             ShowHideStatusButtons();
                         }
                         else if (lineData.data.stop_type == "limit") {
-                            let status = kStatus_StoppedAfterCompleting.replace('[tokens_predicted]', lineData.data.tokens_predicted);
-
-                            SetStatus(status);
-                            ShowElement(elements.statusTokens);
+                           script.statusMode = kStatusMode.stopped_after;
+                           script.stoppedAfterTokens = lineData.data.tokens_predicted;
                             
                             content = content + lineData.data.content;
                             script.completedContent = script.completedContent + lineData.data.content;
                             elements.workAreaText.value = content;
                             
                             ScrollToEnd();
-                            // elements.workAreaText.scrollTop = elements.workAreaText.scrollHeight
-                            // don't set selectionStart, selectionEnd?
 
                             script.completingController = null;
                             ShowHideStatusButtons();
                         }
                         else if (lineData.data.stop_type == "eos") {
-                            let elapsedMS = Date.now() - script.completionStartedMS;
-                            let elapsedTime = GetElapsedTimeString(elapsedMS);
-                            let status = kStatus_FinishedCompleting.replace('[elapsed_time]', elapsedTime);
-                            if (kLogging || logThis) console.log("Completed:" + status);
-
-                            SetStatus(status);
-                            ShowElement(elements.statusTokens);
+                            script.completionEndedMS = Date.now();
+                            script.statusMode = kStatusMode.completed;
 
                             content = content + lineData.data.content;
                             script.completedContent = script.completedContent + lineData.data.content;
                             elements.workAreaText.value = content;
 
                             ScrollToEnd();
-                            // elements.workAreaText.scrollTop = elements.workAreaText.scrollHeight
-                            // don't set selectionStart, selectionEnd?
 
                             if (kLogging || logThis) console.log("end of stream");
                             script.completingController = null;
@@ -657,16 +670,13 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                     }
 
                     else if (lineData.data.content !== undefined) {
-                        SetStatus(kStatus_Completing);
-                        ShowElement(elements.statusTokens);
+                        script.statusMode = kStatusMode.completing;
 
                         content = content + lineData.data.content;
                         script.completedContent = script.completedContent + lineData.data.content;
                         elements.workAreaText.value = content;
 
                         ScrollToEnd();
-                        // elements.workAreaText.scrollTop = elements.workAreaText.scrollHeight
-                        // don't set selectionStart, selectionEnd?
                     }
 
                 }
@@ -704,8 +714,7 @@ function StopCompleting() {
         script.manualStop = true;
 
         ShowHideStatusButtons();
-        ShowElement(elements.statusTokens);
-        SetStatus(kStatus_StoppedByUser);
+        script.statusMode = kStatusMode.stopped_by_user;
         SetCompleting(false);
 
         elements.workAreaText.focus();
@@ -718,7 +727,8 @@ function Replay(completed) {
         PushChange();
 
         SetReplaying(true);
-        SetStatus("Replaying...");
+        // SetStatus("Replaying...");
+        script.statusMode = kStatusMode.replaying;
  
         var workAreaText = elements.workAreaText.value;
         var words = completed.split(' ');
@@ -767,7 +777,7 @@ function SetReplaying(value) {
             // elements.workAreaText.style.borderColor = "var(--color2)";
             elements.workAreaText.focus();
 
-            SetStatusReady();
+            script.statusMode = kStatusMode.editing;
             PushChange();
         }
     }
@@ -789,7 +799,7 @@ function WorkAreaTextPaste() {
         event.preventDefault(); // Prevent the default paste behavior
     }
 
-    SetStatusReady();
+    script.statusMode = kStatusMode.editing;
     ShowHideStatusButtons();
 }
 
@@ -823,37 +833,173 @@ function ShowHideStatusButtons() {
     }
 }
 
-function SetStatus(status, etaMS = 0) {
-    let showETA = false;
-    let eta = "";
+function SetStatus(status, elapsedMS = 0, etaMS = 0) {
+
+    let showTime = false;
+    let time = "";
+
+    if (elapsedMS > 0) {
+        time = GetElapsedTimeString(elapsedMS);
+    }
 
     if (etaMS > 0) {
         let etaMinutes = Math.round((etaMS / 1000) / 60);
 
+        if (elapsedMS > 0) {
+            time = time + " (";
+        }
+
         if (etaMinutes == 1) {
-            eta = "1 minute."
-            showETA = true;
+            time = time + "1 minute remaining";
         }
         else if (etaMinutes > 1) {
+            time = time + etaMinutes + " minutes remaining"
             eta = "" + etaMinutes + " minutes."
-            showETA = true;
+            showTime = true;
         }
+
+        if (elapsedMS > 0){
+            time = time + ").";
+        }
+        else {
+            time = time + ".";
+        }
+    }
+    else {
+        time = time + ".";
     }
 
     elements.statusText.innerHTML = "<b>Status:</b>&nbsp;" + status;
-    elements.statusETA.innerHTML = "<b>ETA:</b>&nbsp;" + eta;
+    elements.statusTime.innerHTML = "<b>Time:</b>&nbsp;" + time;
 
-    if (showETA) {
-        ShowElement(elements.statusETA);
+    if (showTime) {
+        ShowElement(elements.statusTime);
     }
     else {
-        HideElement(elements.statusETA);
+        HideElement(elements.statusTime);
     }
 }
 
-function SetStatusReady() {
-    var w = elements.content.offsetWidth;
-    SetStatus((w >= 400) ? kStatus_TypeSomething : kStatus_Ready);
+function UpdateStatus() {
+    let logThis = false;
+    let status = "<b>Status</b>: ";
+
+    //  elements.status.innerHTML = status;
+
+    if (kLogging || logThis) console.log("UpdateStatus: " + script.statusMode);
+
+    if (script.statusMode == kStatusMode.preparing) {
+        status += kStatusText.preparing;
+    }
+    else if (script.statusMode == kStatusMode.editing) {
+        var w = elements.content.offsetWidth;
+        if (w >= 400) {
+            status += kStatusText.editing_typeSomething;
+            if (script.contextWindowSize > 0) {
+                status += " <b>Tokens:</b> " + script.tokenCount + " / " + script.contextWindowSize + ".";
+            }
+            else if (script.tokenCount > 0) {
+                status += " <b>Tokens:</b> " + script.tokenCount + ".";
+            }
+        }
+        else {
+            status += kStatusText.editing_ready;
+        }
+    }
+    else if (script.statusMode == kStatusMode.evaluating) {
+        status += kStatusText.evaluating;
+
+        let elapsedMS = Date.now() - script.completionStartedMS;
+        if (elapsedMS > 0) {
+            status += " <b>Time:</b> " + GetElapsedTimeString(elapsedMS) + ".";
+        }
+    }
+    else if (script.statusMode == kStatusMode.evaluating_progress) {
+        status += kStatusText.evaluating_progress;
+
+        if (kLogging || logThis) console.log("evaluating_progress");
+        if (kLogging || logThis) console.log("- evaluatingTokensProcessed: " + script.evaluatingTokensProcessed);
+        if (kLogging || logThis) console.log("- evaluatingTokensTotal: " + script.evaluatingTokensTotal);
+        if (kLogging || logThis) console.log("- evaluatingEtaMS: " + script.evaluatingEtaMS);
+
+        if (script.evaluatingTokensTotal > 0) {
+            status = status + script.evaluatingTokensProcessed + " / " + script.evaluatingTokensTotal;
+
+            if (script.evaluatingEtaMS > 0) {
+                let etaMinutes = Math.round((script.evaluatingEtaMS / 1000) / 60);
+                if (kLogging || logThis) console.log("- etaMinutes: " + script.etaMinutes);
+                if (etaMinutes == 1) {
+                    status = status + " (1 minute)";
+                }
+                else if (etaMinutes > 1) {
+                    status = status + " (" + etaMinutes + " minutes)";
+                }
+            }
+            status = status + ".";
+        }
+        else {
+            status = status.trimEnd() + ".";
+        }
+
+        let elapsedMS = Date.now() - script.completionStartedMS;
+        if (elapsedMS > 0) {
+            status += " <b>Time:</b> " + GetElapsedTimeString(elapsedMS) + ".";
+        }
+    }
+    else if (script.statusMode == kStatusMode.evaluating_finishing) {
+        status += kStatusText.evaluating_finishing;
+
+        let elapsedMS = Date.now() - script.completionStartedMS;
+        if (elapsedMS > 0) {
+            status += " <b>Time:</b> " + GetElapsedTimeString(elapsedMS) + ".";
+        }
+    }
+    else if (script.statusMode == kStatusMode.completing) {
+        status += kStatusText.completing;
+
+        let elapsedMS = Date.now() - script.completionStartedMS;
+        if (elapsedMS > 0) {
+            status += " <b>Time:</b> " + GetElapsedTimeString(elapsedMS) + ".";
+        }
+    }
+    else if (script.statusMode == kStatusMode.completed) {
+        status += kStatusText.completed;
+
+        if (script.completionEndedMS > 0) {
+            let elapsedMS = script.completionEndedMS - script.completionStartedMS;
+            let elapsedTime = GetElapsedTimeString(elapsedMS);
+            status = status.replace('[elapsed_time]', elapsedTime);
+        }
+        else {
+            status = status.replace(' in [elapsed_time]', "");
+        }
+    }
+    else if (script.statusMode == kStatusMode.stopped_by_word) {
+        status += kStatusText.stopped_by_word;
+
+        if (script.stoppedByWord != "") {
+            status = status.replace('[word]', script.stoppedByWord);
+        }
+        else {
+            status = status.replace('\"[word]\"', 'word.');
+        }
+    }
+    else if (script.statusMode == kStatusMode.stopped_after) {
+        status += kStatusText.stopped_after;
+
+        status = status.replace('[tokens_predicted]', script.stoppedAfterTokens);
+        if (script.stoppedAfterTokens == 1) {
+            status = status.replace('tokens', 'token');
+        }
+    }
+    else if (script.statusMode == kStatusMode.stopped_by_user) {
+        status += kStatusText.stopped_by_user;
+    }
+    else if (script.statusMode == kStatusMode.replaying) {
+        status += kStatusText.replaying;
+    }
+
+    elements.statusText.innerHTML = status;
 }
 
 function WorkAreaTextKeyDown(event) {
@@ -891,20 +1037,42 @@ function WorkAreaTextKeyDown(event) {
 
         if (event.ctrlKey) {
             elements.workAreaText.value = elements.workAreaText.value + '\n';
-            elements.workAreaText.selectionStart = elements.workAreaText.selectionEnd = elements.workAreaText.value.length;
+            let workAreaLength = elements.workAreaText.value.length;
+            elements.workAreaText.setSelectionRange(workAreaLength, workAreaLength);
         }
         event.preventDefault();
 
+        script.statusMode = kStatusMode.evaluating;
         script.completionStartedMS = Date.now();
+        script.completionEndedMS = 0;
+        script.evaluatingEtaMS = 0;
+        script.evaluatingTokensProcessed = 0;
+        script.evaluatingTokensTotal = 0;
+        script.stoppedByWord = "";
+        script.stoppedAfterTokens = 0;
+
         setTimeout(() => {
             Complete();
         }, 500);
     }
 
+    // home
+    else if ((event.keyCode == 36)) {
+        elements.workAreaText.scrollTop = 0;
+        elements.workAreaText.setSelectionRange(0, 0);
+    }
+
+    // end
+    else if ((event.keyCode == 35)) {
+        ScrollToEnd();
+        let workAreaLength = elements.workAreaText.value.length;
+        elements.workAreaText.setSelectionRange(workAreaLength, workAreaLength);
+    }
+
     else {
         // This will change the content area, so forget completedContent.
         script.completedContent = "";
-        SetStatusReady();
+        script.statusMode = kStatusMode.editing;
         EnableCopyPaste();
     }
 
@@ -1188,8 +1356,8 @@ function ScrollToEnd() {
     else {
         elements.workAreaText.scrollTop = 0;
     }
-    elements.workAreaText.selectionStart = elements.workAreaText.selectionEnd = elements.workAreaText.value.length;
-
+    let workAreaTexLength = elements.workAreaText.value.length;
+    elements.workAreaText.setSelectionRange(workAreaTexLength, workAreaTexLength);
 }
 
 function MakeHash() {
@@ -1361,11 +1529,30 @@ function UseHash() {
         }
 
         if (mode == kModeAppend) {
+            let saveWorkAreaLength = elements.workAreaText.value.length;
+            if (kLogging || logThis) console.log("saveWorkAreaLength: " + saveWorkAreaLength);
             elements.workAreaText.value = elements.workAreaText.value + cue;
+
+            let workAreaLength = elements.workAreaText.value.length;
+            if (kLogging || logThis) console.log("workAreaLength: " + workAreaLength);
+
+            setTimeout(() => {
+                ScrollToEnd();
+                if (kLogging || logThis) console.log("Moving cursor.");
+                // elements.workAreaText.setSelectionRange(saveWorkAreaLength, saveWorkAreaLength);
+                elements.workAreaText.setSelectionRange(workAreaLength, workAreaLength);
+            }, 100);
+
             PushChange();
         }
         else if (mode == kModePrepend) {
             elements.workAreaText.value = cue + elements.workAreaText.value;
+
+            setTimeout(() => {
+                elements.workAreaText.scrollTop = 0;
+                elements.workAreaText.setSelectionRange(0, 0);
+            }, 100);
+
             PushChange();
         }
         else if (mode == kModeReplace) {
@@ -1453,7 +1640,8 @@ function UseHash() {
 }
 
 async function CountTokens() {
-    if (kLogging) console.log("CountTokens()");
+    kLogThis = false;
+    if (kLogging || kLogThis) console.log("CountTokens()");
 
     var success = true;
     var workAreaText = elements.workAreaText.value;
@@ -1463,7 +1651,7 @@ async function CountTokens() {
         script.lastTokenCountText = workAreaText;
         script.lastContentWindowSize = script.contextWindowSize;
 
-        if (kLogging) console.log("POST: " + kTokenizeURL);
+        if (kLogging || kLogThis) console.log("POST: " + kTokenizeURL);
 
         var data = {
             "content": workAreaText,
@@ -1485,17 +1673,17 @@ async function CountTokens() {
         
             const json = await response.json();
 
-            if (kLogging) console.log("json:\n");
-            if (kLogging) console.log(json);
+            if (kLogging || kLogThis) console.log("json:\n");
+            if (kLogging || kLogThis) console.log(json);
 
             const tokens = json.tokens;
-            if (kLogging) console.log("tokens:\n");
-            if (kLogging) console.log(tokens);
+            if (kLogging || kLogThis) console.log("tokens:\n");
+            if (kLogging || kLogThis) console.log(tokens);
 
             if (Array.isArray(tokens)) {
                 script.tokenCount = tokens.length;
 
-                if (kLogging) console.log("tokens is an array with " + script.tokenCount + " items.");
+                if (kLogging || kLogThis) console.log("tokens is an array with " + script.tokenCount + " items.");
 
                 if (script.contextWindowSize > 1 ) {
                     tokensHTML = "<b>Tokens:</b> " + script.tokenCount + "&nbsp;/&nbsp;" + script.contextWindowSize;
@@ -1506,14 +1694,14 @@ async function CountTokens() {
             }    
         }
         catch(exc) {
-            if (kLogging) console.log("Exception caught receiving results from " + kTokenizeURL + ".");
-            if (kLogging) console.log(exc.name);
-            if (kLogging) console.log(exc.message);
+            if (kLogging || kLogThis) console.log("Exception caught receiving results from " + kTokenizeURL + ".");
+            if (kLogging || kLogThis) console.log(exc.name);
+            if (kLogging || kLogThis) console.log(exc.message);
 
             // As far as the user sees, a silent fail here is OK.
         }
 
-        elements.statusTokens.innerHTML = tokensHTML;
+        // elements.statusTokens.innerHTML = tokensHTML;
         ShowHideStatusButtons();
     }
 
