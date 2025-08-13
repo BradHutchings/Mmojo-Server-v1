@@ -63,6 +63,7 @@
             <label id="tokens-label" for="tokens">Tokens:</label>
             <select id="tokens">
                 <option value="-1" selected>Complete</option>
+                <option value="1">1</option>
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="50">50</option>
@@ -132,8 +133,6 @@
 
         <div id="status" class="row hidden">
             <div id="status-text"><b>Status:</b> The status goes here.</div>
-            <div id="status-eta" class="hidden"><b>ETA:</b> ETA goes here.</div>
-            <div id="status-tokens"><b>Tokens:</b></div>
             <div id="status-space" class="space"></div>
             <button id="status-start" onclick="elements.workAreaText.focus(); Complete();">Start</button>
             <button id="status-stop" onclick="elements.workAreaText.focus(); StopCompleting();">Stop</button>
