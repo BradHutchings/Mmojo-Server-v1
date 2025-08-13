@@ -3512,6 +3512,7 @@ struct server_context {
 
                     SLT_INF(slot, "prompt processing progress, n_past = %d, n_tokens = %d, progress = %f\n", slot.n_past, batch.n_tokens, (float) slot.n_prompt_tokens_processed / slot.n_prompt_tokens);
 
+                    /*
                     // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
                     // Send progress response if requested
                     send_progress_response(slot);
@@ -3522,6 +3523,7 @@ struct server_context {
                         SLT_INF(slot, "%s", "Finished sleep after batch.\n");
                     }
                     // mmojo-server END
+                    */
                     
                     // entire prompt has been processed
                     if (slot.n_past == slot.n_prompt_tokens) {
@@ -3549,6 +3551,17 @@ struct server_context {
                         SLT_INF(slot, "prompt done, n_past = %d, n_tokens = %d\n", slot.n_past, batch.n_tokens);
                     }
                 }
+
+                // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
+                // Send progress response if requested
+                send_progress_response(slot);
+
+                if (params_base.n_batch_sleep_ms > 0) {
+                    SLT_INF(slot, "Starting sleep %d ms after batch.\n", params_base.n_batch_sleep_ms);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(params_base.n_batch_sleep_ms));
+                    SLT_INF(slot, "%s", "Finished sleep after batch.\n");
+                }
+                // mmojo-server END
 
                 if (batch.n_tokens >= n_batch) {
                     break;

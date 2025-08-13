@@ -1083,6 +1083,7 @@ OBJ_GGML = \
 	$(OBJ_GGML_EXT)
 
 	# $(DIR_GGML)/src/ggml-cpu/cpu-feats-x86.o \
+	# $(DIR_GGML)/src/ggml-backend-reg-mmojo.o \
 
 OBJ_LLAMA = \
 	$(DIR_LLAMA)/llama.o \
@@ -1895,3 +1896,5 @@ ifneq (,$(wildcard embedding))
 	@echo "  Remove the 'embedding' binary to remove this warning."
 	@echo "#########"
 endif
+
+
