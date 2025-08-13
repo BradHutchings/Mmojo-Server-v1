@@ -509,6 +509,7 @@ ul, li {
     color: var(--grey-dark);
     min-height: 1.6rem;
     user-select: none;
+    overflow: clip;
 }
 
 #status-text {
@@ -516,24 +517,8 @@ ul, li {
     margin-bottom: auto;
     flex-grow: 0;
     color: var(--grey-black);
-}
-
-#status-eta {
-    xx-display: none;
-    xx-visibility: hidden;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 0.5rem;
-    flex-grow: 0;
-    color: var(--grey-black);
-}
-
-#status-tokens {
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 0.5rem;
-    font-size: 1rem;
-    color: var(--grey-black);
+    text-wrap: nowrap;
+    overflow: clip;
 }
 
 #status-start, #status-stop, #status-undo, #status-clear {
