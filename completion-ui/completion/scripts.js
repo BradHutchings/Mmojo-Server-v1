@@ -699,7 +699,9 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
         if (kLogging || logThis) console.log(exc.name);
         if (kLogging || logThis) console.log(exc.message);
 
-        script.statusMode = kStatusMode.error;
+        if (!script.manualStop) {
+            script.statusMode = kStatusMode.error;
+        }
 
         // I thought this might be a checkbox in settings, but that felt clumsy.
         // These are mostly network errors. It would be good for the user to know.
