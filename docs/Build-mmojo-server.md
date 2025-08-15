@@ -13,7 +13,7 @@ Let's define some environment variables, resetting those that affect the Makefil
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
 COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
-COSMO_DIR="1-BUILD-cosmopolitan/.cosmo"
+COSMO_DIR="$COSMOPOLITAN_DIR/.cosmocc"
 BUILD_DIR="2-BUILD-mmojo-server"
 export LLAMA_MAKEFILE=1
 export LLAMA_SERVER_SSL=ON
@@ -36,23 +36,21 @@ printf "\n**********\n*\n* FINISHED: Build Dependencies.\n*\n**********\n\n"
 ```
 
 ---
-### Clone Cosmopolitan Repo Locally
+### Clone Cosmopolitan Repo, Build Locally (Skip this)
 Clone this repo and repos this repo depends on into a `~\1-BUILD-mmojo-server` directory.
 ```
 cd ~
-git clone https://github.com/jart/cosmopolitan.git $COSMO_DIR
+git clone https://github.com/jart/cosmopolitan.git $COSMOPOLITAN_DIR
 mkdir -p ~/$DOWNLOAD_DIR
 mkdir -p ~/$COSMOPOLITAN_DIR
-mkdir -p ~/$COSMO_DIR
-cd ~/$DOWNLOAD_DIR
-if [ ! -f cosmocc.zip ]; then wget https://cosmo.zip/pub/cosmocc/cosmocc.zip; fi
-cd ~/$COSMO_DIR
-cp ~/$DOWNLOAD_DIR/cosmocc.zip .
-unzip cosmocc.zip
-rm cosmocc.zip
-cd ~
-printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo Locally.\n*\n**********\n\n"
-
+cd ~/$COSMOPOLITAN_DIR
+# Edit the memchr_sse() function to check params.
+sed -i '39i \  if ((s == NULL) || (n == 0)) return 0;' libc/intrin/memchr.c
+make MODE=x86_64
+# Figure out how to link libc.a
+make MODE=aarch64
+# Figure out how to link libc.a
+printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\n**********\n\n"
 ```
 
 ---
@@ -336,6 +334,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
