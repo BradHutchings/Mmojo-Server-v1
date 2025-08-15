@@ -12,8 +12,8 @@ Instructions have been customized for my environment. You should use these [Conf
 Let's define some environment variables:
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
-BUILD_DIR="1-BUILD-mmojo-server"
-CONFIGURE_DIR="2-CONFIGURE-mmojo-server"
+BUILD_DIR="2-BUILD-mmojo-server"
+CONFIGURE_DIR="3-CONFIGURE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_ZIP="mmojo-server.zip"
