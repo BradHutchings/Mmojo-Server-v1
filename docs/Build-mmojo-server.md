@@ -12,7 +12,9 @@ This particular file is a work in progress to build separate x86_64 and Aarch64 
 Let's define some environment variables, resetting those that affect the Makefile:
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
-BUILD_DIR="1-BUILD-mmojo-server"
+COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
+COSMO_DIR="1-BUILD-cosmopolitan/.cosmo"
+BUILD_DIR="2-BUILD-mmojo-server"
 export LLAMA_MAKEFILE=1
 export LLAMA_SERVER_SSL=ON
 if [ -z "$SAVE_PATH" ]; then
@@ -31,6 +33,26 @@ sudo apt install -y git python3-pip build-essential zlib1g-dev \
     libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev \
     liblzma-dev tk-dev python3-tk cmake zip npm
 printf "\n**********\n*\n* FINISHED: Build Dependencies.\n*\n**********\n\n"
+```
+
+---
+### Clone Cosmopolitan Repo Locally
+Clone this repo and repos this repo depends on into a `~\1-BUILD-mmojo-server` directory.
+```
+cd ~
+git clone https://github.com/jart/cosmopolitan.git $COSMO_DIR
+mkdir -p ~/$DOWNLOAD_DIR
+mkdir -p ~/$COSMOPOLITAN_DIR
+mkdir -p ~/$COSMO_DIR
+cd ~/$DOWNLOAD_DIR
+if [ ! -f cosmocc.zip ]; then wget https://cosmo.zip/pub/cosmocc/cosmocc.zip; fi
+cd ~/$COSMO_DIR
+cp ~/$DOWNLOAD_DIR/cosmocc.zip .
+unzip cosmocc.zip
+rm cosmocc.zip
+cd ~
+printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo Locally.\n*\n**********\n\n"
+
 ```
 
 ---
@@ -314,5 +336,6 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
