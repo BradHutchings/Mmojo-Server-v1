@@ -12,7 +12,8 @@ Instructions have been customized for my environment. You should use these [Conf
 Let's define some environment variables:
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
-BUILD_DIR="2-BUILD-mmojo-server"
+BUILD_COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
+BUILD_MMOJO_SERVER_DIR="2-BUILD-mmojo-server"
 CONFIGURE_DIR="3-CONFIGURE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
@@ -32,7 +33,7 @@ Next, let's create a directory where we'll configure `mmojo-server`:
 cd ~
 rm -r -f ~/$CONFIGURE_DIR
 mkdir -p $CONFIGURE_DIR
-cp ~/$BUILD_DIR/Builds-Cosmo/$MMOJO_SERVER ~/$CONFIGURE_DIR/$MMOJO_SERVER_ZIP
+cp ~/$BUILD_MMOJO_SERVER_DIR/Builds-Cosmo/$MMOJO_SERVER ~/$CONFIGURE_DIR/$MMOJO_SERVER_ZIP
 cd ~/$CONFIGURE_DIR
 printf "\n**********\n*\n* FINISHED: Create Configuration Directory.\n*\n**********\n\n"
 ```
@@ -90,7 +91,7 @@ printf "\n**********\n*\n* FINISHED: Verify certs Directory in Archive.\n*\n****
 `llama.cpp` has a built in chat UI. If you'd like to provide a custom UI, you should add a `website` directory to the `mmojo-server` archive. `llama.cpp`'s chat UI is optimized for serving inside the project's source code. But we can copy the unoptimized source:
 ```
 mkdir website
-cp -r ~/$BUILD_DIR/completion-ui/* website
+cp -r ~/$BUILD_MMOJO_SERVER_DIR/completion-ui/* website
 sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" website/completion/scripts.js
 sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" website/completion/bookmark-scripts.js
 cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt website/CA.crt
@@ -237,6 +238,6 @@ printf "\n**********\n*\n* FINISHED: Copy mmojo-server for Deployment.\n*\n*****
 Copy completion-ui to local space.
 
 ```
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 sudo cp -r completion-ui /mnt/hyperv/web-apps
 ```
