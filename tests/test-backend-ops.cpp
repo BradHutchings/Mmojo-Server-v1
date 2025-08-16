@@ -2491,12 +2491,12 @@ struct test_bin_bcast : public test_case {
         : op(op), type(type), ne(ne), nr(nr), nf(nf) {}
 
     ggml_tensor * build_graph(ggml_context * ctx) override {
-        GGML_ASSERT(nf <= 8);
+        GGML_ASSERT(nf <= 16);
 
         ggml_tensor * a = ggml_new_tensor_4d(ctx, type, ne[0]*nr[0], ne[1]*nr[1], ne[2]*nr[2], ne[3]*nr[3]);
         ggml_set_name(a, "a");
 
-        ggml_tensor * b[8];
+        ggml_tensor * b[16];
         for (int i = 0; i < nf; ++i) {
             b[i] = ggml_new_tensor(ctx, type, 4, ne.data());
             ggml_set_name(b[i], (std::string("b") + std::to_string(i)).c_str());
@@ -5528,6 +5528,7 @@ static std::vector<std::unique_ptr<test_case>> make_test_cases_eval() {
     test_cases.emplace_back(new test_count_equal(GGML_TYPE_F32, {4, 5000, 1, 1}));
 
     test_cases.emplace_back(new test_argmax(GGML_TYPE_F32, {32,    1, 1, 1}));
+    test_cases.emplace_back(new test_argmax(GGML_TYPE_F32, {32,  513, 1, 1}));
     test_cases.emplace_back(new test_argmax(GGML_TYPE_F32, {100,  10, 1, 1}));
     test_cases.emplace_back(new test_argmax(GGML_TYPE_F32, {1024, 10, 1, 1}));
     test_cases.emplace_back(new test_argmax(GGML_TYPE_F32, {1024, 12, 1, 1}));
@@ -5657,6 +5658,7 @@ static std::vector<std::unique_ptr<test_case>> make_test_cases_eval() {
     test_cases.emplace_back(new test_bin_bcast(ggml_add, GGML_TYPE_F32, {10, 5, 4, 3}, {1, 1, 2, 2}, 6));
     test_cases.emplace_back(new test_bin_bcast(ggml_add, GGML_TYPE_F32, {10, 5, 4, 3}, {1, 2, 2, 2}, 7));
     test_cases.emplace_back(new test_bin_bcast(ggml_add, GGML_TYPE_F32, {16, 5, 4, 3}, {2, 2, 2, 2}, 8));
+    test_cases.emplace_back(new test_bin_bcast(ggml_add, GGML_TYPE_F32, {16, 5, 4, 3}, {1, 1, 1, 1}, 16));
 
     test_cases.emplace_back(new test_add1());
     test_cases.emplace_back(new test_scale());
@@ -5822,6 +5824,8 @@ static std::vector<std::unique_ptr<test_case>> make_test_cases_eval() {
     for (bool b : {false, true}) {
         test_cases.emplace_back(new test_mul_mat_id(GGML_TYPE_F16, GGML_TYPE_F32, 16, 16, b, 32, 1024, 16));
     }
+
+    test_cases.emplace_back(new test_mul_mat_id(GGML_TYPE_F16, GGML_TYPE_F32, 1, 1, false, 8, 16, 1));
 
     for (ggml_type type_a : base_types) {
         for (ggml_type type_b : {GGML_TYPE_F32 /*, GGML_TYPE_F16 */}) {
