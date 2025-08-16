@@ -12,8 +12,8 @@ This particular file is a work in progress to build separate x86_64 and Aarch64 
 Let's define some environment variables, resetting those that affect the Makefile:
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
-COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
-COSMO_DIR="$COSMOPOLITAN_DIR/cosmocc"
+BUILD_COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
+COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 BUILD_DIR="2-BUILD-mmojo-server"
 export LLAMA_MAKEFILE=1
 export LLAMA_SERVER_SSL=ON
@@ -40,10 +40,10 @@ printf "\n**********\n*\n* FINISHED: Build Dependencies.\n*\n**********\n\n"
 Clone Cosmopolitan repo into a `~\1-BUILD-cosmopolitan` directory, fix bugs, then build Cosmopolitan. Build this once, and leave the `~\1-BUILD-cosmopolitan` directory between builds.
 ```
 cd ~
-git clone https://github.com/jart/cosmopolitan.git $COSMOPOLITAN_DIR
 mkdir -p ~/$DOWNLOAD_DIR
-mkdir -p ~/$COSMOPOLITAN_DIR
-cd ~/$COSMOPOLITAN_DIR
+mkdir -p ~/$BUILD_COSMOPOLITAN_DIR
+git clone https://github.com/jart/cosmopolitan.git $BUILD_COSMOPOLITAN_DIR
+cd ~/$BUILD_COSMOPOLITAN_DIR
 # Edit the memchr_sse() function to check params.
 sed -i '39i \  if ((s == NULL) || (n == 0)) return 0;' libc/intrin/memchr.c
 tool/cosmocc/package.sh
@@ -135,23 +135,11 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 ```
 
 ---
-### Install Cosmo
-If we haven't previously downloaded `cosmocc.zip`, download it to `~/$DOWNLOAD_DIR`. Then copy the `.zip` file to the build directory and unzip it.
-
+### Copy cosmocc to Build Directory
 ```
-mkdir -p ~/$DOWNLOAD_DIR
-if [ -f ~/$COSMO_DIR ]; then cp -r ~/$COSMO_DIR ~/$BUILD_DIR; fi
-if [ ! -f ~/$COSMO_DIR ]; then
-  cd ~/$DOWNLOAD_DIR
-  if [ ! -f cosmocc.zip ]; then wget https://cosmo.zip/pub/cosmocc/cosmocc.zip; fi
-  cd ~/$BUILD_DIR/cosmocc
-  mkdir -p ~/$BUILD_DIR/cosmocc
-  cp ~/$DOWNLOAD_DIR/cosmocc.zip .
-  unzip cosmocc.zip
-  rm cosmocc.zip
-fi
 cd ~/$BUILD_DIR
-printf "\n**********\n*\n* FINISHED: Install Cosmo.\n*\n**********\n\n"
+cp -r ~/$COSMO_DIR .
+printf "\n**********\n*\n* FINISHED: Copy cosmocc to Build Directory.\n*\n**********\n\n"
 ```
 
 ---
@@ -334,6 +322,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
