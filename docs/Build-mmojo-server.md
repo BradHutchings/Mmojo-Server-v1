@@ -13,7 +13,7 @@ Let's define some environment variables, resetting those that affect the Makefil
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
 COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
-COSMO_DIR="$COSMOPOLITAN_DIR/.cosmocc"
+COSMO_DIR="$COSMOPOLITAN_DIR/cosmocc"
 BUILD_DIR="2-BUILD-mmojo-server"
 export LLAMA_MAKEFILE=1
 export LLAMA_SERVER_SSL=ON
@@ -36,8 +36,8 @@ printf "\n**********\n*\n* FINISHED: Build Dependencies.\n*\n**********\n\n"
 ```
 
 ---
-### Clone Cosmopolitan Repo, Build Locally (Skip this)
-Clone this repo and repos this repo depends on into a `~\1-BUILD-mmojo-server` directory.
+### Clone Cosmopolitan Repo, Build Locally (DO THIS ONCE)
+Clone Cosmopolitan repo into a `~\1-BUILD-cosmopolitan` directory, fix bugs, then build Cosmopolitan. Build this once, and leave the `~\1-BUILD-cosmopolitan` directory between builds.
 ```
 cd ~
 git clone https://github.com/jart/cosmopolitan.git $COSMOPOLITAN_DIR
@@ -46,16 +46,13 @@ mkdir -p ~/$COSMOPOLITAN_DIR
 cd ~/$COSMOPOLITAN_DIR
 # Edit the memchr_sse() function to check params.
 sed -i '39i \  if ((s == NULL) || (n == 0)) return 0;' libc/intrin/memchr.c
-make MODE=x86_64
-# Figure out how to link libc.a
-make MODE=aarch64
-# Figure out how to link libc.a
+tool/cosmocc/package.sh
 printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\n**********\n\n"
 ```
 
 ---
 ### Clone this Repo Locally
-Clone this repo and repos this repo depends on into a `~\1-BUILD-mmojo-server` directory.
+Clone this repo and repos this repo depends on into a `~\2-BUILD-mmojo-server` directory.
 ```
 cd ~
 git clone https://github.com/BradHutchings/mmojo-server.git $BUILD_DIR
@@ -143,13 +140,16 @@ If we haven't previously downloaded `cosmocc.zip`, download it to `~/$DOWNLOAD_D
 
 ```
 mkdir -p ~/$DOWNLOAD_DIR
-mkdir -p ~/$BUILD_DIR/cosmocc
-cd ~/$DOWNLOAD_DIR
-if [ ! -f cosmocc.zip ]; then wget https://cosmo.zip/pub/cosmocc/cosmocc.zip; fi
-cd ~/$BUILD_DIR/cosmocc
-cp ~/$DOWNLOAD_DIR/cosmocc.zip .
-unzip cosmocc.zip
-rm cosmocc.zip
+if [ -f ~/$COSMO_DIR ]; then cp -r ~/$COSMO_DIR ~/$BUILD_DIR; fi
+if [ ! -f ~/$COSMO_DIR ]; then
+  cd ~/$DOWNLOAD_DIR
+  if [ ! -f cosmocc.zip ]; then wget https://cosmo.zip/pub/cosmocc/cosmocc.zip; fi
+  cd ~/$BUILD_DIR/cosmocc
+  mkdir -p ~/$BUILD_DIR/cosmocc
+  cp ~/$DOWNLOAD_DIR/cosmocc.zip .
+  unzip cosmocc.zip
+  rm cosmocc.zip
+fi
 cd ~/$BUILD_DIR
 printf "\n**********\n*\n* FINISHED: Install Cosmo.\n*\n**********\n\n"
 ```
@@ -334,6 +334,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
