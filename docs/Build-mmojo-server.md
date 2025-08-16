@@ -13,8 +13,8 @@ Let's define some environment variables, resetting those that affect the Makefil
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
+BUILD_MMOJO_SERVER_DIR="2-BUILD-mmojo-server"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
-BUILD_DIR="2-BUILD-mmojo-server"
 export LLAMA_MAKEFILE=1
 export LLAMA_SERVER_SSL=ON
 if [ -z "$SAVE_PATH" ]; then
@@ -55,26 +55,26 @@ printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\
 Clone this repo and repos this repo depends on into a `~\2-BUILD-mmojo-server` directory.
 ```
 cd ~
-git clone https://github.com/BradHutchings/mmojo-server.git $BUILD_DIR
-git clone https://github.com/nlohmann/json.git ~/$BUILD_DIR/nlohmann-json
-git clone https://github.com/google/minja.git ~/$BUILD_DIR/google-minja
-git clone https://github.com/yhirose/cpp-httplib.git ~/$BUILD_DIR/cpp-httplib
-git clone https://github.com/mackron/miniaudio.git ~/$BUILD_DIR/miniaudio
-git clone https://github.com/nothings/stb.git ~/$BUILD_DIR/stb
-sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' ~/$BUILD_DIR/miniaudio/miniaudio.h
+git clone https://github.com/BradHutchings/mmojo-server.git $BUILD_MMOJO_SERVER_DIR
+git clone https://github.com/nlohmann/json.git ~/$BUILD_MMOJO_SERVER_DIR/nlohmann-json
+git clone https://github.com/google/minja.git ~/$BUILD_MMOJO_SERVER_DIR/google-minja
+git clone https://github.com/yhirose/cpp-httplib.git ~/$BUILD_MMOJO_SERVER_DIR/cpp-httplib
+git clone https://github.com/mackron/miniaudio.git ~/$BUILD_MMOJO_SERVER_DIR/miniaudio
+git clone https://github.com/nothings/stb.git ~/$BUILD_MMOJO_SERVER_DIR/stb
+sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' ~/$BUILD_MMOJO_SERVER_DIR/miniaudio/miniaudio.h
 printf "\n**********\n*\n* FINISHED: Clone this Repo and Dependent Repos Locally.\n*\n**********\n\n"
 ```
 
 **Optional:** Use the `work-in-progress` branch where I implement and test my own changes and where I test upstream changes from `llama.cpp`.
 ```
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 git checkout work-in-progress
 printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n\n"
 ```
 
 Patch `ggml-cpu/cosmo` with latest generic ggml-cpu code.
 ```
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 mkdir -p ggml/src/ggml-cpu/arch/cosmo
 cp ggml/src/ggml-cpu/repack.cpp ggml/src/ggml-cpu/arch/cosmo/
 cp ggml/src/ggml-cpu/quants.c ggml/src/ggml-cpu/arch/cosmo/
@@ -92,7 +92,7 @@ sed -i -e "s/>llama.cpp<\/div>/>$APP_NAME<\/div>/g" tools/server/webui/src/compo
 cd tools/server/webui
 npm i
 npm run build
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ```
 
@@ -100,7 +100,7 @@ printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ### Build llama.cpp
 We use the old `Makefile` rather than CMake. We've updated the `Makefile` in this repo to build llama.cpp correctly.
 ```
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH=$SAVE_PATH
 unset CC; export CC
 unset CXX; export CXX
@@ -137,7 +137,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 ---
 ### Copy cosmocc to Build Directory
 ```
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 cp -r ~/$COSMO_DIR .
 printf "\n**********\n*\n* FINISHED: Copy cosmocc to Build Directory.\n*\n**********\n\n"
 ```
@@ -161,15 +161,15 @@ printf "\n**********\n*\n* FINISHED: Prepare to Build llama.cpp with Cosmo.\n*\n
 ### Build openssl with Cosmo
 We need cross-architectire `libssl` and `libcrypto` static libraries to support SSL in `mmojo-server`.
 ```
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 cp -r /usr/include/openssl/ ./cosmocc/include/
 cp -r /usr/include/x86_64-linux-gnu/openssl/* ./cosmocc/include/openssl
 cp -r /usr/include/aarch64-linux-gnu/openssl/* ./cosmocc/include/openssl
 git clone https://github.com/openssl/openssl.git
-cd ~/$BUILD_DIR/openssl
+cd ~/$BUILD_MMOJO_SERVER_DIR/openssl
 ./Configure no-asm no-dso no-afalgeng no-shared no-pinshared no-apps
 make
-cd ~/$BUILD_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
 printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\n"
 
 ```
@@ -322,6 +322,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
