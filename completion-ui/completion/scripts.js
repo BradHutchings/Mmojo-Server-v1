@@ -31,6 +31,7 @@ const kStatusMode = Object.freeze({
     stopped_after:                      9,
     stopped_by_user:                    10,
     replaying:                          11,
+    error:                              12,
 });
 
 const kStatusText = Object.freeze({
@@ -46,6 +47,7 @@ const kStatusText = Object.freeze({
     stopped_after:          "Stopped after [tokens_predicted] tokens.",
     stopped_by_user:        "Stopped by you.",
     replaying:              "Replaying.",
+    error:                  "Error.",
 });
 
 const kModeCueLink = "cue-link";
@@ -486,8 +488,10 @@ function Complete() {
         else {
             let problemText = "\n\n----------------------------------------\n\n" +
                 "The text in the work area (" + script.tokenCount + " tokens) exceeds the context window size (" + script.contextWindowSize + " tokens) for this model.\n\n" +
-                "Please remove some text from the work area or switch to a bigger model.";
+                "Please remove some text from the work area or switch to a bigger model.\n";
             elements.workAreaText.value = elements.workAreaText.value + problemText;
+
+            script.statusMode = kStatusMode.error;
 
             ScrollToEnd();
             PushChange();
@@ -695,6 +699,10 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
         if (kLogging || logThis) console.log(exc.name);
         if (kLogging || logThis) console.log(exc.message);
 
+        if (!script.manualStop) {
+            script.statusMode = kStatusMode.error;
+        }
+
         // I thought this might be a checkbox in settings, but that felt clumsy.
         // These are mostly network errors. It would be good for the user to know.
         // -Brad 2025-07-25
@@ -705,7 +713,10 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                     "A problem was encountered while completing:\n\n" +
                     exc + "\n\n";
                 elements.workAreaText.value = elements.workAreaText.value + problemText;
-                ScrollToEnd();
+
+                setTimeout(function() {
+                    ScrollToEnd();
+                }, 100);
             }
         }
     }
@@ -956,6 +967,9 @@ function UpdateStatus() {
     }
     else if (script.statusMode == kStatusMode.replaying) {
         status += kStatusText.replaying;
+    }
+    else if (script.statusMode == kStatusMode.error) {
+        status += kStatusText.error;
     }
 
     elements.statusText.innerHTML = status;

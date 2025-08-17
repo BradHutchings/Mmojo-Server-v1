@@ -11,8 +11,8 @@ This file contains instructions for configuring the `mmojo-server` executable to
 Let's define some environment variables:
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
-BUILD_DIR="1-BUILD-mmojo-server"
-CONFIGURE_DIR="2-CONFIGURE-mmojo-server"
+BUILD_DIR="2-BUILD-mmojo-server"
+CONFIGURE_DIR="3-CONFIGURE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_ZIP="mmojo-server.zip"
@@ -197,3 +197,4 @@ Hit `ctrl-C` on your keyboard to stop it.
 ---
 ### Next Step: Package mmojo-server for Deployment
 Congratulations! You are ready to package your llams-server-one executable for deployment. Follow instructions in [Package-mmojo-server.md](Package-mmojo-server.md).
+
