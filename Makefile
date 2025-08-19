@@ -431,30 +431,36 @@ ifeq ($(UNAME_P),cosmocc-cross)
 			$(DIR_GGML)/src/ggml-cpu/quants.o \
 			$(DIR_GGML)/src/ggml-cpu/repack.o
 
-#		OBJ_GGML_EXT += \
-#			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/quants.o \
-#			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/repack.o
-
 endif
 
 ifeq ($(UNAME_P),cosmocc-intel)
 
 		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/quants.o \
-			$(DIR_GGML)/src/ggml-cpu/repack.o \
+			$(DIR_GGML)/src/ggml-cpu/repack.o 
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/arch/x86/quants.o \
 			$(DIR_GGML)/src/ggml-cpu/arch/x86/repack.o
 
+endif
 endif
 
 ifeq ($(UNAME_P),cosmocc-acorn)
 
 		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/quants.o \
-			$(DIR_GGML)/src/ggml-cpu/repack.o \
+			$(DIR_GGML)/src/ggml-cpu/repack.o 
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/arch/arm/quants.o \
 			$(DIR_GGML)/src/ggml-cpu/arch/arm/repack.o
 
+endif
 endif
 
 else
@@ -557,9 +563,15 @@ ifeq ($(UNAME_M),$(filter $(UNAME_M),x86_64 i686 amd64))
 
 	OBJ_GGML_EXT += \
 		$(DIR_GGML)/src/ggml-cpu/quants.o \
-        $(DIR_GGML)/src/ggml-cpu/repack.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/x86/quants.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/x86/repack.o
+        $(DIR_GGML)/src/ggml-cpu/repack.o
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
+			$(DIR_GGML)/src/ggml-cpu/arch/x86/quants.o \
+			$(DIR_GGML)/src/ggml-cpu/arch/x86/repack.o
+
+endif
 endif
 
 ifneq ($(UNAME_S),cosmocc)
@@ -592,9 +604,15 @@ ifneq ($(filter aarch64%,$(UNAME_M)),)
 
 	OBJ_GGML_EXT += \
 		$(DIR_GGML)/src/ggml-cpu/quants.o \
-        $(DIR_GGML)/src/ggml-cpu/repack.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/arm/quants.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/arm/repack.o
+        $(DIR_GGML)/src/ggml-cpu/repack.o
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
+			$(DIR_GGML)/src/ggml-cpu/arch/arm/quants.o \
+			$(DIR_GGML)/src/ggml-cpu/arch/arm/repack.o
+
+endif
 endif
 
 ifneq ($(filter armv6%,$(UNAME_M)),)
@@ -1907,6 +1925,7 @@ ifneq (,$(wildcard embedding))
 	@echo "  Remove the 'embedding' binary to remove this warning."
 	@echo "#########"
 endif
+
 
 
 
