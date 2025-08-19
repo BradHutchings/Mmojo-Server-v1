@@ -74,6 +74,9 @@ TEST_TARGETS = \
 	tests/test-tokenizer-1-spm
 #	tests/test-opt \
 
+# Force build with CPU
+GGML_CPU_GENERIC := 1
+
 # Legacy build targets that were renamed in #7809, but should still be removed when the project is cleaned
 LEGACY_TARGETS_CLEAN = main quantize quantize-stats perplexity imatrix embedding vdot q8dot convert-llama2c-to-ggml \
 	simple batched batched-bench save-load-state server gguf gguf-split eval-callback llama-bench libllava.a llava-cli baby-llama \
@@ -269,6 +272,10 @@ MK_CFLAGS    = -std=c11   -fPIC
 MK_CXXFLAGS  = -std=c++17 -fPIC
 MK_NVCCFLAGS = -std=c++17
 
+ifdef GGML_CPU_GENERIC
+MK_CPPFLAGS += -DGGML_CPU_GENERIC 
+endif
+
 ifdef LLAMA_NO_CCACHE
 GGML_NO_CCACHE := 1
 DEPRECATE_WARNING := 1
@@ -421,8 +428,8 @@ $(info Setting MK_CFLAGS and MK_CXXFLAGS flags for cosmocc.)
 ifeq ($(UNAME_P),cosmocc-cross)
 
 		OBJ_GGML_EXT += \
-			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/quants.o \
-			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/repack.o
+			$(DIR_GGML)/src/ggml-cpu/quants.o \
+			$(DIR_GGML)/src/ggml-cpu/repack.o
 
 endif
 
@@ -430,20 +437,30 @@ ifeq ($(UNAME_P),cosmocc-intel)
 
 		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/quants.o \
-			$(DIR_GGML)/src/ggml-cpu/repack.o \
+			$(DIR_GGML)/src/ggml-cpu/repack.o 
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/arch/x86/quants.o \
 			$(DIR_GGML)/src/ggml-cpu/arch/x86/repack.o
 
+endif
 endif
 
 ifeq ($(UNAME_P),cosmocc-acorn)
 
 		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/quants.o \
-			$(DIR_GGML)/src/ggml-cpu/repack.o \
+			$(DIR_GGML)/src/ggml-cpu/repack.o 
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
 			$(DIR_GGML)/src/ggml-cpu/arch/arm/quants.o \
 			$(DIR_GGML)/src/ggml-cpu/arch/arm/repack.o
 
+endif
 endif
 
 else
@@ -546,9 +563,15 @@ ifeq ($(UNAME_M),$(filter $(UNAME_M),x86_64 i686 amd64))
 
 	OBJ_GGML_EXT += \
 		$(DIR_GGML)/src/ggml-cpu/quants.o \
-        $(DIR_GGML)/src/ggml-cpu/repack.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/x86/quants.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/x86/repack.o
+        $(DIR_GGML)/src/ggml-cpu/repack.o
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
+			$(DIR_GGML)/src/ggml-cpu/arch/x86/quants.o \
+			$(DIR_GGML)/src/ggml-cpu/arch/x86/repack.o
+
+endif
 endif
 
 ifneq ($(UNAME_S),cosmocc)
@@ -581,9 +604,15 @@ ifneq ($(filter aarch64%,$(UNAME_M)),)
 
 	OBJ_GGML_EXT += \
 		$(DIR_GGML)/src/ggml-cpu/quants.o \
-        $(DIR_GGML)/src/ggml-cpu/repack.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/arm/quants.o \
-		$(DIR_GGML)/src/ggml-cpu/arch/arm/repack.o
+        $(DIR_GGML)/src/ggml-cpu/repack.o
+
+ifndef GGML_CPU_GENERIC
+
+		OBJ_GGML_EXT += \
+			$(DIR_GGML)/src/ggml-cpu/arch/arm/quants.o \
+			$(DIR_GGML)/src/ggml-cpu/arch/arm/repack.o
+
+endif
 endif
 
 ifneq ($(filter armv6%,$(UNAME_M)),)
@@ -1896,5 +1925,8 @@ ifneq (,$(wildcard embedding))
 	@echo "  Remove the 'embedding' binary to remove this warning."
 	@echo "#########"
 endif
+
+
+
 
 

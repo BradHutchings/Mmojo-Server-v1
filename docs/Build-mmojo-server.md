@@ -20,6 +20,7 @@ export LLAMA_SERVER_SSL=ON
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
+TODAY=$(date +%Y-%m-%d)
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -72,17 +73,6 @@ git checkout work-in-progress
 printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n\n"
 ```
 
-Patch `ggml-cpu/cosmo` with latest generic ggml-cpu code.
-```
-cd ~/$BUILD_MMOJO_SERVER_DIR
-mkdir -p ggml/src/ggml-cpu/arch/cosmo
-cp ggml/src/ggml-cpu/repack.cpp ggml/src/ggml-cpu/arch/cosmo/
-cp ggml/src/ggml-cpu/quants.c ggml/src/ggml-cpu/arch/cosmo/
-sed -i -e "s/_generic//g" ggml/src/ggml-cpu/arch/cosmo/repack.cpp 
-sed -i -e "s/_generic//g" ggml/src/ggml-cpu/arch/cosmo/quants.c 
-printf "\n**********\n*\n* FINISHED: Patch ggml-cpu/cosmo.\n*\n**********\n\n"
-```
-
 ---
 ### Customize WebUI
 ```
@@ -93,6 +83,8 @@ cd tools/server/webui
 npm i
 npm run build
 cd ~/$BUILD_MMOJO_SERVER_DIR
+sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/scripts.js
+sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/bookmark-scripts.js
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ```
 
@@ -126,6 +118,12 @@ If the build fails and you've checked out the `work-in-progress` branch, well, i
 
 If the build fails on the `master` branch, please post a note in the [Discussions](https://github.com/BradHutchings/mmojo-server/discussions) area.
 
+**Optional:** Test the build. If you've previously downloaded a model to the `0-DOWNLOAD` folder, you can test the build.
+```
+./Builds-Platform/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+    --path completion-ui/ --host 0.0.0.0 --port 8080
+```
+
 #### List Directory
 
 At this point, you should see `mmojo-server` and other built binaries in the directory listing.
@@ -133,7 +131,6 @@ At this point, you should see `mmojo-server` and other built binaries in the dir
 ls -al Builds-Platform/*
 printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 ```
-
 ---
 ### Copy cosmocc to Build Directory
 ```
@@ -190,6 +187,11 @@ If the build is successful, it will end with this message:
 &nbsp;&nbsp;&nbsp;&nbsp;**Built mmojo-server.**<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;**Copying builds to Builds-Cosmo.**
 
+**Optional:** Test the build. If you've previously downloaded a model to the `0-DOWNLOAD` folder, you can test the build.
+```
+./Builds-Platform/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+    --path completion-ui/ --host 0.0.0.0 --port 8080
+```
 
 **Optional:** Build other llama.cpp binaries with Cosmo.
 ```
@@ -322,6 +324,8 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
+
 
 
 
