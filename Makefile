@@ -74,6 +74,9 @@ TEST_TARGETS = \
 	tests/test-tokenizer-1-spm
 #	tests/test-opt \
 
+# Force build with CPU
+GGML_CPU_GENERIC := 1
+
 # Legacy build targets that were renamed in #7809, but should still be removed when the project is cleaned
 LEGACY_TARGETS_CLEAN = main quantize quantize-stats perplexity imatrix embedding vdot q8dot convert-llama2c-to-ggml \
 	simple batched batched-bench save-load-state server gguf gguf-split eval-callback llama-bench libllava.a llava-cli baby-llama \
@@ -421,8 +424,12 @@ $(info Setting MK_CFLAGS and MK_CXXFLAGS flags for cosmocc.)
 ifeq ($(UNAME_P),cosmocc-cross)
 
 		OBJ_GGML_EXT += \
-			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/quants.o \
-			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/repack.o
+			$(DIR_GGML)/src/ggml-cpu/quants.o \
+			$(DIR_GGML)/src/ggml-cpu/repack.o
+
+#		OBJ_GGML_EXT += \
+#			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/quants.o \
+#			$(DIR_GGML)/src/ggml-cpu/arch/cosmo/repack.o
 
 endif
 
@@ -1896,5 +1903,6 @@ ifneq (,$(wildcard embedding))
 	@echo "  Remove the 'embedding' binary to remove this warning."
 	@echo "#########"
 endif
+
 
 
