@@ -289,11 +289,11 @@ struct server_task {
         params.stream           = json_value(data, "stream",             false);
         params.cache_prompt     = json_value(data, "cache_prompt",       true);
         params.return_tokens    = json_value(data, "return_tokens",      false);
-
+        
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         params.include_prompt_progress = json_value(data, "include_prompt_progress", false);
         // mmojo-server END
-
+        
         params.n_predict        = json_value(data, "n_predict",          json_value(data, "max_tokens", defaults.n_predict));
         params.n_indent         = json_value(data, "n_indent",           defaults.n_indent);
         params.n_keep           = json_value(data, "n_keep",             defaults.n_keep);
@@ -1027,7 +1027,7 @@ struct server_task_result_cmpl_partial : server_task_result {
         if (!prob_output.probs.empty()) {
             res["completion_probabilities"] = completion_token_output::probs_vector_to_json({prob_output}, post_sampling_probs);
         }
-
+        
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         // include prompt processing progress if this is a progress response
         if (is_progress_response) {
@@ -1251,6 +1251,8 @@ struct server_task_result_metrics : server_task_result {
     uint64_t n_tokens_predicted_total        = 0;
     uint64_t t_tokens_generation_total       = 0;
 
+    uint64_t n_past_max = 0;
+
     uint64_t n_prompt_tokens_processed = 0;
     uint64_t t_prompt_processing       = 0;
 
@@ -1275,6 +1277,8 @@ struct server_task_result_metrics : server_task_result {
             { "t_tokens_generation_total",       t_tokens_generation_total },
             { "n_tokens_predicted_total",        n_tokens_predicted_total },
             { "t_prompt_processing_total",       t_prompt_processing_total },
+
+            { "n_past_max",                      n_past_max },
 
             { "n_prompt_tokens_processed",       n_prompt_tokens_processed },
             { "t_prompt_processing",             t_prompt_processing },
@@ -1637,6 +1641,8 @@ struct server_metrics {
     uint64_t n_tokens_predicted_total        = 0;
     uint64_t t_tokens_generation_total       = 0;
 
+    uint64_t n_past_max = 0;
+
     uint64_t n_prompt_tokens_processed = 0;
     uint64_t t_prompt_processing       = 0;
 
@@ -1655,6 +1661,10 @@ struct server_metrics {
         n_prompt_tokens_processed       += slot.n_prompt_tokens_processed;
         t_prompt_processing             += slot.t_prompt_processing;
         t_prompt_processing_total       += slot.t_prompt_processing;
+
+        if (slot.n_past > 0) {
+            n_past_max = std::max(n_past_max, (uint64_t) slot.n_past);
+        }
     }
 
     void on_prediction(const server_slot & slot) {
@@ -1669,6 +1679,9 @@ struct server_metrics {
         for (const auto & slot : slots) {
             if (slot.is_processing()) {
                 n_busy_slots_total++;
+            }
+            if (slot.n_past > 0) {
+                n_past_max = std::max(n_past_max, (uint64_t) slot.n_past);
             }
         }
     }
@@ -1768,7 +1781,7 @@ struct server_queue {
     void pop_deferred_task() {
         std::unique_lock<std::mutex> lock(mutex_tasks);
         if (!queue_tasks_deferred.empty()) {
-            queue_tasks.emplace_back(std::move(queue_tasks_deferred.front()));
+            queue_tasks.emplace_front(std::move(queue_tasks_deferred.front()));
             queue_tasks_deferred.pop_front();
         }
         condition_tasks.notify_one();
@@ -2996,6 +3009,8 @@ struct server_context {
                     res->n_tokens_predicted_total        = metrics.n_tokens_predicted_total;
                     res->t_tokens_generation_total       = metrics.t_tokens_generation_total;
 
+                    res->n_past_max = metrics.n_past_max;
+
                     res->n_prompt_tokens_processed = metrics.n_prompt_tokens_processed;
                     res->t_prompt_processing       = metrics.t_prompt_processing;
                     res->n_tokens_predicted        = metrics.n_tokens_predicted;
@@ -3581,13 +3596,6 @@ struct server_context {
                     // This is still the wrong spot. It sends BEFORE a batch is evaluated.
                     // Send progress response if requested
                     send_progress_response(slot);
-
-                    if (params_base.n_batch_sleep_ms > 0) {
-                        SLT_INF(slot, "Starting sleep %d ms after batch.\n", params_base.n_batch_sleep_ms);
-                        std::this_thread::sleep_for(std::chrono::milliseconds(params_base.n_batch_sleep_ms));
-                        SLT_INF(slot, "%s", "Finished sleep after batch.\n");
-                    }
-                    // mmojo-server END
 
                     // entire prompt has been processed
                     if (slot.n_past == slot.n_prompt_tokens) {
@@ -4298,6 +4306,10 @@ int main(int argc, char ** argv) {
                     {"name",  "n_decode_total"},
                     {"help",  "Total number of llama_decode() calls"},
                     {"value",  res_metrics->n_decode_total}
+            }, {
+                    {"name",  "n_past_max"},
+                    {"help",  "Largest observed n_past."},
+                    {"value",  res_metrics->n_past_max}
             }, {
                     {"name",  "n_busy_slots_per_decode"},
                     {"help",  "Average number of busy slots per llama_decode() call"},
