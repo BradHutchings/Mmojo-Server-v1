@@ -20,6 +20,7 @@ export LLAMA_SERVER_SSL=ON
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
+TODAY=$(date +%Y-%m-%d)
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -72,6 +73,7 @@ git checkout work-in-progress
 printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n\n"
 ```
 
+<!-- DELETE THIS!
 Patch `ggml-cpu/cosmo` with latest generic ggml-cpu code.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
@@ -82,12 +84,7 @@ sed -i -e "s/_generic//g" ggml/src/ggml-cpu/arch/cosmo/repack.cpp
 sed -i -e "s/_generic//g" ggml/src/ggml-cpu/arch/cosmo/quants.c 
 printf "\n**********\n*\n* FINISHED: Patch ggml-cpu/cosmo.\n*\n**********\n\n"
 ```
-
-Make some miscellaneous patches to source before building:
-```
-sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" website/completion/scripts.js
-sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" website/completion/bookmark-scripts.js
-```
+-->
 
 ---
 ### Customize WebUI
@@ -99,6 +96,8 @@ cd tools/server/webui
 npm i
 npm run build
 cd ~/$BUILD_MMOJO_SERVER_DIR
+sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/scripts.js
+sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/bookmark-scripts.js
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ```
 
@@ -201,6 +200,11 @@ If the build is successful, it will end with this message:
 &nbsp;&nbsp;&nbsp;&nbsp;**Built mmojo-server.**<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;**Copying builds to Builds-Cosmo.**
 
+**Optional:** Test the build. If you've previously downloaded a model to the `0-DOWNLOAD` folder, you can test the build.
+```
+./Builds-Platform/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+    --path completion-ui/ --host 0.0.0.0 --port 8080
+```
 
 **Optional:** Build other llama.cpp binaries with Cosmo.
 ```
