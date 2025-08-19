@@ -272,6 +272,10 @@ MK_CFLAGS    = -std=c11   -fPIC
 MK_CXXFLAGS  = -std=c++17 -fPIC
 MK_NVCCFLAGS = -std=c++17
 
+ifdef GGML_CPU_GENERIC
+MK_CPPFLAGS += -DGGML_CPU_GENERIC 
+endif
+
 ifdef LLAMA_NO_CCACHE
 GGML_NO_CCACHE := 1
 DEPRECATE_WARNING := 1
@@ -1903,6 +1907,7 @@ ifneq (,$(wildcard embedding))
 	@echo "  Remove the 'embedding' binary to remove this warning."
 	@echo "#########"
 endif
+
 
 
 
