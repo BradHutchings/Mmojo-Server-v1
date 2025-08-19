@@ -83,6 +83,12 @@ sed -i -e "s/_generic//g" ggml/src/ggml-cpu/arch/cosmo/quants.c
 printf "\n**********\n*\n* FINISHED: Patch ggml-cpu/cosmo.\n*\n**********\n\n"
 ```
 
+Make some miscellaneous patches to source before building:
+```
+sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" website/completion/scripts.js
+sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" website/completion/bookmark-scripts.js
+```
+
 ---
 ### Customize WebUI
 ```
@@ -126,6 +132,12 @@ If the build fails and you've checked out the `work-in-progress` branch, well, i
 
 If the build fails on the `master` branch, please post a note in the [Discussions](https://github.com/BradHutchings/mmojo-server/discussions) area.
 
+**Optional:** Test the build. If you've previously downloaded a model to the `0-DOWNLOAD` folder, you can test the build.
+```
+./Builds-Platform/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+    --path completion-ui/ --host 0.0.0.0 --port 8080
+```
+
 #### List Directory
 
 At this point, you should see `mmojo-server` and other built binaries in the directory listing.
@@ -133,7 +145,6 @@ At this point, you should see `mmojo-server` and other built binaries in the dir
 ls -al Builds-Platform/*
 printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 ```
-
 ---
 ### Copy cosmocc to Build Directory
 ```
@@ -322,6 +333,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
