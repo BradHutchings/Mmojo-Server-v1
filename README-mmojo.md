@@ -1,4 +1,4 @@
-## mmojo-server (née llama-server-one)
+## mmojo-server
 Based on [llama.cpp](https://github.com/ggml-org/llama.cpp).
 
 Brad Hutchings<br/>
@@ -86,3 +86,4 @@ In no particular order of importance, these are the things that bother me:
 - Write docs for a Deploying step. It should address the args file, removing the extra executable depending on platform, models, host, port. context size.
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
+
