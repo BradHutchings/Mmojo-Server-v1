@@ -1120,7 +1120,7 @@ OBJ_LLAMA = \
 	$(DIR_LLAMA)/llama-arch.o \
 	$(DIR_LLAMA)/llama-batch.o \
 	$(DIR_LLAMA)/llama-chat.o \
-	$(DIR_LLAMA)/llama-context-mmojo.o \
+	$(DIR_LLAMA)/llama-context.o \
 	$(DIR_LLAMA)/llama-cparams.o \
 	$(DIR_LLAMA)/llama-grammar.o \
 	$(DIR_LLAMA)/llama-graph.o \
@@ -1143,6 +1143,7 @@ OBJ_LLAMA = \
 	$(DIR_LLAMA)/unicode-data.o
 
 #	$(DIR_LLAMA)/llama-context.o \
+#	$(DIR_LLAMA)/llama-context-mmojo.o \
 
 OBJ_COMMON = \
 	$(DIR_COMMON)/arg-mmojo.o \
@@ -1925,6 +1926,7 @@ ifneq (,$(wildcard embedding))
 	@echo "  Remove the 'embedding' binary to remove this warning."
 	@echo "#########"
 endif
+
 
 
 
