@@ -50,8 +50,6 @@ To get this from the llama.cpp source base, there are few files that need to be 
 
 4. [common/common.h](common/common-mmojo.h) -- Added a paramter for sleep after each batch.
 
-6. [src/llama-hparams.cpp](src/llama-hparams-mmojo.cpp) -- COSMOCC doesn't have std::max in its Standard Templates Library.
-
 7. [tools/server/server.cpp](tools/server/server-mmojo.cpp) -- Support embedded or adjacent "args" file, fix Cosmo name conflict with "defer" task member, add additional meta data to `model_meta`.
 
 8. [ggml/src/ggml-cpu/arch/cosmo](ggml/src/ggml-cpu/arch/cosmo) -- Added a cosmo architecture for GGML CPU that uses generic code to compile for both ARM and x86.
@@ -84,5 +82,6 @@ In no particular order of importance, these are the things that bother me:
 - Write docs for a Deploying step. It should address the args file, removing the extra executable depending on platform, models, host, port. context size.
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
+
 
 
