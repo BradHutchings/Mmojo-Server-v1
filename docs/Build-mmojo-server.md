@@ -151,6 +151,9 @@ export AR="cosmoar"
 export UNAME_S="cosmocc"
 export UNAME_P="cosmocc-cross"
 export UNAME_M="cosmocc"
+if ! grep -q "#include <algorithm>" "src/llama-hparams.cpp" ; then
+  sed -i '4i #include <algorithm>' src/llama-hparams.cpp
+fi
 printf "\n**********\n*\n* FINISHED: Prepare to Build llama.cpp with Cosmo.\n*\n**********\n\n"
 ```
 
@@ -324,6 +327,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
