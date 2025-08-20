@@ -7,6 +7,7 @@
 #include "llama-mmap.h"
 #include "llama-model.h"
 
+#include <algorithm>
 #include <cinttypes>
 #include <cstring>
 #include <limits>
@@ -1227,7 +1228,9 @@ int llama_context::decode(const llama_batch & batch_inp) {
                 // remember the swaps and apply them lazily upon logits/embeddings access
                 output_swaps.push_back({ i, j_min });
             }
-
+            
+            std::fill(output_ids.begin(), output_ids.end(), -1);
+            /*
             // mmojo-server START
             #ifndef COSMOCC
             std::fill(output_ids.begin(), output_ids.end(), -1);
@@ -1237,7 +1240,8 @@ int llama_context::decode(const llama_batch & batch_inp) {
             }
             #endif
             // mmojo-server END
-
+            */
+            
             for (uint32_t i = 0; i < n_outputs; ++i) {
                 output_ids[out_ids[i]] = i;
             }
@@ -1323,6 +1327,8 @@ uint32_t llama_context::output_reserve(int32_t n_outputs) {
     embd   = has_embd   ? output_base + logits_size : nullptr;
 
     // set all ids as invalid (negative)
+    std::fill(output_ids.begin(), output_ids.end(), -1);
+    /*
     // mmojo-server START
     #ifndef COSMOCC
     std::fill(output_ids.begin(), output_ids.end(), -1);
@@ -1332,7 +1338,8 @@ uint32_t llama_context::output_reserve(int32_t n_outputs) {
     }
     #endif
     // mmojo-server END
-
+    */
+    
     this->n_outputs = 0;
 
     return n_outputs_max;
