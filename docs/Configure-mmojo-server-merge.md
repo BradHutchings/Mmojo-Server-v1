@@ -180,7 +180,7 @@ Now we can test run `mmojo-server`, listening on localhost:8080.
 
 After starting up and loading the model, it should display:
 
-**main: server is listening on http://127.0.0.1:8080 - starting the main loop**<br/>
+**main: server is listening on https://127.0.0.1:8080 - starting the main loop**<br/>
 **srv  update_slots: all slots are idle**
 
 Hit `ctrl-C` on your keyboard to stop it.
@@ -194,7 +194,7 @@ If you'd like it to listen on all available interfaces, so you can connect from 
 
 After starting up and loading the model, it should display:
 
-**main: server is listening on http://0.0.0.0:8080 - starting the main loop**<br/>
+**main: server is listening on https://0.0.0.0:8080 - starting the main loop**<br/>
 **srv  update_slots: all slots are idle**
 
 Hit `ctrl-C` on your keyboard to stop it.
