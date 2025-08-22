@@ -1127,8 +1127,8 @@ OBJ_LLAMA = \
 	$(DIR_LLAMA)/llama-hparams.o \
 	$(DIR_LLAMA)/llama-impl.o \
 	$(DIR_LLAMA)/llama-io.o \
-	$(DIR_LLAMA)/llama-kv-cache-unified-iswa.o \
-	$(DIR_LLAMA)/llama-kv-cache-unified.o \
+	$(DIR_LLAMA)/llama-kv-cache-iswa.o \
+	$(DIR_LLAMA)/llama-kv-cache.o \
 	$(DIR_LLAMA)/llama-memory.o \
 	$(DIR_LLAMA)/llama-memory-hybrid.o \
 	$(DIR_LLAMA)/llama-memory-recurrent.o \
@@ -1923,6 +1923,7 @@ ifneq (,$(wildcard embedding))
 	@echo "  Remove the 'embedding' binary to remove this warning."
 	@echo "#########"
 endif
+
 
 
 
