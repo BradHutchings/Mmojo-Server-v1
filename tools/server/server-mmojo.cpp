@@ -289,7 +289,7 @@ struct server_task {
         params.stream           = json_value(data, "stream",             false);
         params.cache_prompt     = json_value(data, "cache_prompt",       true);
         params.return_tokens    = json_value(data, "return_tokens",      false);
-        
+
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         params.include_prompt_progress = json_value(data, "include_prompt_progress", false);
         // mmojo-server END
@@ -940,6 +940,17 @@ struct server_task_result_cmpl_final : server_task_result {
             {"model",              oaicompat_model},
             {"system_fingerprint", build_info},
             {"object",             "chat.completion.chunk"},
+        });
+
+        // OpenAI API spec for chat.completion.chunks specifies an empty `choices` array for the last chunk when including usage
+        // https://platform.openai.com/docs/api-reference/chat_streaming/streaming#chat_streaming/streaming-choices
+        deltas.push_back({
+            {"choices", json::array()},
+            {"created",            t},
+            {"id",                 oaicompat_cmpl_id},
+            {"model",              oaicompat_model},
+            {"system_fingerprint", build_info},
+            {"object",             "chat.completion.chunk"},
             {"usage", json {
                 {"completion_tokens", n_decoded},
                 {"prompt_tokens",     n_prompt_tokens},
@@ -973,7 +984,7 @@ struct server_task_result_cmpl_partial : server_task_result {
     completion_token_output prob_output;
     result_timings timings;
 
-    // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
+// mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
     // Progress fields (only populated when is_progress_response is true)
     bool is_progress_response = false;
     int32_t n_past = 0;
@@ -3579,14 +3590,14 @@ struct server_context {
 
                         slot.n_prompt_tokens_processed++;
                         slot.n_past++;
-
+                        
                         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
                         // THIS IS WRONG. The notifications all batch up at the end. Grrrrrr. -Brad 2025-07-27.
 
                         // Send incremental progress updates during token processing
                         // send_progress_response(slot);
                         // mmojo-server END                                            
-                    }
+                   }
 
                     // SLT_INF(slot, "new cache_tokens: %s\n", slot.cache_tokens.str().c_str());
 
@@ -3596,6 +3607,7 @@ struct server_context {
                     // This is still the wrong spot. It sends BEFORE a batch is evaluated.
                     // Send progress response if requested
                     send_progress_response(slot);
+                    // mmojo-server END                                            
 
                     // entire prompt has been processed
                     if (slot.n_past == slot.n_prompt_tokens) {
@@ -5224,7 +5236,7 @@ int main(int argc, char ** argv) {
         return false;
     });
     // mmojo-server END    
-    
+
     // register API routes
     svr->Get (params.api_prefix + "/health",              handle_health); // public endpoint (no API key check)
     svr->Get (params.api_prefix + "/metrics",             handle_metrics);
