@@ -192,7 +192,7 @@ If the build is successful, it will end with this message:
 
 **Optional:** Test the build. If you've previously downloaded a model to the `0-DOWNLOAD` folder, you can test the build.
 ```
-./Builds-Platform/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./Builds-Cosmo/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --host 0.0.0.0 --port 8080
 ```
 
@@ -327,6 +327,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
