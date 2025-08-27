@@ -73,6 +73,15 @@ git checkout work-in-progress
 printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n\n"
 ```
 
+#### Fix llama.cpp Source and Build Code
+```
+sed -i -e 's/arg.cpp/arg-mmojo.cpp/g' ~/$BUILD_MMOJO_SERVER_DIR/common/CMakeLists.txt
+sed -i -e 's/common.cpp/common-mmojo.cpp/g' ~/$BUILD_MMOJO_SERVER_DIR/common/CMakeLists.txt
+sed -i -e 's/server.cpp/server-mmojo.cpp/g' ~/$BUILD_MMOJO_SERVER_DIR/tools/server/CMakeLists.txt
+sed -i '3i #include <cstdlib>' tools/mtmd/deprecation-warning.cpp
+printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
+```
+
 ---
 ### Customize WebUI
 ```
@@ -327,6 +336,7 @@ printf "\n**********\n*\n* FINISHED: List Directory.\n*\n**********\n\n"
 Now that you've built `mmojo-server`, you're ready to configure it. Follow instructions in [Configure-mmojo-server.md](Configure-mmojo-server.md).
 
 Brad's environment-specifc instructions are here: [Configure-mmojo-server-merge.md](Configure-mmojo-server-merge.md).
+
 
 
 
