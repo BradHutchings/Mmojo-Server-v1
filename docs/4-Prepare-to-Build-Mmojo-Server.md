@@ -1,11 +1,11 @@
-## 4. Build Native Mmojo Server
+## 4. Prepare to Build Mmojo Server
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
 The third step in building Mmojo Server is to clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, add some features for Mmojo Server, and build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
 
-Skip ahead to: [5. Build Mmojo Server with Cosmopolitan](5-Build-Mmojo-Server-with-Cosmopolitan.md).
+Skip ahead to: [5. Build Mmojo Server - Native](5-Build-Mmojo-Server-Native.md).
 
 ---
 ### Environment Variables
@@ -84,29 +84,8 @@ printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ```
 
 ---
-### Build Mmojo Server for build platform.
-We now use CMake to build Mmojo Server.
-```
-cd ~/$BUILD_MMOJO_SERVER_DIR
-export PATH=$SAVE_PATH
-unset CC; export CC
-unset CXX; export CXX
-unset AR; export AR
-cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF
-cmake --build build-platform --config Release
+### Next Step: Build Mmojo Server - Native
 
-printf "\n**********\n*\n* FINISHED: Build llama.cpp.\n*\n**********\n\n"
-```
+You've cloned the OpenSSL repo, and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
-**Optional:** Test the build. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
-```
-./build-platform/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --host 0.0.0.0 --port 8080
-```
-
----
-### Next Step: Build Mmojo Server with Cosmopolitan
-
-You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
-
-Next step: [5. Build Mmojo Server with Cosmopolitan](5-Build-Mmojo-Server-with-Cosmopolitan.md).
+Next step: [5. Build Mmojo Server - Native](5-Build-Mmojo-Server-Native.md).
