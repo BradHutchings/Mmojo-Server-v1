@@ -38,7 +38,7 @@ unset AR; export AR
 cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF
 cmake --build build-platform --config Release
 
-printf "\n**********\n*\n* FINISHED: Build llama.cpp.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n**********\n\n"
 ```
 
 **Optional:** Test the build. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
