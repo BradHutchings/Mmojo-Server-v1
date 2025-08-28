@@ -6,8 +6,8 @@ brad@bradhutchings.com
 The third step in building Mmojo Server is to clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, add some features for Mmojo Server, and build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
 
 Skip ahead to: [4. Build Mmojo Server with Cosmopolitan](4-Build-Mmojo-Server-with-Cosmopolitan.md).
----
 
+---
 ### Environment Variables
 
 Let's define some environment variables:
