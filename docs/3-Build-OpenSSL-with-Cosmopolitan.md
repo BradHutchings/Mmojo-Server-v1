@@ -3,9 +3,9 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The second step in building Mmojo Server is to clone the OpenSSL repo, fix problems that affect building with Cosmopolitan, and build it. You don't need to do this every time you build Mmojo Server.
+The third step in building Mmojo Server is to clone the OpenSSL repo, fix problems that affect building with Cosmopolitan, and build it. You don't need to do this every time you build Mmojo Server.
 
-Skip ahead to: [4. Build Native Mmojo Server](4-Build-Native-Mmojo-Server.md).
+Skip ahead to: [4. Prepare to Build Mmojo Server](4-Prepare-to-Build-Mmojo-Server.md).
 
 ---
 ### Environment Variables
@@ -35,7 +35,8 @@ printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
 ```
 
 ---
-### Prepare to Build OpenSSL with Cosmo - Both platforms
+### Build openssl with Cosmo
+We need cross-architectire `libssl` and `libcrypto` static libraries to support SSL in `mmojo-server`.
 ```
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 export CC="cosmocc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib"
@@ -43,16 +44,6 @@ export CXX="cosmocc -I$(pwd)/cosmocc/include \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
 export AR="cosmoar"
-# export UNAME_S="cosmocc"
-# export UNAME_P="cosmocc"
-# export UNAME_M="cosmocc"
-printf "\n**********\n*\n* FINISHED: Prepare to Build llama.cpp with Cosmo.\n*\n**********\n\n"
-```
-
----
-### Build openssl with Cosmo
-We need cross-architectire `libssl` and `libcrypto` static libraries to support SSL in `mmojo-server`.
-```
 cd ~/$BUILD_OPENSSSL_DIR
 cp -r /usr/include/openssl/ ./cosmocc/include/
 cp -r /usr/include/x86_64-linux-gnu/openssl/* ./cosmocc/include/openssl
@@ -71,4 +62,4 @@ printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\
 
 You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
 
-Next step: [4. Build Native Mmojo Server](4-Build-Native-Mmojo-Server.md).
+Next step: [4. Prepare to Build Mmojo Server](4-Prepare-to-Build-Mmojo-Server.md).
