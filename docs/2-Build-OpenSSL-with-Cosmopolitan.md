@@ -49,7 +49,6 @@ export AR="cosmoar"
 if ! grep -q "#include <algorithm>" "src/llama-hparams.cpp" ; then
   sed -i '4i #include <algorithm>' src/llama-hparams.cpp
 fi
-export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Prepare to Build llama.cpp with Cosmo.\n*\n**********\n\n"
 ```
 
@@ -66,6 +65,7 @@ cd ~/$BUILD_OPENSSSL_DIR/openssl
 ./Configure no-asm no-dso no-afalgeng no-shared no-pinshared no-apps
 make
 cd ~/$BUILD_OPENSSSL_DIR
+export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\n"
 ```
 
