@@ -31,13 +31,15 @@ _Note that if you copy each code block from the guide and paste it into your ter
 Clone this repo and repos this repo depends on into a `~\2-BUILD-mmojo-server` directory.
 ```
 cd ~
-git clone https://github.com/BradHutchings/mmojo-server.git $BUILD_MMOJO_SERVER_DIR
-git clone https://github.com/nlohmann/json.git ~/$BUILD_MMOJO_SERVER_DIR/nlohmann-json
-git clone https://github.com/google/minja.git ~/$BUILD_MMOJO_SERVER_DIR/google-minja
-git clone https://github.com/yhirose/cpp-httplib.git ~/$BUILD_MMOJO_SERVER_DIR/cpp-httplib
-git clone https://github.com/mackron/miniaudio.git ~/$BUILD_MMOJO_SERVER_DIR/miniaudio
-git clone https://github.com/nothings/stb.git ~/$BUILD_MMOJO_SERVER_DIR/stb
-sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' ~/$BUILD_MMOJO_SERVER_DIR/miniaudio/miniaudio.h
+git clone https://github.com/BradHutchings/mmojo-server.git ~/$BUILD_MMOJO_SERVER_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
+git clone https://github.com/nlohmann/json.git nlohmann-json
+git clone https://github.com/google/minja.git google-minja
+git clone https://github.com/yhirose/cpp-httplib.git cpp-httplib
+git clone https://github.com/mackron/miniaudio.git miniaudio
+git clone https://github.com/nothings/stb.git stb
+cp -r ~/$BUILD_COSMOPOLITAN_DIR/cosmocc .
+cp -r ~/$BUILD_OPENSSSL_DIR/openssl .
 printf "\n**********\n*\n* FINISHED: Clone this Repo and Dependent Repos Locally.\n*\n**********\n\n"
 ```
 
@@ -50,10 +52,12 @@ printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n
 
 #### Fix llama.cpp Source Code and Build Code
 ```
-sed -i -e 's/arg.cpp/arg-mmojo.cpp/g' ~/$BUILD_MMOJO_SERVER_DIR/common/CMakeLists.txt
-sed -i -e 's/common.cpp/common-mmojo.cpp/g' ~/$BUILD_MMOJO_SERVER_DIR/common/CMakeLists.txt
-sed -i -e 's/server.cpp/server-mmojo.cpp/g' ~/$BUILD_MMOJO_SERVER_DIR/tools/server/CMakeLists.txt
-sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' ~/$BUILD_MMOJO_SERVER_DIR/tools/server/CMakeLists.txt
+cd ~/$BUILD_MMOJO_SERVER_DIR
+sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' miniaudio/miniaudio.h
+sed -i -e 's/arg.cpp/arg-mmojo.cpp/g' common/CMakeLists.txt
+sed -i -e 's/common.cpp/common-mmojo.cpp/g' common/CMakeLists.txt
+sed -i -e 's/server.cpp/server-mmojo.cpp/g' tools/server/CMakeLists.txt
+sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' tools/server/CMakeLists.txt
 if ! grep -q "#include <cstdlib>" "tools/mtmd/deprecation-warning.cpp" ; then
   sed -i '3i #include <cstdlib>' tools/mtmd/deprecation-warning.cpp
 fi
