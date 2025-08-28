@@ -11,7 +11,7 @@ Skip ahead to: [2. Build OpenSSL with Cosmopolitan](2-Build-OpenSSL-with-Cosmopo
 
 ### Environment Variables
 
-Let's define some environment variables, resetting those that affect the Makefile:
+Let's define some environment variables:
 ```
 DOWNLOAD_DIR="0-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
