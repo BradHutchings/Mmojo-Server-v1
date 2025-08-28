@@ -1,4 +1,4 @@
-## 2. Build OpenSSL with Cosmopolitan
+## 3. Build OpenSSL with Cosmopolitan
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
