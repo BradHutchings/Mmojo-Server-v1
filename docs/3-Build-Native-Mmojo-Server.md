@@ -92,7 +92,7 @@ export PATH=$SAVE_PATH
 unset CC; export CC
 unset CXX; export CXX
 unset AR; export AR
-cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DCMAKE_SYSTEM_NAME=Linux
+cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF
 cmake --build build-platform --config Release
 
 printf "\n**********\n*\n* FINISHED: Build llama.cpp.\n*\n**********\n\n"
