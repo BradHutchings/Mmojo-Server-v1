@@ -46,9 +46,6 @@ export AR="cosmoar"
 # export UNAME_S="cosmocc"
 # export UNAME_P="cosmocc"
 # export UNAME_M="cosmocc"
-if ! grep -q "#include <algorithm>" "src/llama-hparams.cpp" ; then
-  sed -i '4i #include <algorithm>' src/llama-hparams.cpp
-fi
 printf "\n**********\n*\n* FINISHED: Prepare to Build llama.cpp with Cosmo.\n*\n**********\n\n"
 ```
 
