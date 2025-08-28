@@ -5,17 +5,17 @@ brad@bradhutchings.com
 
 The third step in building Mmojo Server is to clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, add some features for Mmojo Server, and build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
 
-Skip ahead to: [4. Build Mmojo Server with Cosmopolitan](4-Build-Mmojo-Server-with-Cosmopolitan.md).
+Skip ahead to: [5. Build Mmojo Server with Cosmopolitan](5-Build-Mmojo-Server-with-Cosmopolitan.md).
 
 ---
 ### Environment Variables
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="0-DOWNLOAD"
-BUILD_COSMOPOLITAN_DIR="1-BUILD-cosmopolitan"
-BUILD_OPENSSSL_DIR="2-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="3-BUILD-mmojo-server"
+DOWNLOAD_DIR="1-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
+BUILD_OPENSSSL_DIR="3-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -98,9 +98,9 @@ cmake --build build-platform --config Release
 printf "\n**********\n*\n* FINISHED: Build llama.cpp.\n*\n**********\n\n"
 ```
 
-**Optional:** Test the build. If you've previously downloaded a model to the `0-DOWNLOAD` folder, you can test the build.
+**Optional:** Test the build. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
-./build-platform/bin/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./build-platform/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --host 0.0.0.0 --port 8080
 ```
 
@@ -109,4 +109,4 @@ printf "\n**********\n*\n* FINISHED: Build llama.cpp.\n*\n**********\n\n"
 
 You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
 
-Next step: [4. Build Mmojo Server with Cosmopolitan](4-Build-Mmojo-Server-with-Cosmopolitan.md).
+Next step: [5. Build Mmojo Server with Cosmopolitan](5-Build-Mmojo-Server-with-Cosmopolitan.md).
