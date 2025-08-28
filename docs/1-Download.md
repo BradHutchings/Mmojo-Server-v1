@@ -42,6 +42,8 @@ If you're lucky enough to be using Brad's environment, copying from a local file
 Mount the share:
 ```
 mount-host-share.sh
+ls -al /mnt/hyperv
+printf "\n**********\n*\n* FINISHED: Mount the share.\n*\n**********\n\n"
 ```
 
 Copy the models:
