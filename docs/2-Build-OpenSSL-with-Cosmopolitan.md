@@ -67,7 +67,7 @@ printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\
 ```
 
 ---
-### Next Step: Build OpenSSL with Cosmopolitan
+### Next Step: Build Native Mmojo Server
 
 You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
 
