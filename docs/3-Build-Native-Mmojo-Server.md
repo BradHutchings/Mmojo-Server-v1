@@ -100,7 +100,7 @@ printf "\n**********\n*\n* FINISHED: Build llama.cpp.\n*\n**********\n\n"
 
 **Optional:** Test the build. If you've previously downloaded a model to the `0-DOWNLOAD` folder, you can test the build.
 ```
-./Builds-Platform/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./build-platform/bin/mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --host 0.0.0.0 --port 8080
 ```
 
