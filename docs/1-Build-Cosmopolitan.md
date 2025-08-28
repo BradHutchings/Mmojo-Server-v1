@@ -25,8 +25,6 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
-
----
 ### Build Dependencies
 I build with a freshly installed Ubuntu 24.04 VM. Here are some packages that are helpful in creating a working build system. You may need to install more.
 ```
