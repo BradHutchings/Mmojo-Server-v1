@@ -3,7 +3,7 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The third step in building Mmojo Server is to clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, add some features for Mmojo Server, and build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
+The fourth step in building Mmojo Server is to clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
 
 Skip ahead to: [5. Build Mmojo Server - Native](5-Build-Mmojo-Server-Native.md).
 
@@ -86,6 +86,6 @@ printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ---
 ### Next Step: Build Mmojo Server - Native
 
-You've cloned the OpenSSL repo, and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
+You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
 Next step: [5. Build Mmojo Server - Native](5-Build-Mmojo-Server-Native.md).
