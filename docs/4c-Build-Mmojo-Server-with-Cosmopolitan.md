@@ -3,7 +3,9 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The soxth step in building Mmojo Server is to build a Mmojo Server with Cosmopoltan. The resulting combined binary file will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems.
+The fourth step in building Mmojo Server is to build the Mmojo Server.
+
+In this third substep, we will build a Mmojo Server with Cosmopoltan. The resulting combined binary file will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems.
 
 ---
 ### Environment Variables
