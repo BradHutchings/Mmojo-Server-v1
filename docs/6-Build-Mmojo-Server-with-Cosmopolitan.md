@@ -38,6 +38,7 @@ export AR="cosmoar"
 cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64
 cmake --build build-cosmo-amd64 --config Release
+export PATH=$SAVE_PATH
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n**********\n\n"
 ```
@@ -56,6 +57,7 @@ export AR="cosmoar"
 cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64
 cmake --build build-cosmo-aarch64 --config Release
+export PATH=$SAVE_PATH
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n**********\n\n"
 ```
@@ -69,12 +71,12 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
-	-o mmojo-server build-cosmo-intel/bin/mmojo-server build-cosmo-aarch64/bin/mmojo-server
+	-o mmojo-server build-cosmo-amd64/bin/mmojo-server build-cosmo-aarch64/bin/mmojo-server
 printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
 ```
 
 Let's test our combined build:
 ```
-./mmojo-server --model ~/0-DOWNLOAD/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --host 0.0.0.0 --port 8080
 ```
