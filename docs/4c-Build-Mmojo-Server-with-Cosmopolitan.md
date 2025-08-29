@@ -84,3 +84,10 @@ Let's test our combined build:
 ./mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --host 0.0.0.0 --port 8080
 ```
+
+---
+### Next Step: Configure Mmojo Server
+
+You've built the Mmojo Server. The `mmojo-server` binary with run on x86_64 and ARM CPUs, across Windows, Linux, and macOS.
+
+Next step: [5. Configure Mmojo Server](5-Configure-Mmojo-Server.md).
