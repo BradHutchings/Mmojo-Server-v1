@@ -292,7 +292,7 @@ struct server_task {
         params.stream           = json_value(data, "stream",             false);
         params.cache_prompt     = json_value(data, "cache_prompt",       true);
         params.return_tokens    = json_value(data, "return_tokens",      false);
-        
+
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         params.include_prompt_progress = json_value(data, "include_prompt_progress", false);
         // mmojo-server END
@@ -986,7 +986,7 @@ struct server_task_result_cmpl_partial : server_task_result {
     bool post_sampling_probs;
     completion_token_output prob_output;
     result_timings timings;
-    
+
     // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
     // Progress fields (only populated when is_progress_response is true)
     bool is_progress_response = false;
@@ -1041,7 +1041,7 @@ struct server_task_result_cmpl_partial : server_task_result {
         if (!prob_output.probs.empty()) {
             res["completion_probabilities"] = completion_token_output::probs_vector_to_json({prob_output}, post_sampling_probs);
         }
-        
+
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         // include prompt processing progress if this is a progress response
         if (is_progress_response) {
@@ -3593,7 +3593,7 @@ struct server_context {
 
                         slot.n_prompt_tokens_processed++;
                         slot.n_past++;
-
+                        
                         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
                         // THIS IS WRONG. The notifications all batch up at the end. Grrrrrr. -Brad 2025-07-27.
 
@@ -3610,8 +3610,13 @@ struct server_context {
                     // This is still the wrong spot. It sends BEFORE a batch is evaluated.
                     // Send progress response if requested
                     send_progress_response(slot);
+                    if (params_base.n_batch_sleep_ms > 0) {
+                        SLT_INF(slot, "Starting sleep %d ms after batch.\n", params_base.n_batch_sleep_ms);
+                        std::this_thread::sleep_for(std::chrono::milliseconds(params_base.n_batch_sleep_ms));
+                        SLT_INF(slot, "%s", "Finished sleep after batch.\n");
+                    }
                     // mmojo-server END                                            
-
+                    
                     // entire prompt has been processed
                     if (slot.n_past == slot.n_prompt_tokens) {
                         slot.state = SLOT_STATE_DONE_PROMPT;
@@ -5116,6 +5121,8 @@ int main(int argc, char ** argv) {
                 {"id", i},
                 {"path", lora.path},
                 {"scale", lora.scale},
+                {"task_name", lora.task_name},
+                {"prompt_prefix", lora.prompt_prefix},
             });
         }
         res_ok(res, result);
@@ -5182,7 +5189,7 @@ int main(int argc, char ** argv) {
             });
         }
     }
-
+    
     // mmojo-server START
     svr->Get("/chat", [](const httplib::Request & req, httplib::Response & res) {
         if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
@@ -5202,7 +5209,7 @@ int main(int argc, char ** argv) {
         return false;
     });
     // mmojo-server END    
-
+    
     // register API routes
     svr->Get (params.api_prefix + "/health",              handle_health); // public endpoint (no API key check)
     svr->Get (params.api_prefix + "/metrics",             handle_metrics);
