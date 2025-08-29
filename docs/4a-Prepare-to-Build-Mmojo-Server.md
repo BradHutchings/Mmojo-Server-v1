@@ -50,7 +50,8 @@ git checkout work-in-progress
 printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n\n"
 ```
 
-#### Fix llama.cpp Source Code and Build Code
+---
+### Fix llama.cpp Source Code and Build Code
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' miniaudio/miniaudio.h
@@ -59,6 +60,8 @@ sed -i -e 's/common.cpp/common-mmojo.cpp/g' common/CMakeLists.txt
 sed -i -e 's/server.cpp/server-mmojo.cpp/g' tools/server/CMakeLists.txt
 sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' tools/server/CMakeLists.txt
 sed -i -e 's/loading.html/loading-mmojo.html/g' tools/server/CMakeLists.txt
+sed -i -e 's/find_package(OpenSSL REQUIRED)/# find_package(OpenSSL REQUIRED)/g' tools/server/CMakeLists.txt
+sed -i -e 's/PRIVATE OpenSSL::SSL OpenSSL::Crypto)/PRIVATE libssl.a libcrypto.a/g' tools/server/CMakeLists.txt
 if ! grep -q "#include <cstdlib>" "tools/mtmd/deprecation-warning.cpp" ; then
   sed -i '3i #include <cstdlib>' tools/mtmd/deprecation-warning.cpp
 fi
