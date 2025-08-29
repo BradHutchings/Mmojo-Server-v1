@@ -61,7 +61,7 @@ cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF \
 cmake --build build-cosmo-aarch64 --config Release
 export PATH=$SAVE_PATH
 
-printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\n\n"
 ```
 
 ---
