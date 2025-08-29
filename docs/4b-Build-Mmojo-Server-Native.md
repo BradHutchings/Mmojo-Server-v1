@@ -1,4 +1,4 @@
-## 5. Build Mmojo Server - Native
+## 4b. Build Mmojo Server - Native
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
