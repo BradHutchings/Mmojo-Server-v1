@@ -3,7 +3,9 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fourth step in building Mmojo Server is to clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
+The fourth step in building Mmojo Server is to build the Mmojo Server.
+
+In this first substep, we will clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
 
 ---
 ### Environment Variables
