@@ -3,7 +3,9 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The third step in building Mmojo Server is to build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
+The fourth step in building Mmojo Server is to build the Mmojo Server.
+
+In this second substep, we will build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
 
 Skip ahead to: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
 
