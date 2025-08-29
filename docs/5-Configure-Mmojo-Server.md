@@ -163,17 +163,13 @@ printf "\n**********\n*\n* FINISHED: Remove .zip Extension.\n*\n**********\n\n"
 ```
 
 ---
-### Download Model
+### Copy Model
 
-Let's download a small model. We'll use Google Gemma 1B Instruct v3, a surprisingly capable tiny model.
+Let's copy a small model. We'll use Google Gemma 1B Instruct v3, a surprisingly capable tiny model.
 ```
 MODEL_FILE="Google-Gemma-1B-Instruct-v3-q8_0.gguf"
-mkdir -p ~/$DOWNLOAD_DIR
-cd ~/$DOWNLOAD_DIR
-if [ ! -f $MODEL_FILE ]; then cp /mnt/hyperv/models/$MODEL_FILE ~/0-DOWNLOAD/ ; fi
-cd ~/$CONFIGURE_DIR
 cp ~/$DOWNLOAD_DIR/$MODEL_FILE model.gguf
-printf "\n**********\n*\n* FINISHED: Download Model.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Copy Model.\n*\n**********\n\n"
 ```
 
 ---
