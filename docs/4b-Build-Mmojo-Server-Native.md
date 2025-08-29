@@ -52,6 +52,6 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n
 ---
 ### Next Step: Build Mmojo Server with Cosmopolitan
 
-You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
+You've built the `mmojo-server` application for the build platform.
 
 Next step: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
