@@ -16,7 +16,10 @@
 
 // auto generated files (see README.md for details)
 #include "index.html.gz.hpp"
-#include "loading.html.hpp"
+// mmojo-server START
+// #include "loading.html.hpp"
+#include "loading-mmojo.html.hpp"
+// mmojo-server END
 
 #include <atomic>
 #include <chrono>

@@ -1,0 +1,95 @@
+## 4c. Build Mmojo Server with Cosmopolitan
+
+Brad Hutchings<br/>
+brad@bradhutchings.com
+
+The fourth step in building Mmojo Server is to build the Mmojo Server.
+
+In this third substep, we will build a Mmojo Server with Cosmopoltan. The resulting combined binary file will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems.
+
+---
+### Environment Variables
+
+Let's define some environment variables:
+```
+DOWNLOAD_DIR="1-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
+BUILD_OPENSSSL_DIR="3-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
+COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
+if [ -z "$SAVE_PATH" ]; then
+  export SAVE_PATH=$PATH
+fi
+TODAY=$(date +%Y-%m-%d)
+printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
+```
+
+_Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
+
+---
+### Build Mmojo Server for x86_64.
+We now use CMake to build Mmojo Server.
+```
+cd ~/$BUILD_MMOJO_SERVER_DIR
+export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
+export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc"
+export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nostdinc -nostdinc++ \
+    -I$(pwd)/cosmocc/include/third_party/libcxx \
+    -I$(pwd)/openssl/include \
+    -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
+export AR="cosmoar"
+cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_SERVER_SSL=ON \
+    -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64
+cmake --build build-cosmo-amd64 --config Release
+export PATH=$SAVE_PATH
+
+printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n**********\n\n"
+```
+
+---
+### Build Mmojo Server for ARM.
+We now use CMake to build Mmojo Server.
+```
+cd ~/$BUILD_MMOJO_SERVER_DIR
+export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
+export CC="aarch64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc"
+export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nostdinc -nostdinc++ \
+    -I$(pwd)/cosmocc/include/third_party/libcxx \
+    -I$(pwd)/openssl/include \
+    -L$(pwd)/cosmocc/lib -L$(pwd)/openssl/.aarch64/"
+export AR="cosmoar"
+cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_SERVER_SSL=ON \
+    -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64
+cmake --build build-cosmo-aarch64 --config Release
+export PATH=$SAVE_PATH
+
+printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\n\n"
+```
+
+---
+### Build mmojo-server Actual Portable Executable (APE)
+Now that we have amd64 (x86) and aarch64 (ARM) builds, we can combine them into an Actual Portable Executable (APE) file.
+
+```
+cd ~/$BUILD_MMOJO_SERVER_DIR
+export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
+apelink \
+	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
+	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
+	-o mmojo-server build-cosmo-amd64/bin/mmojo-server build-cosmo-aarch64/bin/mmojo-server
+export PATH=$SAVE_PATH
+printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
+```
+
+Let's test our combined build:
+```
+./mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+    --path completion-ui/ --host 0.0.0.0 --port 8080
+```
+
+---
+### Next Step: Configure Mmojo Server
+
+You've built the Mmojo Server. The `mmojo-server` binary with run on x86_64 and ARM CPUs, across Windows, Linux, and macOS.
+
+Next step: [5. Configure Mmojo Server](5-Configure-Mmojo-Server.md).
