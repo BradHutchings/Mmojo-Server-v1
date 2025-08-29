@@ -5,7 +5,7 @@ brad@bradhutchings.com
 
 The third step in building Mmojo Server is to build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
 
-Skip ahead to: [6. Build Mmojo Server with Cosmopolitan](6-Build-Mmojo-Server-with-Cosmopolitan.md).
+Skip ahead to: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
 
 ---
 ### Environment Variables
@@ -52,4 +52,4 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n
 
 You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
 
-Next step: [6. Build Mmojo Server with Cosmopolitan](6-Build-Mmojo-Server-with-Cosmopolitan.md).
+Next step: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
