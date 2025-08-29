@@ -1,11 +1,9 @@
-## 4. Prepare to Build Mmojo Server
+## 4a. Prepare to Build Mmojo Server
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
 The fourth step in building Mmojo Server is to clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
-
-Skip ahead to: [5. Build Mmojo Server - Native](5-Build-Mmojo-Server-Native.md).
 
 ---
 ### Environment Variables
@@ -88,4 +86,4 @@ printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 
 You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
-Next step: [5. Build Mmojo Server - Native](5-Build-Mmojo-Server-Native.md).
+Next step: [4b. Build Mmojo Server - Native](4b-Build-Mmojo-Server-Native.md).
