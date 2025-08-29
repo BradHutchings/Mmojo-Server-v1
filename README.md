@@ -33,28 +33,24 @@ I welcome any of my changes being implemented in the official llama.cpp.
 ---
 ### Documentation
 Follow these guides in order to build, package, and deploy `mmojo-server`:
-- My start-to-finish guide for building `mmojo-server` with Cosmo is in the [Build Steps](docs/Build-mmojo-server.md) file.
-- My guide for configuring a `mmojo-server` executable is in the [Configure Steps](docs/Configure-mmojo-server.md) file.
-- My guide for packaging a `mmojo-server` executable for deployment is in the [Package Steps](docs/Package-mmojo-server.md) file.
+- My start-to-finish guide for building `mmojo-server` with Cosmo [starts here](docs/1-Download.md).
 
 ---
 ### Modifications to llama.cpp
 
 To get this from the llama.cpp source base, there are few files that need to be modified:
 
-1. [Makefile](Makefile) -- Extensive modifications to bring up to date, as it is deprecated in favor of a CMake system, and to support COSMOCC.
+1. [common/arg.cpp](common/arg-mmojo.cpp) -- Added a parameter for sleep after each batch.
 
-2. [common/arg.cpp](common/arg-mmojo.cpp) -- Added a parameter for sleep after each batch.
+2. [common/common.cpp](common/common-mmojo.cpp) -- Added COSMOCC build support.
 
-3. [common/common.cpp](common/common-mmojo.cpp) -- Added COSMOCC build support.
+3. [common/common.h](common/common-mmojo.h) -- Added a parameter for sleep after each batch.
 
-4. [common/common.h](common/common-mmojo.h) -- Added a parameter for sleep after each batch.
+4. [tools/server/server.cpp](tools/server/server-mmojo.cpp) -- Support embedded or adjacent "args" file, fix Cosmo name conflict with "defer" task member, add additional meta data to `model_meta`.
 
-5. [tools/server/server.cpp](tools/server/server-mmojo.cpp) -- Support embedded or adjacent "args" file, fix Cosmo name conflict with "defer" task member, add additional meta data to `model_meta`.
+5. [completion-ui](completion-ui) -- Default UI is Mmojo Completion.
 
-6. [completion-ui](completion-ui) -- Default UI is Mmojo Completion.
-
-7. [tools/server/public_legacy/loading-mmojo.html](tools/server/public_legacy/loading-mmojo.html) -- Loading page matches Mmojo Completion theme.
+6. [tools/server/public/loading-mmojo.html](tools/server/public/loading-mmojo.html) -- Loading page matches Mmojo Completion theme.
 
 ---
 ### Reference
@@ -80,6 +76,7 @@ In no particular order of importance, these are the things that bother me:
 - Write docs for a Deploying step. It should address the args file, removing the extra executable depending on platform, models, host, port. context size.
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
+
 
 
 
