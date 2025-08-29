@@ -70,10 +70,12 @@ Now that we have amd64 (x86) and aarch64 (ARM) builds, we can combine them into 
 
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
+export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
 	-o mmojo-server build-cosmo-amd64/bin/mmojo-server build-cosmo-aarch64/bin/mmojo-server
+export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
 ```
 
