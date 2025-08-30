@@ -3578,7 +3578,7 @@ struct server_context {
                     }
 
                     // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
-                    // This is still the wrong spot. It sends BEFORE a batch is evaluated.
+                    // This looks like the right spot -- before tokens are added to the batch.
                     // Send progress response if requested
                     send_progress_response(slot);
                     if (params_base.n_batch_sleep_ms > 0) {
@@ -3604,31 +3604,11 @@ struct server_context {
 
                         slot.n_prompt_tokens_processed++;
                         slot.n_past++;
-                        
-                        // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
-                        // THIS IS WRONG. The notifications all batch up at the end. Grrrrrr. -Brad 2025-07-27.
-
-                        // Send incremental progress updates during token processing
-                        // send_progress_response(slot);
-                        // mmojo-server END                                            
                     }
 
                     // SLT_INF(slot, "new cache_tokens: %s\n", slot.cache_tokens.str().c_str());
 
                     SLT_INF(slot, "prompt processing progress, n_past = %d, n_tokens = %d, progress = %f\n", slot.n_past, batch.n_tokens, (float) slot.n_prompt_tokens_processed / slot.n_prompt_tokens);
-
-                    // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
-                    /*
-                    // This is still the wrong spot. It sends BEFORE a batch is evaluated.
-                    // Send progress response if requested
-                    send_progress_response(slot);
-                    if (params_base.n_batch_sleep_ms > 0) {
-                        SLT_INF(slot, "Starting sleep %d ms after batch.\n", params_base.n_batch_sleep_ms);
-                        std::this_thread::sleep_for(std::chrono::milliseconds(params_base.n_batch_sleep_ms));
-                        SLT_INF(slot, "%s", "Finished sleep after batch.\n");
-                    }
-                    */
-                    // mmojo-server END                                            
                     
                     // entire prompt has been processed
                     if (slot.n_past == slot.n_prompt_tokens) {
