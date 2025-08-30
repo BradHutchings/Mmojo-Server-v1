@@ -292,7 +292,7 @@ struct server_task {
         params.stream           = json_value(data, "stream",             false);
         params.cache_prompt     = json_value(data, "cache_prompt",       true);
         params.return_tokens    = json_value(data, "return_tokens",      false);
-
+        
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         params.include_prompt_progress = json_value(data, "include_prompt_progress", false);
         // mmojo-server END
@@ -1041,7 +1041,7 @@ struct server_task_result_cmpl_partial : server_task_result {
         if (!prob_output.probs.empty()) {
             res["completion_probabilities"] = completion_token_output::probs_vector_to_json({prob_output}, post_sampling_probs);
         }
-
+        
         // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
         // include prompt processing progress if this is a progress response
         if (is_progress_response) {
@@ -3577,6 +3577,17 @@ struct server_context {
                         slot.n_prompt_tokens_processed += n_pos;
                     }
 
+                    // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
+                    // This is still the wrong spot. It sends BEFORE a batch is evaluated.
+                    // Send progress response if requested
+                    send_progress_response(slot);
+                    if (params_base.n_batch_sleep_ms > 0) {
+                        SLT_INF(slot, "Starting sleep %d ms after batch.\n", params_base.n_batch_sleep_ms);
+                        std::this_thread::sleep_for(std::chrono::milliseconds(params_base.n_batch_sleep_ms));
+                        SLT_INF(slot, "%s", "Finished sleep after batch.\n");
+                    }
+                    // mmojo-server END                                            
+
                     // add prompt tokens for processing in the current batch
                     while (slot.n_past < slot.n_prompt_tokens && batch.n_tokens < n_batch) {
                         // get next token to process
@@ -3607,6 +3618,7 @@ struct server_context {
                     SLT_INF(slot, "prompt processing progress, n_past = %d, n_tokens = %d, progress = %f\n", slot.n_past, batch.n_tokens, (float) slot.n_prompt_tokens_processed / slot.n_prompt_tokens);
 
                     // mmojo-server START -- https://github.com/ggml-org/llama.cpp/pull/14731/files
+                    /*
                     // This is still the wrong spot. It sends BEFORE a batch is evaluated.
                     // Send progress response if requested
                     send_progress_response(slot);
@@ -3615,6 +3627,7 @@ struct server_context {
                         std::this_thread::sleep_for(std::chrono::milliseconds(params_base.n_batch_sleep_ms));
                         SLT_INF(slot, "%s", "Finished sleep after batch.\n");
                     }
+                    */
                     // mmojo-server END                                            
                     
                     // entire prompt has been processed
@@ -5189,7 +5202,7 @@ int main(int argc, char ** argv) {
             });
         }
     }
-    
+
     // mmojo-server START
     svr->Get("/chat", [](const httplib::Request & req, httplib::Response & res) {
         if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
