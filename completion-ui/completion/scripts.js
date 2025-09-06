@@ -610,7 +610,6 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                 if (lineData.data) {
                     lineData.data = JSON.parse(lineData.data);
 
-                    logThis = true;
                     if (kLogging || logThis) console.log(lineData.data);
 
                     if ("prompt_progress" in lineData.data) {
@@ -1748,4 +1747,5 @@ function GetElapsedTimeString(ms) {
 
     return result;
 }
+
 
