@@ -540,7 +540,7 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
         "n_predict": tokens,
         "temperature": temperature,
         "stream": true,
-        "include_prompt_progress": true,
+        "return_progress": true,
     }
 
     if (stopWords.length > 0) {
@@ -613,24 +613,24 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                     logThis = true;
                     if (kLogging || logThis) console.log(lineData.data);
 
-                    if ("prompt_processing" in lineData.data) {
+                    if ("prompt_progress" in lineData.data) {
                         if (kLogging || logThis) console.log("Prompt processing:");
-                        if (kLogging || logThis) console.log(lineData.data.prompt_processing);
+                        if (kLogging || logThis) console.log(lineData.data.prompt_progress);
 
-                        let n_past = lineData.data.prompt_processing.n_past;
-                        let n_prompt_tokens = lineData.data.prompt_processing.n_prompt_tokens;
+                        let processed = lineData.data.prompt_progress.processed;
+                        let total = lineData.data.prompt_progress.total;
 
                         let elapsedMS = Date.now() - script.completionStartedMS;
-                        script.evaluatingEtaMS = ((elapsedMS * n_prompt_tokens) / n_past) - elapsedMS;
-                        script.evaluatingTokensProcessed = n_past;
-                        script.evaluatingTokensTotal = n_prompt_tokens;
+                        script.evaluatingEtaMS = ((elapsedMS * total) / processed) - elapsedMS;
+                        script.evaluatingTokensProcessed = processed;
+                        script.evaluatingTokensTotal = total;
 
-                        if (kLogging || logThis) console.log("n_past: " + n_past);
-                        if (kLogging || logThis) console.log("n_prompt_tokens: " + n_prompt_tokens);
+                        if (kLogging || logThis) console.log("n_past: " + processed);
+                        if (kLogging || logThis) console.log("n_prompt_tokens: " + total);
                         if (kLogging || logThis) console.log("elapsedMS: " + elapsedMS);
                         if (kLogging || logThis) console.log("evaluatingEtaMS: " + script.evaluatingEtaMS);
 
-                        if (n_past < n_prompt_tokens) {
+                        if (processed < total) {
                             script.statusMode = kStatusMode.evaluating_progress;
                         }
                         else {
