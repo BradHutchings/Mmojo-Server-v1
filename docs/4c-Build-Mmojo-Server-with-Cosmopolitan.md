@@ -86,7 +86,7 @@ printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executab
 Let's test our combined build:
 ```
 ./mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --host 0.0.0.0 --port 8080
+    --path completion-ui/ --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0
 ```
 
 ---
