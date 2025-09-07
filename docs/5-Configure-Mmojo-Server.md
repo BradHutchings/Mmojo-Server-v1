@@ -23,7 +23,9 @@ DEFAULT_ARGS="default-args"
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-TODAY=$(date +%Y-%m-%d)
+if [ -z "$TODAY" ]; then
+  TODAY=$(date +%Y-%m-%d)
+fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
