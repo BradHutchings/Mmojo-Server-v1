@@ -34,8 +34,8 @@ We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
-export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc"
-export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nostdinc -nostdinc++ \
+export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc -O3"
+export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
@@ -60,8 +60,8 @@ We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
-export CC="aarch64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc"
-export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nostdinc -nostdinc++ \
+export CC="aarch64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc -O3"
+export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl/.aarch64/"
