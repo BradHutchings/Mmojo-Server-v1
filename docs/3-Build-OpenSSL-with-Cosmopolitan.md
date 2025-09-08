@@ -16,6 +16,7 @@ DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
+EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
@@ -26,6 +27,11 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
+
+**Optional:** Set `$EXTRA_FLAGS` for profiling.
+```
+EXTRA_FLAGS=" -pg "
+```
 
 ---
 ### Create Build Directory
@@ -41,10 +47,10 @@ printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
 We need cross-architectire `libssl` and `libcrypto` static libraries to support SSL in `mmojo-server`.
 ```
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
-export CC="cosmocc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib"
+export CC="cosmocc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -O3 $EXTRA_FLAGS "
 export CXX="cosmocc -I$(pwd)/cosmocc/include \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
-    -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
+    -L$(pwd)/cosmocc/lib -L$(pwd)/openssl -O3 $EXTRA_FLAGS"
 export AR="cosmoar"
 cd ~/$BUILD_OPENSSSL_DIR
 cp -r /usr/include/openssl/ ./cosmocc/include/
