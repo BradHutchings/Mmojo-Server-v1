@@ -19,6 +19,7 @@ BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
+EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
@@ -30,15 +31,25 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
+**Optional:** Set `$EXTRA_FLAGS` for profiling.
+```
+EXTRA_FLAGS=" -pg "
+```
+
+
 ---
 ### Build Mmojo Server for build platform.
 We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH=$SAVE_PATH
-unset CC; export CC
-unset CXX; export CXX
-unset AR; export AR
+if [ -z "$EXTRA_FLAGS" ]; then
+    unset CC; export CC
+    unset CXX; export CXX
+else
+    export CC="cc $EXTRA_FLAGS "
+    export CXX="c++ $EXTRA_FLAGS "
+fi
 cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_SERVER_SSL=ON
 cmake --build build-platform --config Release
 
@@ -49,6 +60,12 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n
 ```
 ./build-platform/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+```
+
+**Optional:** If you're profiling, get some profile output.
+```
+gprof build-platform/bin/mmojo-server gmon.out > build-platform/profile.txt
+more build-platform/profile.txt
 ```
 
 ---
