@@ -32,7 +32,7 @@ _Note that if you copy each code block from the guide and paste it into your ter
 
 **Optional:** Set `$EXTRA_FLAGS` for profiling.
 ```
-EXTRA_FLAGS=" -pg "
+EXTRA_FLAGS=" -g -pg "
 ```
 
 ---
