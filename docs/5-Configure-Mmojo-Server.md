@@ -14,6 +14,7 @@ DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
+BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
 CONFIGURE_DIR="5-CONFIGURE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
@@ -23,7 +24,9 @@ DEFAULT_ARGS="default-args"
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-TODAY=$(date +%Y-%m-%d)
+if [ -z "$TODAY" ]; then
+  TODAY=$(date +%Y-%m-%d)
+fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 

@@ -16,15 +16,24 @@ DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
+BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
+EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-TODAY=$(date +%Y-%m-%d)
+if [ -z "$TODAY" ]; then
+  TODAY=$(date +%Y-%m-%d)
+fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
+
+**Optional:** Set `$EXTRA_FLAGS` for profiling.
+```
+EXTRA_FLAGS=" -g -pg "
+```
 
 ---
 ### Build Mmojo Server for x86_64.
@@ -32,8 +41,8 @@ We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
-export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc"
-export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nostdinc -nostdinc++ \
+export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc -O3 $EXTRA_FLAGS "
+export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 $EXTRA_FLAGS \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
@@ -46,14 +55,26 @@ export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n**********\n\n"
 ```
 
+**Optional:** Test the build if you're building on an x86 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
+```
+./build-cosmo-amd64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+    --path completion-ui/ --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+```
+
+**Optional:** If you're profiling, get some profile output.
+```
+gprof build-cosmo-amd64/bin/mmojo-server gmon.out > build-cosmo-amd64/profile.txt
+more build-cosmo-amd64/profile.txt
+```
+
 ---
 ### Build Mmojo Server for ARM.
 We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
-export CC="aarch64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc"
-export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nostdinc -nostdinc++ \
+export CC="aarch64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc -O3 $EXTRA_FLAGS "
+export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 $EXTRA_FLAGS \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl/.aarch64/"
@@ -64,6 +85,18 @@ cmake --build build-cosmo-aarch64 --config Release
 export PATH=$SAVE_PATH
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\n\n"
+```
+
+**Optional:** Test the build if you're building on an ARM system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
+```
+./build-cosmo-aarch64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+    --path completion-ui/ --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+```
+
+**Optional:** If you're profiling, get some profile output.
+```
+gprof build-cosmo-aarch64/bin/mmojo-server gmon.out > build-cosmo-aarch64/profile.txt
+more build-cosmo-aarch64/profile.txt
 ```
 
 ---
@@ -84,7 +117,7 @@ printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executab
 Let's test our combined build:
 ```
 ./mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --host 0.0.0.0 --port 8080
+    --path completion-ui/ --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
 ```
 
 ---
