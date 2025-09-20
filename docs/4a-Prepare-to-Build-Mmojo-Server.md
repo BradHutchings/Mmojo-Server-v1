@@ -89,6 +89,22 @@ sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/bookmark-scripts
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ```
 
+#### Uh. Oh. npm Spit Out Errors
+
+You may have an earlier version of `npm` and `nodejs` installed on your build machine than are required
+for that customization step. If you're running Linux or macOS, these steps should clean that up.
+
+**ONLY RUN THESE IF YOU HAD PROBLEMS IN THE PREVIOUS STEP!!** Then rerun the previous step.
+
+```
+cd ~
+sudo apt remove nodejs npm -y
+sudo apt install nodejs npm -y
+sudo npm install -g node@latest
+sudo npm install -g npm@latest
+cd ~/$BUILD_MMOJO_SERVER_DIR
+```
+
 ---
 ### Next Step: Build Mmojo Server - Native
 
