@@ -76,14 +76,20 @@ printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**
 
 ---
 ### Customize WebUI
+
+The `npm build` command writes over `tools/server/public`, so we save `loading-mmojo.html` and
+copy it back in after.
+
 ```
 APP_NAME='Mmojo Chat'
 sed -i -e "s/<title>.*<\/title>/<title>$APP_NAME<\/title>/g" tools/server/webui/index.html
 sed -i -e "s/>llama.cpp<\/div>/>$APP_NAME<\/div>/g" tools/server/webui/src/components/Header.tsx
+cp tools/server/public/loading-mmojo.html ./loading-mmojo.html
 cd tools/server/webui
 npm i
 npm run build
 cd ~/$BUILD_MMOJO_SERVER_DIR
+mv loading-mmojo.html tools/server/public/loading-mmojo.html
 sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/scripts.js
 sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/bookmark-scripts.js
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
