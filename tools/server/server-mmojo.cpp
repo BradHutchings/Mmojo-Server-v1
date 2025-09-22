@@ -5367,8 +5367,8 @@ int main(int argc, char ** argv) {
     }
 
     // mmojo-server START
-    if (params_base.default_ui_endpoint != "") {
-        std::string endpoint = params_base.default_ui_endpoint;
+    if (ctx_server.params_base.default_ui_endpoint != "") {
+        std::string endpoint = ctx_server.params_base.default_ui_endpoint;
         if (!begins_with(endpoint, "/")) {
             endpoint = "/" + endpoint;
         }
