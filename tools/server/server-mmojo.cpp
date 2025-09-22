@@ -5367,14 +5367,18 @@ int main(int argc, char ** argv) {
     }
 
     // mmojo-server START
-    if (ctx_server.params_base.default_ui_endpoint != "") {
-        std::string endpoint = ctx_server.params_base.default_ui_endpoint;
+    // LOG_INF("%s%s\n", "default_ui_endpoint: ", params.default_ui_endpoint.c_str());
+
+    if (params.default_ui_endpoint != "") {
+        std::string endpoint = params.default_ui_endpoint;
         if (!begins_with(endpoint, "/")) {
             endpoint = "/" + endpoint;
         }
         while (ends_with(endpoint, "/")) {
             endpoint = endpoint.substr(0, endpoint.length() - 1);
         }
+
+        // LOG_INF("-- %s%s\n", "endpoint: ", endpoint.c_str());
         
         svr->Get(endpoint, [](const httplib::Request & req, httplib::Response & res) {
             if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
@@ -5384,35 +5388,14 @@ int main(int argc, char ** argv) {
                 // COEP and COOP headers, required by pyodide (python interpreter)
                 res.set_header("Cross-Origin-Embedder-Policy", "require-corp");
                 res.set_header("Cross-Origin-Opener-Policy", "same-origin");
-                res.set_content(reinterpret_cast<const char*>(index_html_gz), index_html_gz_len, "text/html; charset=utf-8");
-            }
-            return false;
-        });
-        
-        svr->Get(endpoint + "/", [](const httplib::Request & req, httplib::Response & res) {
-            res.set_redirect(req.path.substr(0, req.path.length() - 1));
-            return false;
-        });
-        
-        /*
-        svr->Get("/chat", [](const httplib::Request & req, httplib::Response & res) {
-            if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
-                res.set_content("Error: gzip is not supported by this browser", "text/plain");
-            } else {
-                res.set_header("Content-Encoding", "gzip");
-                // COEP and COOP headers, required by pyodide (python interpreter)
-                res.set_header("Cross-Origin-Embedder-Policy", "require-corp");
-                res.set_header("Cross-Origin-Opener-Policy", "same-origin");
-                res.set_content(reinterpret_cast<const char*>(index_html_gz), index_html_gz_len, "text/html; charset=utf-8");
-            }
+                res.set_content(reinterpret_cast<const char*>(index_html_gz), index_html_gz_len, "text/html; charset=ut>            }
             return false;
         });
 
-        svr->Get("/chat/", [](const httplib::Request &, httplib::Response & res) {
-            res.set_redirect("/chat");
+        svr->Get(endpoint + "/", [](const httplib::Request & req, httplib::Response & res) {
+            res.set_redirect(req.path.substr(0, req.path.length() - 1));
             return false;
-        });
-        */
+        });        
     }
     // mmojo-server END        
     
