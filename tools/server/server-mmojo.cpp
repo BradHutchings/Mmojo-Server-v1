@@ -39,7 +39,18 @@
 #include <cosmo.h>
 #endif
 
+bool begins_with (std::string const &fullString, std::string const &beginning);
 bool ends_with (std::string const &fullString, std::string const &ending);
+
+bool begins_with (std::string const &fullString, std::string const &beginning) {
+    if (fullString.length() >= beginning.length()) {
+        return (0 == fullString.compare (0, beginning.length(), beginning));
+    }
+    else {
+        return false;
+    } 
+}
+
 bool ends_with (std::string const &fullString, std::string const &ending) {
     if (fullString.length() >= ending.length()) {
         return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
@@ -5356,23 +5367,53 @@ int main(int argc, char ** argv) {
     }
 
     // mmojo-server START
-    svr->Get("/chat", [](const httplib::Request & req, httplib::Response & res) {
-        if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
-            res.set_content("Error: gzip is not supported by this browser", "text/plain");
-        } else {
-            res.set_header("Content-Encoding", "gzip");
-            // COEP and COOP headers, required by pyodide (python interpreter)
-            res.set_header("Cross-Origin-Embedder-Policy", "require-corp");
-            res.set_header("Cross-Origin-Opener-Policy", "same-origin");
-            res.set_content(reinterpret_cast<const char*>(index_html_gz), index_html_gz_len, "text/html; charset=utf-8");
+    if (params_base.default_ui_endpoint != "") {
+        std::string endpoint = params_base.default_ui_endpoint;
+        if (!begins_with(endpoint, "/")) {
+            endpoint = "/" + endpoint;
         }
-        return false;
-    });
+        while (ends_with(endpoint, "/")) {
+            endpoint = endpoint.left(endpoint.length() - 1);
+        }
 
-    svr->Get("/chat/", [](const httplib::Request &, httplib::Response & res) {
-        res.set_redirect("/chat");
-        return false;
-    });
+        svr->Get(endpoint, [](const httplib::Request & req, httplib::Response & res) {
+            if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
+                res.set_content("Error: gzip is not supported by this browser", "text/plain");
+            } else {
+                res.set_header("Content-Encoding", "gzip");
+                // COEP and COOP headers, required by pyodide (python interpreter)
+                res.set_header("Cross-Origin-Embedder-Policy", "require-corp");
+                res.set_header("Cross-Origin-Opener-Policy", "same-origin");
+                res.set_content(reinterpret_cast<const char*>(index_html_gz), index_html_gz_len, "text/html; charset=utf-8");
+            }
+            return false;
+        });
+
+        svr->Get(endpoint + "/", [](const httplib::Request &, httplib::Response & res) {
+            res.set_redirect(endpoint);
+            return false;
+        });
+
+        /*
+        svr->Get("/chat", [](const httplib::Request & req, httplib::Response & res) {
+            if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
+                res.set_content("Error: gzip is not supported by this browser", "text/plain");
+            } else {
+                res.set_header("Content-Encoding", "gzip");
+                // COEP and COOP headers, required by pyodide (python interpreter)
+                res.set_header("Cross-Origin-Embedder-Policy", "require-corp");
+                res.set_header("Cross-Origin-Opener-Policy", "same-origin");
+                res.set_content(reinterpret_cast<const char*>(index_html_gz), index_html_gz_len, "text/html; charset=utf-8");
+            }
+            return false;
+        });
+
+        svr->Get("/chat/", [](const httplib::Request &, httplib::Response & res) {
+            res.set_redirect("/chat");
+            return false;
+        });
+        */
+    }
     // mmojo-server END        
     
     // register API routes
