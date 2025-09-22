@@ -3846,6 +3846,14 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
 
     // mmojo-server START
     add_opt(common_arg(
+        {"--default-ui-endpoint"}, "STRING",
+        "endpoint for accessing the default chat user interface",
+        [](common_params & params, const std::string & value) {
+            params.default_ui_endpoint = value;
+        }
+    ).set_examples({LLAMA_EXAMPLE_SERVER}));
+
+    add_opt(common_arg(
         {"--batch-sleep-ms"}, "N",
         "sleep time in milliseconds after processing each batch; to keep CPUs and GPUs cool.",
         [](common_params & params, int value) {
