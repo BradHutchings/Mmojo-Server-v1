@@ -39,10 +39,11 @@
 #include <cosmo.h>
 #endif
 
-bool begins_with (std::string const &fullString, std::string const &beginning);
+// pre C++20 helpers.
+bool starts_with (std::string const &fullString, std::string const &beginning);
 bool ends_with (std::string const &fullString, std::string const &ending);
 
-bool begins_with (std::string const &fullString, std::string const &beginning) {
+bool starts_with (std::string const &fullString, std::string const &beginning) {
     if (fullString.length() >= beginning.length()) {
         return (0 == fullString.compare (0, beginning.length(), beginning));
     }
@@ -5371,7 +5372,7 @@ int main(int argc, char ** argv) {
 
     if (params.default_ui_endpoint != "") {
         std::string endpoint = params.default_ui_endpoint;
-        if (!begins_with(endpoint, "/")) {
+        if (!starts_with(endpoint, "/")) {
             endpoint = "/" + endpoint;
         }
         while (ends_with(endpoint, "/")) {
