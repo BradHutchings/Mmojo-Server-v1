@@ -76,17 +76,39 @@ printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**
 
 ---
 ### Customize WebUI
+
+The `npm build` command writes over `tools/server/public`, so we save `loading-mmojo.html` and
+copy it back in after.
+
 ```
 APP_NAME='Mmojo Chat'
-sed -i -e "s/<title>.*<\/title>/<title>$APP_NAME<\/title>/g" tools/server/webui/index.html
-sed -i -e "s/>llama.cpp<\/div>/>$APP_NAME<\/div>/g" tools/server/webui/src/components/Header.tsx
+sed -i -e "s/>llama.cpp<\/h1>/>$APP_NAME<\/h1>/g" tools/server/webui/src/lib/components/app/chat/ChatScreen/ChatScreen.svelte
+sed -i -e "s/>llama.cpp<\/h1>/>$APP_NAME<\/h1>/g" tools/server/webui/src/lib/components/app/chat/ChatSidebar/ChatSidebar.svelte
+cp tools/server/public/loading-mmojo.html ./loading-mmojo.html
 cd tools/server/webui
 npm i
 npm run build
 cd ~/$BUILD_MMOJO_SERVER_DIR
+mv loading-mmojo.html tools/server/public/loading-mmojo.html
 sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/scripts.js
 sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/bookmark-scripts.js
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
+```
+
+#### Uh. Oh. npm Spit Out Errors
+
+You may have an earlier version of `npm` and `nodejs` installed on your build machine than are required
+for that customization step. If you're running Linux or macOS, these steps should clean that up.
+
+**ONLY RUN THESE IF YOU HAD PROBLEMS IN THE PREVIOUS STEP!!** Then rerun the previous step.
+
+```
+cd ~
+sudo apt remove nodejs npm -y
+sudo apt install nodejs npm -y
+sudo npm install -g node@latest
+sudo npm install -g npm@latest
+cd ~/$BUILD_MMOJO_SERVER_DIR
 ```
 
 ---

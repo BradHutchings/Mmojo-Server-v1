@@ -138,6 +138,8 @@ model.gguf
 0
 --path
 /zip/website
+--default-ui-endpoint
+chat
 --ssl-key-file
 /zip/certs/mmojo.local.key
 --ssl-cert-file
