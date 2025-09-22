@@ -5388,9 +5388,9 @@ int main(int argc, char ** argv) {
             }
             return false;
         });
-
-        svr->Get(endpoint + "/", [](const httplib::Request &, httplib::Response & res) {
-            res.set_redirect(endpoint);
+        
+        svr->Get(endpoint + "/", [](const httplib::Request & req, httplib::Response & res) {
+            res.set_redirect(req.path.left(req.path.length() - 1);
             return false;
         });
 
