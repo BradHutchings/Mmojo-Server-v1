@@ -5373,9 +5373,9 @@ int main(int argc, char ** argv) {
             endpoint = "/" + endpoint;
         }
         while (ends_with(endpoint, "/")) {
-            endpoint = endpoint.left(endpoint.length() - 1);
+            endpoint = endpoint.substr(0, endpoint.length() - 1);
         }
-
+        
         svr->Get(endpoint, [](const httplib::Request & req, httplib::Response & res) {
             if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
                 res.set_content("Error: gzip is not supported by this browser", "text/plain");
@@ -5390,10 +5390,10 @@ int main(int argc, char ** argv) {
         });
         
         svr->Get(endpoint + "/", [](const httplib::Request & req, httplib::Response & res) {
-            res.set_redirect(req.path.left(req.path.length() - 1);
+            res.set_redirect(req.path.substr(0, req.path.length() - 1));
             return false;
         });
-
+        
         /*
         svr->Get("/chat", [](const httplib::Request & req, httplib::Response & res) {
             if (req.get_header_value("Accept-Encoding").find("gzip") == std::string::npos) {
