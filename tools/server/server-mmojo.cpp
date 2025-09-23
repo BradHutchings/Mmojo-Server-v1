@@ -60,11 +60,6 @@ bool ends_with (std::string const &fullString, std::string const &ending) {
         return false;
     } 
 }
-
-// Scattered through this file are additions from a currently unmerged pull request on llama.cpp that 
-// sends progress during the evaluating stage. Pull these out if it's ever merged. -Brad 2025-07-27
-// Reference: https://github.com/ggml-org/llama.cpp/pull/14731/files
-
 // mmojo-server END
 
 using json = nlohmann::ordered_json;
@@ -3876,7 +3871,7 @@ struct server_context {
                 if (slot.state == SLOT_STATE_PROCESSING_PROMPT || slot.state == SLOT_STATE_DONE_PROMPT) {
                     if (slot.params.stream && slot.params.return_progress) {
                         send_partial_response(slot, {}, true);
-                        
+
                         // mmojo-server START
                         // This looks like the right spot to sleep.
                         if (params_base.n_batch_sleep_ms > 0) {
@@ -4811,17 +4806,17 @@ int main(int argc, char ** argv) {
                     json res_json = result->to_json();
                     if (res_json.is_array()) {
                         for (const auto & res : res_json) {
-                            if (!server_sent_event(sink, "data", res)) {
+                            if (!server_sent_event(sink, res)) {
                                 // sending failed (HTTP connection closed), cancel the generation
                                 return false;
                             }
                         }
                         return true;
                     } else {
-                        return server_sent_event(sink, "data", res_json);
+                        return server_sent_event(sink, res_json);
                     }
                 }, [&](const json & error_data) {
-                    server_sent_event(sink, "error", error_data);
+                    server_sent_event(sink, json{{"error", error_data}});
                 }, [&sink]() {
                     // note: do not use req.is_connection_closed here because req is already destroyed
                     return !sink.is_writable();
@@ -5400,7 +5395,7 @@ int main(int argc, char ** argv) {
         });        
     }
     // mmojo-server END        
-    
+
     // register API routes
     svr->Get (params.api_prefix + "/health",              handle_health); // public endpoint (no API key check)
     svr->Get (params.api_prefix + "/metrics",             handle_metrics);
