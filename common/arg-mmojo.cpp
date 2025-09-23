@@ -41,6 +41,10 @@
 
 #ifdef __linux__
 #include <linux/limits.h>
+// mmojo-server START
+#elif defined(COSMOCC)
+#include <linux/limits.h>
+// mmojo-server END
 #elif defined(_WIN32)
 #   if !defined(PATH_MAX)
 #   define PATH_MAX MAX_PATH
