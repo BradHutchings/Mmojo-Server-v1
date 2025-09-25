@@ -35,7 +35,7 @@ _Note that if you copy each code block from the guide and paste it into your ter
 ---
 ### Create Configure Directory
 
-Next, let's create a directory where we'll configure `mmojo-server`:
+Next, let's create a directory where we'll configure `mmojo-server`. We copy `mmojo-server` to the directory as `mmojo-server.zip` because the `zip` command will not add or delete files to an archive that does not have a `.` in the name. Crazy, right?
 ```
 cd ~
 rm -r -f ~/$CONFIGURE_DIR
