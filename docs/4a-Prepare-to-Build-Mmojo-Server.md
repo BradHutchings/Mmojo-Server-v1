@@ -77,6 +77,17 @@ printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**
 ---
 ### Customize WebUI
 
+**Suggested:** Rollback the `tools/server/webui` to the pre-Svelte version. The new Svelte UI doesn't like running on non-root web server path. We'll remove this step when the new UI is fixed upstream in llama.cpp.
+
+```
+rm -r -f tools/server/webui
+git checkout 6c019cb04e86e2dacfe62ce7666c64e9717dde1f tools/server/webui/
+
+APP_NAME='Mmojo Chat'
+sed -i -e "s/>.*llama.cpp.*</>$APP_NAME</g" tools/server/webui/index.html
+sed -i -e "s/>.*llama.cpp.*</>$APP_NAME</g" tools/server/webui/src/components/Header.tsx
+```
+
 The `npm build` command writes over `tools/server/public`, so we save `loading-mmojo.html` and
 copy it back in after.
 
