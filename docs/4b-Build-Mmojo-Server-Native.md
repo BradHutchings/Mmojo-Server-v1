@@ -51,7 +51,7 @@ else
     export CC="cc $EXTRA_FLAGS "
     export CXX="c++ $EXTRA_FLAGS "
 fi
-cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_SERVER_SSL=ON
+cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
 cmake --build build-platform --config Release
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n**********\n\n"
