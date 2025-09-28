@@ -3,7 +3,7 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fifth step in building Mmojo Server is to configfure the zip archive is also the the Mmojo Server Actual Portable Executable (APE).
+The sixth step in building Mmojo Server is to configfure the zip archive is also the the Mmojo Server Actual Portable Executable (APE).
 
 ---
 ### Environment Variables
