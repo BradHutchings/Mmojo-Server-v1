@@ -5,7 +5,7 @@ brad@bradhutchings.com
 
 The third step in building Mmojo Server is to clone the OpenSSL repo, fix problems that affect building with Cosmopolitan, and build it. You don't need to do this every time you build Mmojo Server.
 
-Skip ahead to: [4a. Prepare to Build Mmojo Server](4a-Prepare-to-Build-Mmojo-Server.md).
+Skip ahead to: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
 
 ---
 ### Environment Variables
@@ -71,4 +71,4 @@ printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\
 
 You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
 
-Next step: [4a. Prepare to Build Mmojo Server](4a-Prepare-to-Build-Mmojo-Server.md).
+Next step: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
