@@ -1,4 +1,4 @@
-## 4c. Build Mmojo Server with Cosmopolitan
+## 5c. Build Mmojo Server with Cosmopolitan
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
