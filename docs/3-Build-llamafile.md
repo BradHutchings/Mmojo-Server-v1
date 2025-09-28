@@ -40,7 +40,6 @@ printf "\n**********\n*\n* FINISHED: Clone and Build llamafile.\n*\n**********\n
 Now, `zipalign` exists at `~/3-BUILD-llamafile/bin/zipalign`.
 
 ---
----
 ### Next Step: Build OpenSSL with Cosmopolitan
 
 You've cloned the Cosmopolitan repo, fixed a couple issues, and built it. You don't need to do this every time you build Mmojo Server.
