@@ -15,7 +15,6 @@ Let's define some environment variables:
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
 BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 EXTRA_FLAGS=""
@@ -47,7 +46,7 @@ export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nost
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
 export AR="cosmoar"
-cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_SERVER_SSL=ON \
+cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64
 cmake --build build-cosmo-amd64 --config Release
 export PATH=$SAVE_PATH
@@ -79,7 +78,7 @@ export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nost
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl/.aarch64/"
 export AR="cosmoar"
-cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_SERVER_SSL=ON \
+cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64
 cmake --build build-cosmo-aarch64 --config Release
 export PATH=$SAVE_PATH

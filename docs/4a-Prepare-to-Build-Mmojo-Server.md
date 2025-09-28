@@ -15,7 +15,6 @@ Let's define some environment variables:
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
 BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 if [ -z "$SAVE_PATH" ]; then
@@ -63,8 +62,11 @@ sed -i -e 's/common.cpp/common-mmojo.cpp/g' common/CMakeLists.txt
 sed -i -e 's/server.cpp/server-mmojo.cpp/g' tools/server/CMakeLists.txt
 sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' tools/server/CMakeLists.txt
 sed -i -e 's/loading.html/loading-mmojo.html/g' tools/server/CMakeLists.txt
-sed -i -e 's/find_package(OpenSSL REQUIRED)/# find_package(OpenSSL REQUIRED)/g' tools/server/CMakeLists.txt
-sed -i -e 's/PRIVATE OpenSSL::SSL OpenSSL::Crypto/PRIVATE libssl.a libcrypto.a/g' tools/server/CMakeLists.txt
+# Use lbssl.a and libcrypto.a static libraries.
+sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
+# Delete the rejection test for OpenSSL.
+sed -i -e '/#include <openssl\/opensslv.h>/d' common/CMakeLists.txt
+sed -i -e '/error bad version/d' common/CMakeLists.txt
 if ! grep -q "#include <cstdlib>" "tools/mtmd/deprecation-warning.cpp" ; then
   sed -i '3i #include <cstdlib>' tools/mtmd/deprecation-warning.cpp
 fi

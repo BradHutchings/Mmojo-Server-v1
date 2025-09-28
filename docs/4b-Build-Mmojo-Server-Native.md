@@ -17,7 +17,6 @@ Let's define some environment variables:
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
 BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 EXTRA_FLAGS=""
@@ -51,7 +50,7 @@ else
     export CC="cc $EXTRA_FLAGS "
     export CXX="c++ $EXTRA_FLAGS "
 fi
-cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_SERVER_SSL=ON
+cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
 cmake --build build-platform --config Release
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n**********\n\n"

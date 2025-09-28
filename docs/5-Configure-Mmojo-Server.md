@@ -13,7 +13,6 @@ Let's define some environment variables:
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo-server"
 BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
 CONFIGURE_DIR="5-CONFIGURE-mmojo-server"
 
