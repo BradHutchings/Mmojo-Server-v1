@@ -3,11 +3,11 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fourth step in building Mmojo Server is to build the Mmojo Server.
+The fifth step in building Mmojo Server is to build the Mmojo Server.
 
 In this second substep, we will build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
 
-Skip ahead to: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
+Skip ahead to: [5c. Build Mmojo Server with Cosmopolitan](5c-Build-Mmojo-Server-with-Cosmopolitan.md).
 
 ---
 ### Environment Variables
@@ -74,4 +74,4 @@ more build-platform/profile.txt
 
 You've built the `mmojo-server` application for the build platform.
 
-Next step: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
+Next step: [5c. Build Mmojo Server with Cosmopolitan](5c-Build-Mmojo-Server-with-Cosmopolitan.md).
