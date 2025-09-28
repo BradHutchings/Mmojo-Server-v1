@@ -1,4 +1,4 @@
-## 5. Configure Mmojo Server
+## 6. Configure Mmojo Server
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
