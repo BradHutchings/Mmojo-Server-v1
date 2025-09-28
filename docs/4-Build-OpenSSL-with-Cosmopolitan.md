@@ -1,4 +1,4 @@
-## 3. Build OpenSSL with Cosmopolitan
+## 4. Build OpenSSL with Cosmopolitan
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -14,7 +14,8 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_OPENSSSL_DIR="3-BUILD-openssl"
+BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="4-BUILD-openssl"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
