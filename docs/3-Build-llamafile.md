@@ -29,7 +29,10 @@ _Note that if you copy each code block from the guide and paste it into your ter
 
 ---
 ### Clone and Build llamafile
+We clone and build llamafile so we will have access to its custom `zipalign` tool for packaging. 
+
 ```
+cd ~
 git clone https://github.com/Mozilla-Ocho/llamafile $BUILD_LLAMAFILE_DIR
 cd $BUILD_LLAMAFILE_DIR
 make -j8
