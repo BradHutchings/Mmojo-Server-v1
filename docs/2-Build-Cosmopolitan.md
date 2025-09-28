@@ -5,7 +5,7 @@ brad@bradhutchings.com
 
 The second step in building Mmojo Server is to clone the Cosmopolitan repo, fix known problems, and build it. You don't need to do this every time you build Mmojo Server.
 
-Skip ahead to: [3. Build OpenSSL with Cosmopolitan](3-Build-OpenSSL-with-Cosmopolitan.md).
+Skip ahead to: [3. Build llamafile](3-Build-llamfile.md).
 
 ---
 
@@ -52,8 +52,8 @@ printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\
 ```
 
 ---
-### Next Step: Build OpenSSL with Cosmopolitan
+### Next Step: Build llamfile
 
 You've cloned the Cosmopolitan repo, fixed a couple issues, and built it. You don't need to do this every time you build Mmojo Server.
 
-Next step: [3. Build OpenSSL with Cosmopolitan](3-Build-OpenSSL-with-Cosmopolitan.md).
+Next step: [3. Build llamfile](3-Build-llamafile.md).

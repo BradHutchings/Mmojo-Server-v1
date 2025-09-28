@@ -1,9 +1,9 @@
-## 5. Configure Mmojo Server
+## 6. Configure Mmojo Server
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fifth step in building Mmojo Server is to configfure the zip archive is also the the Mmojo Server Actual Portable Executable (APE).
+The sixth step in building Mmojo Server is to configfure the zip archive is also the the Mmojo Server Actual Portable Executable (APE).
 
 ---
 ### Environment Variables
@@ -12,9 +12,10 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
-CONFIGURE_DIR="5-CONFIGURE-mmojo-server"
+BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="4-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
+CONFIGURE_DIR="6-CONFIGURE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_ZIP="mmojo-server.zip"

@@ -1,13 +1,13 @@
-## 4b. Build Mmojo Server - Native
+## 5b. Build Mmojo Server - Native
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fourth step in building Mmojo Server is to build the Mmojo Server.
+The fifth step in building Mmojo Server is to build the Mmojo Server.
 
 In this second substep, we will build a native Mmojo Server for the build platform. You don't need to do this. It's a good check to make sure the mmojo-server code is in order. 
 
-Skip ahead to: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
+Skip ahead to: [5c. Build Mmojo Server with Cosmopolitan](5c-Build-Mmojo-Server-with-Cosmopolitan.md).
 
 ---
 ### Environment Variables
@@ -16,8 +16,9 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
+BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="4-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
@@ -73,4 +74,4 @@ more build-platform/profile.txt
 
 You've built the `mmojo-server` application for the build platform.
 
-Next step: [4c. Build Mmojo Server with Cosmopolitan](4c-Build-Mmojo-Server-with-Cosmopolitan.md).
+Next step: [5c. Build Mmojo Server with Cosmopolitan](5c-Build-Mmojo-Server-with-Cosmopolitan.md).

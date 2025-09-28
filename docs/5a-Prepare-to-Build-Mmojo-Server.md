@@ -1,9 +1,9 @@
-## 4a. Prepare to Build Mmojo Server
+## 5a. Prepare to Build Mmojo Server
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fourth step in building Mmojo Server is to build the Mmojo Server.
+The fifth step in building Mmojo Server is to build the Mmojo Server.
 
 In this first substep, we will clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
 
@@ -14,8 +14,10 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
+BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="4-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
+CONFIGURE_DIR="6-CONFIGURE-mmojo-server"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -129,4 +131,4 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 
 You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
-Next step: [4b. Build Mmojo Server - Native](4b-Build-Mmojo-Server-Native.md).
+Next step: [5b. Build Mmojo Server - Native](5b-Build-Mmojo-Server-Native.md).

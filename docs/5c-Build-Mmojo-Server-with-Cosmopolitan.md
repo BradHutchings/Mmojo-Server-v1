@@ -1,9 +1,9 @@
-## 4c. Build Mmojo Server with Cosmopolitan
+## 5c. Build Mmojo Server with Cosmopolitan
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fourth step in building Mmojo Server is to build the Mmojo Server.
+The fifth step in building Mmojo Server is to build the Mmojo Server.
 
 In this third substep, we will build a Mmojo Server with Cosmopoltan. The resulting combined binary file will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems.
 
@@ -14,8 +14,9 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_OPENSSSL_DIR="3-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="4-BUILD-mmojo"
+BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="4-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
@@ -124,4 +125,4 @@ Let's test our combined build:
 
 You've built the Mmojo Server. The `mmojo-server` binary with run on x86_64 and ARM CPUs, across Windows, Linux, and macOS.
 
-Next step: [5. Configure Mmojo Server](5-Configure-Mmojo-Server.md).
+Next step: [6. Configure Mmojo Server](6-Configure-Mmojo-Server.md).
