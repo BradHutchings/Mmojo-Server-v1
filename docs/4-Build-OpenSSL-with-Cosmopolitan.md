@@ -3,7 +3,7 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The third step in building Mmojo Server is to clone the OpenSSL repo, fix problems that affect building with Cosmopolitan, and build it. You don't need to do this every time you build Mmojo Server.
+The fourth step in building Mmojo Server is to clone the OpenSSL repo, fix problems that affect building with Cosmopolitan, and build it. You don't need to do this every time you build Mmojo Server.
 
 Skip ahead to: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
 
