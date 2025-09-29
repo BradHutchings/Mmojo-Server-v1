@@ -19,7 +19,10 @@ BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="4-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-PACKAGE_DIR="6a-PACAKGE-mmojo-server-stabdalone"
+PACKAGE_DIR="6b-PACAKGE-mmojo-server-embedded-model"
+
+ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
+MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_ZIP="mmojo-server.zip"
@@ -70,6 +73,31 @@ printf "\n**********\n*\n* FINISHED: Delete Extraneous Timezone Files.\n*\n*****
 #### Verify Contents of Zip Archive
 
 Verify that these files are no longer in the archive:
+```
+unzip -l $MMOJO_SERVER_ZIP 
+printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
+```
+
+---
+### Copy Model
+
+Let's copy a small model. We'll use Google Gemma 1B Instruct v3, a surprisingly capable tiny model.
+```
+cp ~/$DOWNLOAD_DIR/$MODEL_FILE $MODEL_FILE
+printf "\n**********\n*\n* FINISHED: Copy Model.\n*\n**********\n\n"
+```
+
+---
+### Add Model to Zip Archive
+
+Let's add the model to the `mmojo.server.zip` archive.
+```
+$ZIPALIGN $MMOJO_SERVER_ZIP $MODEL_FILE
+```
+
+#### Verify Contents of Zip Archive
+
+Verify that the model was added to the archive:
 ```
 unzip -l $MMOJO_SERVER_ZIP 
 printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
@@ -127,7 +155,8 @@ We will serve on localhost, port 8080 by default for safety. The `--ctx-size` pa
 ```
 cat << EOF > $DEFAULT_ARGS
 -m
-model.gguf
+/zip/$MODEL_FILE
+--no-mmap
 --host
 127.0.0.1
 --port
@@ -163,22 +192,13 @@ printf "\n**********\n*\n* FINISHED: Verify default-args File in Archive.\n*\n**
 ```
 
 ---
-### Remove .zip Extension
+### Remove .zip Extension, Delete Local Copy of Model File
 
-Remove the `.zip` from our working file:
+Remove the `.zip` from our working file and delete the local copy of the model file:
 ```
 mv $MMOJO_SERVER_ZIP $MMOJO_SERVER
-printf "\n**********\n*\n* FINISHED: Remove .zip Extension.\n*\n**********\n\n"
-```
-
----
-### Copy Model
-
-Let's copy a small model. We'll use Google Gemma 1B Instruct v3, a surprisingly capable tiny model.
-```
-MODEL_FILE="Google-Gemma-1B-Instruct-v3-q8_0.gguf"
-cp ~/$DOWNLOAD_DIR/$MODEL_FILE model.gguf
-printf "\n**********\n*\n* FINISHED: Copy Model.\n*\n**********\n\n"
+rm $MODEL_FILE
+printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Copy of Model File.\n*\n**********\n\n"
 ```
 
 ---
@@ -212,14 +232,17 @@ Hit `ctrl-C` on your keyboard to stop it.
 
 ---
 ### Copy mmojo-server for Deployment
-Congratulations! You are ready to copy `mmojo-server` executable to the share for deployment.
+Not sure where to copy yet.
 
+
+<!--
 ```
 sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER
 sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER.exe
 sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server for Deployment.\n*\n**********\n\n"
 ```
+-->
 
 ---
 ### Copy completion-ui to Local Space
@@ -230,5 +253,4 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 sudo cp -r completion-ui /mnt/hyperv/web-apps
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
-
 ```
