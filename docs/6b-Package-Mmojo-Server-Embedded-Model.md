@@ -1,7 +1,5 @@
 ## 6b. Package Mmojo Server (Embedded Model)
 
-**WORK IN PROGRESS - NOT WORKING YET**
-
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
