@@ -18,7 +18,7 @@ I am inspired by the [llamafile project](https://github.com/Mozilla-Ocho/llamafi
 
 I want to use the MIT license as used by llama.cpp.
 
-GPU support is not important to me and can be handled by platform specific builds of llama.cpp. CPU inference is quite adequate for many private end-user applications. Generic CPU inference is implemented. ARM and x86 tuned CPU inference is not implemented yet.
+GPU support is important to me, and can be handled by platform specific builds of llama.cpp. It's complicated to make work with a cross-platform and cross-architecture build. CPU inference is quite adequate for many private end-user applications. Base-level ARM and x86 tuned CPU inference is implemented.
 
 The ability to package support files, such as a custom web UI into the executable file is important to me. This is implemented.
 
@@ -26,7 +26,7 @@ The ability to package default arguments, in an "args" file, into the executable
 
 The ability to read arguments from a file adjacent to the executable file is important to me. This is implemented.
 
-The ability to package a gguf model into the executable file is important to me. This is not implemented yet.
+The ability to package a gguf model into the executable file is important to me. This is implemented.
 
 I welcome any of my changes being implemented in the official llama.cpp.
 
@@ -85,6 +85,7 @@ In no particular order of importance, these are the things that bother me:
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
