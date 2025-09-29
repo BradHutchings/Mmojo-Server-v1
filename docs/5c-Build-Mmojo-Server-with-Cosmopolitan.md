@@ -125,4 +125,4 @@ Let's test our combined build:
 
 You've built the Mmojo Server. The `mmojo-server` binary with run on x86_64 and ARM CPUs, across Windows, Linux, and macOS.
 
-Next step: [6. Configure Mmojo Server](6-Configure-Mmojo-Server.md).
+Next step: [6. Package Mmojo Server](6-Package-Mmojo-Server.md).
