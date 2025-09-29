@@ -229,5 +229,5 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 sudo cp -r completion-ui /mnt/hyperv/web-apps
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
-
+cd ~/$PACKAGE_DIR
 ```
