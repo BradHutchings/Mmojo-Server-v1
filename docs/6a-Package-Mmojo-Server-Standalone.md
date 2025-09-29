@@ -161,12 +161,13 @@ printf "\n**********\n*\n* FINISHED: Verify default-args File in Archive.\n*\n**
 ```
 
 ---
-### Remove .zip Extension
+### Remove .zip Extension, Delete Local Files
 
-Remove the `.zip` from our working file:
+Remove the `.zip` from our working file and delete the local copy of the model file:
 ```
 mv $MMOJO_SERVER_ZIP $MMOJO_SERVER
-printf "\n**********\n*\n* FINISHED: Remove .zip Extension.\n*\n**********\n\n"
+rm -r -f certs default-args website
+printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Files.\n*\n**********\n\n"
 ```
 
 ---
@@ -228,5 +229,5 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 sudo cp -r completion-ui /mnt/hyperv/web-apps
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
-
+cd ~/$PACKAGE_DIR
 ```
