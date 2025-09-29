@@ -192,13 +192,13 @@ printf "\n**********\n*\n* FINISHED: Verify default-args File in Archive.\n*\n**
 ```
 
 ---
-### Remove .zip Extension, Delete Local Copy of Model File
+### Remove .zip Extension, Delete Local Files
 
 Remove the `.zip` from our working file and delete the local copy of the model file:
 ```
 mv $MMOJO_SERVER_ZIP $MMOJO_SERVER
-rm $MODEL_FILE
-printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Copy of Model File.\n*\n**********\n\n"
+rm -r -f $MODEL_FILE certs default-args website
+printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Files.\n*\n**********\n\n"
 ```
 
 ---
