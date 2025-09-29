@@ -1,7 +1,5 @@
 ## 6a. Package Mmojo Server (Standalone)
 
-**WORK IN PROGRESS - NOT WORKING YET**
-
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
