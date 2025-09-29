@@ -40,17 +40,26 @@ Follow these guides in order to build, package, and deploy `mmojo-server`:
 
 To get this from the llama.cpp source base, there are few files that need to be modified:
 
-1. [common/arg.cpp](common/arg-mmojo.cpp) -- Added a parameter for sleep after each batch.
+1. [common/arg-mmojo.cpp](common/arg-mmojo.cpp)
+   - Added a parameter for sleep after each batch.
+   - Original file, [common/arg.cpp](common/arg.cpp), is preserved.
 
-2. [common/common.cpp](common/common-mmojo.cpp) -- Location of cache directory for COSMOCC builds.
+2. [common/common-mmojo.cpp](common/common-mmojo.cpp)
+   - Location of cache directory for COSMOCC builds.
+   - Original file, [common/common.cpp](common/common.cpp), is preserved.
 
-3. [common/common.h](common/common-mmojo.h) -- Added a parameter for sleep after each batch.
+4. [common/common.h](common/common.h)
+   - Added parameters for sleep after each batch and default UI endpoint to `common_params`.
+   - This original file is modified in this repo, as shown in the snippet at [common/common-mmojo.h](common/common-mmojo.h). This adjustment should be moved to the `sed` commands in the build instructions.
 
-4. [tools/server/server.cpp](tools/server/server-mmojo.cpp) -- Support embedded or adjacent "args" file, fix Cosmo name conflict with "defer" task member, add additional meta data to `model_meta`, stream reporting of evaluating progress, and more.
+6. [tools/server/server-mmojo.cpp](tools/server/server-mmojo.cpp)
+   - Support embedded or adjacent "args" file, fix Cosmo name conflict with "defer" task member, add additional meta data to `model_meta`, stream reporting of evaluating progress, and more.
+   - Original file, [tools/server/server.cpp](tools/server/server.cpp), is preserved.
 
-5. [completion-ui](completion-ui) -- Default UI is Mmojo Completion.
+8. [completion-ui](completion-ui) -- Default UI is Mmojo Completion.
 
-6. [tools/server/public/loading-mmojo.html](tools/server/public/loading-mmojo.html) -- Loading page matches Mmojo Completion theme.
+9. [tools/server/public/loading-mmojo.html](tools/server/public/loading-mmojo.html)
+   - Loading page matches Mmojo Completion theme.
 
 ---
 ### Reference
@@ -76,6 +85,7 @@ In no particular order of importance, these are the things that bother me:
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
