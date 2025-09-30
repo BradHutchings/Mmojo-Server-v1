@@ -83,31 +83,6 @@ printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n*******
 ```
 
 ---
-### Copy Model
-
-Let's copy a small model. We'll use Google Gemma 1B Instruct v3, a surprisingly capable tiny model.
-```
-cp ~/$DOWNLOAD_DIR/$MODEL_FILE $MODEL_FILE
-printf "\n**********\n*\n* FINISHED: Copy Model.\n*\n**********\n\n"
-```
-
----
-### Add Model to Zip Archive
-
-Let's add the model to the `mmojo.server.zip` archive.
-```
-$ZIPALIGN $MMOJO_SERVER_ONE_ZIP $MODEL_FILE
-```
-
-#### Verify Contents of Zip Archive
-
-Verify that the model was added to the archive:
-```
-unzip -l $MMOJO_SERVER_ONE_ZIP 
-printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
-```
-
----
 ### Add Certs to Archive
 
 Add self-signed certs to the archive. CA cert is added to the website folder.
@@ -193,6 +168,31 @@ Verify that the archive contains the `default-args` file:
 ```
 unzip -l $MMOJO_SERVER_ONE_ZIP 
 printf "\n**********\n*\n* FINISHED: Verify default-args File in Archive.\n*\n**********\n\n"
+```
+
+---
+### Copy Model
+
+Let's copy a small model. We'll use Google Gemma 1B Instruct v3, a surprisingly capable tiny model.
+```
+cp ~/$DOWNLOAD_DIR/$MODEL_FILE $MODEL_FILE
+printf "\n**********\n*\n* FINISHED: Copy Model.\n*\n**********\n\n"
+```
+
+---
+### Add Model to Zip Archive
+
+Let's add the model to the `mmojo.server.zip` archive.
+```
+$ZIPALIGN $MMOJO_SERVER_ONE_ZIP $MODEL_FILE
+```
+
+#### Verify Contents of Zip Archive
+
+Verify that the model was added to the archive:
+```
+unzip -l $MMOJO_SERVER_ONE_ZIP 
+printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
 ```
 
 ---
