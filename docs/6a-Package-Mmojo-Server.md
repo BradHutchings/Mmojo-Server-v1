@@ -20,7 +20,7 @@ BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="4-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-PACKAGE_DIR="6a-PACAKGE-mmojo-server-standalone"
+PACKAGE_DIR="6a-PACAKGE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_ZIP="mmojo-server.zip"
