@@ -25,7 +25,7 @@ MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_ONE_ZIP="mmojo-server-one.zip"
 MMOJO_SERVER_ONE="mmojo-server-one"
-GGML_SUFFIX="Google-Gemma-1B-Instruct-v3"
+GGUF_SUFFIX="Google-Gemma-1B-Instruct-v3"
 MMOJO_SERVER_ONE_GGUF="$MMOJO_SERVER_ONE-$GGUF_SUFFIX"
 DEFAULT_ARGS="default-args"
 
