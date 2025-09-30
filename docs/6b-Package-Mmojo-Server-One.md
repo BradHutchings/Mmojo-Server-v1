@@ -20,7 +20,7 @@ BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="4-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-PACKAGE_DIR="6b-PACAKGE-mmojo-server-one"
+PACKAGE_DIR="6b-PACKAGE-mmojo-server-one"
 
 ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
 MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
