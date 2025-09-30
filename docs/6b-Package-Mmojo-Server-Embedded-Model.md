@@ -23,7 +23,10 @@ ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
 MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
 
 MMOJO_SERVER="mmojo-server"
-MMOJO_SERVER_ZIP="mmojo-server.zip"
+MMOJO_SERVER_ONE_ZIP="mmojo-server-one.zip"
+MMOJO_SERVER_ONE="mmojo-server-one"
+GGML_SUFFIX="Google-Gemma-1B-Instruct-v3"
+MMOJO_SERVER_ONE_GGUF="$MMOJO_SERVER_ONE-$GGUF_SUFFIX"
 DEFAULT_ARGS="default-args"
 
 if [ -z "$SAVE_PATH" ]; then
@@ -45,7 +48,7 @@ Next, let's create a directory where we'll package `mmojo-server`. We copy `mmoj
 cd ~
 rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ZIP
+cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
 cd ~/$PACKAGE_DIR
 printf "\n**********\n*\n* FINISHED: Create Configuration Directory.\n*\n**********\n\n"
 ```
@@ -55,7 +58,7 @@ printf "\n**********\n*\n* FINISHED: Create Configuration Directory.\n*\n*******
 
 Look at the contents of the `mmojo.server.zip` archive:
 ```
-unzip -l $MMOJO_SERVER_ZIP 
+unzip -l $MMOJO_SERVER_ONE_ZIP 
 printf "\n**********\n*\n* FINISHED: Examine Contents of Zip Archive.\n*\n**********\n\n"
 ```
 
@@ -64,7 +67,7 @@ printf "\n**********\n*\n* FINISHED: Examine Contents of Zip Archive.\n*\n******
 
 You should notice a bunch of extraneous timezone related files in `/usr/*`. Let's get rid of those:
 ```
-zip -d $MMOJO_SERVER_ZIP "/usr/*"
+zip -d $MMOJO_SERVER_ONE_ZIP "/usr/*"
 printf "\n**********\n*\n* FINISHED: Delete Extraneous Timezone Files.\n*\n**********\n\n"
 ```
 
@@ -72,7 +75,7 @@ printf "\n**********\n*\n* FINISHED: Delete Extraneous Timezone Files.\n*\n*****
 
 Verify that these files are no longer in the archive:
 ```
-unzip -l $MMOJO_SERVER_ZIP 
+unzip -l $MMOJO_SERVER_ONE_ZIP 
 printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
 ```
 
@@ -90,14 +93,14 @@ printf "\n**********\n*\n* FINISHED: Copy Model.\n*\n**********\n\n"
 
 Let's add the model to the `mmojo.server.zip` archive.
 ```
-$ZIPALIGN $MMOJO_SERVER_ZIP $MODEL_FILE
+$ZIPALIGN $MMOJO_SERVER_ONE_ZIP $MODEL_FILE
 ```
 
 #### Verify Contents of Zip Archive
 
 Verify that the model was added to the archive:
 ```
-unzip -l $MMOJO_SERVER_ZIP 
+unzip -l $MMOJO_SERVER_ONE_ZIP 
 printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
 ```
 
@@ -110,7 +113,7 @@ mkdir certs
 cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.crt certs
 cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.key certs
 cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt certs
-zip -0 -r $MMOJO_SERVER_ZIP certs/*
+zip -0 -r $MMOJO_SERVER_ONE_ZIP certs/*
 printf "\n**********\n*\n* FINISHED: Add Certs to Archive.\n*\n**********\n\n"
 ```
 
@@ -118,7 +121,7 @@ printf "\n**********\n*\n* FINISHED: Add Certs to Archive.\n*\n**********\n\n"
 
 Verify that the archive has your certs:
 ```
-unzip -l $MMOJO_SERVER_ZIP 
+unzip -l $MMOJO_SERVER_ONE_ZIP 
 printf "\n**********\n*\n* FINISHED: Verify certs Directory in Archive.\n*\n**********\n\n"
 ```
 
@@ -130,7 +133,7 @@ printf "\n**********\n*\n* FINISHED: Verify certs Directory in Archive.\n*\n****
 mkdir website
 cp -r ~/$BUILD_MMOJO_SERVER_DIR/completion-ui/* website
 cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt website/CA.crt
-zip -0 -r $MMOJO_SERVER_ZIP website/*
+zip -0 -r $MMOJO_SERVER_ONE_ZIP website/*
 printf "\n**********\n*\n* FINISHED: Create website Directory in Archive.\n*\n**********\n\n"
 ```
 
@@ -138,7 +141,7 @@ printf "\n**********\n*\n* FINISHED: Create website Directory in Archive.\n*\n**
 
 Verify that the archive has your website:
 ```
-unzip -l $MMOJO_SERVER_ZIP 
+unzip -l $MMOJO_SERVER_ONE_ZIP 
 printf "\n**********\n*\n* FINISHED: Verify website Directory in Archive.\n*\n**********\n\n"
 ```
 
@@ -177,7 +180,7 @@ chat
 /zip/certs/mmojo.local.crt
 ...
 EOF
-zip -0 -r $MMOJO_SERVER_ZIP $DEFAULT_ARGS
+zip -0 -r $MMOJO_SERVER_ONE_ZIP $DEFAULT_ARGS
 printf "\n**********\n*\n* FINISHED: Create Default args File in Archive.\n*\n**********\n\n"
 ```
 
@@ -185,16 +188,16 @@ printf "\n**********\n*\n* FINISHED: Create Default args File in Archive.\n*\n**
 
 Verify that the archive contains the `default-args` file:
 ```
-unzip -l $MMOJO_SERVER_ZIP 
+unzip -l $MMOJO_SERVER_ONE_ZIP 
 printf "\n**********\n*\n* FINISHED: Verify default-args File in Archive.\n*\n**********\n\n"
 ```
 
 ---
 ### Remove .zip Extension, Delete Local Files
 
-Remove the `.zip` from our working file and delete the local copy of the model file:
+Remove the `.zip` from our working file, rename it with model suffix, and delete the local copy of the model file:
 ```
-mv $MMOJO_SERVER_ZIP $MMOJO_SERVER
+mv $MMOJO_SERVER_ONE_ZIP $MMOJO_SERVER_ONE_GGUF
 rm -r -f $MODEL_FILE certs default-args website
 printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Files.\n*\n**********\n\n"
 ```
@@ -204,7 +207,7 @@ printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Files.\
 
 Now we can test run `mmojo-server`, listening on localhost:8080.
 ```
-./$MMOJO_SERVER
+./$MMOJO_SERVER_ONE_GGUF
 ```
 
 After starting up and loading the model, it should display:
@@ -218,7 +221,7 @@ Hit `ctrl-C` on your keyboard to stop it.
 
 If you'd like it to listen on all available interfaces, so you can connect from a browser on another computer:
 ```
-./$MMOJO_SERVER --host 0.0.0.0
+./$MMOJO_SERVER_ONE_GGUF --host 0.0.0.0
 ```
 
 After starting up and loading the model, it should display:
@@ -235,9 +238,9 @@ Not sure where to copy yet.
 
 <!--
 ```
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER.exe
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER.exe
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server for Deployment.\n*\n**********\n\n"
 ```
 -->
