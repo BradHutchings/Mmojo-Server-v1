@@ -1,11 +1,11 @@
-## 6b. Package Mmojo Server (Embedded Model)
+## 6b. Package Mmojo Server One (Embedded Model)
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
 The sixth step in building Mmojo Server is to package the `mmojo-server` Actual Portable Executable (APE) for deployment.
 
-We are going to package `mmojo-server` with an embedded `.gguf` model file. If you would like to package `mmojo-server` as a stand-alone server without an embedded `.gguf` model file, use this step instead: [6a. Package Mmojo Server (Standalone)](6a-Package-Mmojo-Server-Standalone.md).
+We are going to package `mmojo-server-one` with an embedded `.gguf` model file. If you would like to package `mmojo-server` as a stand-alone server without an embedded `.gguf` model file, use this step instead: [6a. Package Mmojo Server](6a-Package-Mmojo-Server.md).
 
 ---
 ### Environment Variables
