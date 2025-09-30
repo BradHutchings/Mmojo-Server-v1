@@ -53,7 +53,7 @@ rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
 cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
 cd ~/$PACKAGE_DIR
-printf "\n**********\n*\n* FINISHED: Create Configuration Directory.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```
 
 ---
