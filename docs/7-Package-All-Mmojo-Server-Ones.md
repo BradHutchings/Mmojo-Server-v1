@@ -1,0 +1,247 @@
+## 7. Package All Mmojo Server Ones (Embedded Models)
+
+Brad Hutchings<br/>
+brad@bradhutchings.com
+
+The seventh step in building Mmojo Server is to package all of the `mmojo-server-one` Actual Portable Executables (APEs) for deployment. Each `mmojo-server-one` APE will contain one of our downloaded models and be renamed to reflect which model.
+
+Windows .exe files have a maximum size of 4GB, so we will not create `.exe` versions for `mmojo-server-one` APEs that exceed that size.
+
+This step is a bit more automated and time consuming than the previous packaging steps.
+
+---
+### Environment Variables
+
+Let's define some environment variables:
+```
+DOWNLOAD_DIR="1-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
+BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="4-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
+PACKAGE_DIR="7-PACKAGE-all-mmojo-server-one"
+
+ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
+
+MMOJO_SERVER="mmojo-server"
+MMOJO_SERVER_ONE_ZIP="mmojo-server-one.zip"
+MMOJO_SERVER_ONE="mmojo-server-one"
+DEFAULT_ARGS_TEMPLATE="default-args-template"
+DEFAULT_ARGS="default-args"
+
+if [ -z "$SAVE_PATH" ]; then
+  export SAVE_PATH=$PATH
+fi
+if [ -z "$TODAY" ]; then
+  TODAY=$(date +%Y-%m-%d)
+fi
+printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
+```
+
+_Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
+
+---
+### Create PACKAGE Directory
+
+Next, let's create a directory where we'll package `mmojo-server`. We copy `mmojo-server` to the directory as `mmojo-server.zip` because the `zip` command will not add or delete files to an archive that does not have a `.` in the name. Crazy, right?
+```
+cd ~
+rm -r -f ~/$PACKAGE_DIR
+mkdir -p $PACKAGE_DIR
+cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
+cd ~/$PACKAGE_DIR
+printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
+```
+
+---
+### Examine Contents of Zip Archive
+
+Look at the contents of the `mmojo.server.zip` archive:
+```
+unzip -l $MMOJO_SERVER_ONE_ZIP 
+printf "\n**********\n*\n* FINISHED: Examine Contents of Zip Archive.\n*\n**********\n\n"
+```
+
+---
+### Delete Extraneous Timezone Files
+
+You should notice a bunch of extraneous timezone related files in `/usr/*`. Let's get rid of those:
+```
+zip -d $MMOJO_SERVER_ONE_ZIP "/usr/*"
+printf "\n**********\n*\n* FINISHED: Delete Extraneous Timezone Files.\n*\n**********\n\n"
+```
+
+#### Verify Contents of Zip Archive
+
+Verify that these files are no longer in the archive:
+```
+unzip -l $MMOJO_SERVER_ONE_ZIP 
+printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
+```
+
+---
+### Add Certs to Archive
+
+Add self-signed certs to the archive. CA cert is added to the website folder.
+```
+mkdir certs
+cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.crt certs
+cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.key certs
+cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt certs
+zip -0 -r $MMOJO_SERVER_ONE_ZIP certs/*
+printf "\n**********\n*\n* FINISHED: Add Certs to Archive.\n*\n**********\n\n"
+```
+
+#### Verify certs Directory in Archive
+
+Verify that the archive has your certs:
+```
+unzip -l $MMOJO_SERVER_ONE_ZIP 
+printf "\n**********\n*\n* FINISHED: Verify certs Directory in Archive.\n*\n**********\n\n"
+```
+
+---
+### Create website Directory in Archive
+
+`llama.cpp` has a built in chat UI. If you'd like to provide a custom UI, you should add a `website` directory to the `mmojo-server` archive. `llama.cpp`'s chat UI is optimized for serving inside the project's source code. But we can copy the unoptimized source:
+```
+mkdir website
+cp -r ~/$BUILD_MMOJO_SERVER_DIR/completion-ui/* website
+cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt website/CA.crt
+zip -0 -r $MMOJO_SERVER_ONE_ZIP website/*
+printf "\n**********\n*\n* FINISHED: Create website Directory in Archive.\n*\n**********\n\n"
+```
+
+#### Verify website Directory in Archive
+
+Verify that the archive has your website:
+```
+unzip -l $MMOJO_SERVER_ONE_ZIP 
+printf "\n**********\n*\n* FINISHED: Verify website Directory in Archive.\n*\n**********\n\n"
+```
+
+---
+### Create default-args-template File
+
+A `default-args-template` file in the archive can specify sane default parameters. The format of the file is parameter name on a line, parameter value on a line, rinse, repeat. End the file with a `...` line to include user specified parameters.
+
+We will serve on localhost, port 8080 by default for safety. The `--ctx-size` parameter is the size of the context window. This is kinda screwy to have as a set size rather than a maximum because the `.gguf` files now have the training context size in metadata. We set it to 8192 to be sensible. The `--threads-http` parameter ensures that the browser can ask for all the image files in our default UI at once.
+```
+cat << EOF > $DEFAULT_ARGS_TEMPLATE
+-m
+/zip/MODEL_FILE
+--no-mmap
+--host
+127.0.0.1
+--port
+8080
+--ctx-size
+0
+--threads-http
+8
+--batch-size
+64
+--batch-sleep-ms
+0
+--path
+/zip/website
+--default-ui-endpoint
+chat
+--ssl-key-file
+/zip/certs/mmojo.local.key
+--ssl-cert-file
+/zip/certs/mmojo.local.crt
+...
+EOF
+printf "\n**********\n*\n* FINISHED: Create default-args-template File.\n*\n**********\n\n"
+```
+
+
+
+
+
+<!--
+---
+### Copy Model
+
+Let's copy a small model. We'll use Google Gemma 1B Instruct v3, a surprisingly capable tiny model.
+```
+cp ~/$DOWNLOAD_DIR/$MODEL_FILE $MODEL_FILE
+printf "\n**********\n*\n* FINISHED: Copy Model.\n*\n**********\n\n"
+```
+
+---
+### Add Model to Zip Archive
+
+Let's add the model to the `mmojo.server.zip` archive.
+```
+$ZIPALIGN $MMOJO_SERVER_ONE_ZIP $MODEL_FILE
+```
+
+#### Verify Contents of Zip Archive
+
+Verify that the model was added to the archive:
+```
+unzip -l $MMOJO_SERVER_ONE_ZIP 
+printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n**********\n\n"
+```
+
+---
+### Remove .zip Extension, Delete Local Files
+
+Remove the `.zip` from our working file, rename it with model suffix, and delete the local copy of the model file:
+```
+mv $MMOJO_SERVER_ONE_ZIP $MMOJO_SERVER_ONE_GGUF
+rm -r -f $MODEL_FILE certs default-args website
+printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Files.\n*\n**********\n\n"
+```
+
+---
+### Test Run
+
+Now we can test run `mmojo-server`, listening on localhost:8080.
+```
+./$MMOJO_SERVER_ONE_GGUF
+```
+
+After starting up and loading the model, it should display:
+
+**main: server is listening on https://127.0.0.1:8080 - starting the main loop**<br/>
+**srv  update_slots: all slots are idle**
+
+Hit `ctrl-C` on your keyboard to stop it.
+
+#### Test Run on Public Interfaces
+
+If you'd like it to listen on all available interfaces, so you can connect from a browser on another computer:
+```
+./$MMOJO_SERVER_ONE_GGUF --host 0.0.0.0
+```
+
+After starting up and loading the model, it should display:
+
+**main: server is listening on https://0.0.0.0:8080 - starting the main loop**<br/>
+**srv  update_slots: all slots are idle**
+
+Hit `ctrl-C` on your keyboard to stop it.
+
+---
+### Copy mmojo-server-one for Deployment
+Let's copy `mmojo-server-one` to `/mnt/hyperv` for eventual deployment.
+```
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/mac-linux/$MMOJO_SERVER_ONE_GGUF
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/windows/$MMOJO_SERVER_ONE_GGUF.exe
+printf "\n**********\n*\n* FINISHED: Copy mmojo-server-one for Deployment.\n*\n**********\n\n"
+```
+
+---
+### Copy completion-ui to Local Space
+Copy completion-ui to local space.
+
+```
+cd ~/$BUILD_MMOJO_SERVER_DIR
+sudo cp -r completion-ui /mnt/hyperv/web-apps
+sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
+sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
+```
+-->
