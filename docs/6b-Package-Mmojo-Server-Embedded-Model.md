@@ -232,18 +232,13 @@ After starting up and loading the model, it should display:
 Hit `ctrl-C` on your keyboard to stop it.
 
 ---
-### Copy mmojo-server for Deployment
-Not sure where to copy yet.
-
-
-<!--
+### Copy mmojo-server-one for Deployment
+Let's copy `mmojo-server-one` to `/mnt/hyperv` for eventual deployment.
 ```
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER.exe
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
-printf "\n**********\n*\n* FINISHED: Copy mmojo-server for Deployment.\n*\n**********\n\n"
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/mac-linux/$MMOJO_SERVER_ONE_GGUF
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/windows/$MMOJO_SERVER_ONE_GGUF.exe
+printf "\n**********\n*\n* FINISHED: Copy mmojo-server-one for Deployment.\n*\n**********\n\n"
 ```
--->
 
 ---
 ### Copy completion-ui to Local Space
