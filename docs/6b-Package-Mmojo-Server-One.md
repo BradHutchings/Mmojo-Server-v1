@@ -7,7 +7,8 @@ The sixth step in building Mmojo Server is to package the `mmojo-server` Actual 
 
 We are going to package `mmojo-server-one` with an embedded `.gguf` model file.
 
-If you would like to package `mmojo-server` as a stand-alone server without an embedded `.gguf` model file, use this step instead: [6a. Package Mmojo Server](6a-Package-Mmojo-Server.md).
+If you would like to package `mmojo-server` as a stand-alone server without an embedded `.gguf` model file, use this step instead:
+- [6a. Package Mmojo Server](6a-Package-Mmojo-Server.md).
 
 ---
 ### Environment Variables
