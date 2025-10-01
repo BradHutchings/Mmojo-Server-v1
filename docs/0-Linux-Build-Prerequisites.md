@@ -42,7 +42,7 @@ ARM has a few names for various versions and purposes of developer tools. `aarch
 
 Do this if you're running on x86_64.
 ```
-sudo cat << EOF > /etc/apt/sources.list.d/ubuntu-arm64.sources
+sudo cat << EOF > ubuntu-arm64.sources
 Types: deb
 URIs: http://ports.ubuntu.com/ubuntu-ports/
 Suites: noble noble-updates noble-security
@@ -50,6 +50,7 @@ Components: main restricted universe multiverse
 Architectures: arm64
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 EOF
+sudo mv ubuntu-arm64.sources /etc/apt/sources.list.d/ubuntu-arm64.sources
 sudo apt update
 sudo apt install -y libssl-dev:arm64
 ```
