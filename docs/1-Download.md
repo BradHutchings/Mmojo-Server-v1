@@ -43,9 +43,7 @@ printf "\n**********\n*\n* FINISHED: Create Download Directory.\n*\n**********\n
 ### OPTIONAL: Download Model Map
 If you plan to create `mmojo-server-one` Actual Portable Executables (APEs) with embedded models, you should download some models that are tested to work with `mmojo-server`. We'll download a model map from Hugging Face.
 ```
-if [ ! -f $MODEL_MAP ]; then
-  wget $MODEL_MAP_URL --quiet -O $MODEL_MAP
-fi
+wget $MODEL_MAP_URL --quiet -O $MODEL_MAP
 ```
 
 #### OPTIONAL: Edit the Model Map
@@ -53,8 +51,6 @@ All these models will take a long time to download, so you can edit the model ma
 ```
 nano $MODEL_MAP
 ```
-
-
 
 ---
 ### Download Models
