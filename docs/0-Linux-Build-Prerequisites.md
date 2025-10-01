@@ -11,7 +11,7 @@ Skip ahead to: [1. Download](1-Download.md).
 
 ---
 ### System Requirements
-I build in a virtual machine running Ubuntu Server 24.04 x86_64. I also routinely test building on a Raspberry Pi 5 running the latest Raspberry Pi OS (64-bit), which is a Ubuntu derivative with a desktop and Pi things.
+I build in a virtual machine running Ubuntu Server 24.04 x86_64. I also routinely test building on a Raspberry Pi 5 (ARM64) running the latest Raspberry Pi OS (64-bit), which is a Ubuntu derivative with a desktop and Pi things.
 
 #### Disk Space
 If you want to use my scripts to build a `mmojo-server-one` for each of the models available in my HuggingFace repo, you'll need about 120 GB (3 * 40 GB) of available space for the models and copies during the process. I would suggest having 300 GB available on your root `/`.
