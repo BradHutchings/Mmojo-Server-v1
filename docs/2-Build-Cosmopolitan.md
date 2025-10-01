@@ -27,16 +27,6 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
-### Build Dependencies
-I build with a freshly installed Ubuntu 24.04 VM. Here are some packages that are helpful in creating a working build system. You may need to install more.
-```
-sudo apt install -y git python3-pip build-essential zlib1g-dev \
-    libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev \
-    liblzma-dev tk-dev python3-tk cmake zip npm
-printf "\n**********\n*\n* FINISHED: Build Dependencies.\n*\n**********\n\n"
-```
-
----
 ### Clone Cosmopolitan Repo, Build Locally (DO THIS ONCE)
 Clone Cosmopolitan repo into a `~\2-BUILD-cosmopolitan` directory, fix bugs, then build Cosmopolitan. Build this once, and leave the `~\2-BUILD-cosmopolitan` directory between builds.
 ```
