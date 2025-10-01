@@ -14,7 +14,6 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 MODEL_MAP="model-map.txt"
-MODEL_MAP_URL="https://huggingface.co/bradhutchings/Mmojo-Server/resolve/main/model-map.txt"
 
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -43,6 +42,7 @@ printf "\n**********\n*\n* FINISHED: Create Download Directory.\n*\n**********\n
 ### OPTIONAL: Download Model Map
 If you plan to create `mmojo-server-one` Actual Portable Executables (APEs) with embedded models, you should download some models that are tested to work with `mmojo-server`. We'll download a model map from Hugging Face.
 ```
+MODEL_MAP_URL="https://huggingface.co/bradhutchings/Mmojo-Server/resolve/main/model-map.txt"
 wget $MODEL_MAP_URL --quiet -O $MODEL_MAP
 ```
 
