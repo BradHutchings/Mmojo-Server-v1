@@ -42,6 +42,7 @@ ARM has a few names for various versions and purposes of developer tools. `aarch
 
 Do this if you're running on x86_64.
 ```
+sudo dpkg --add-architecture arm64
 sudo cat << EOF > ubuntu-arm64.sources
 Types: deb
 URIs: http://ports.ubuntu.com/ubuntu-ports/
@@ -67,3 +68,18 @@ Find where the files are under `/usr/lib`:
 find /usr/lib -name "libssl.a"
 find /usr/lib -name "libcrypto.a"
 ```
+
+The output should look like this:
+```
+/usr/lib/x86_64-linux-gnu/libssl.a
+/usr/lib/aarch64-linux-gnu/libssl.a
+/usr/lib/x86_64-linux-gnu/libcrypto.a
+/usr/lib/aarch64-linux-gnu/libcrypto.a
+```
+
+---
+### Next Step: Build Mmojo Server with Cosmopolitan
+
+Your build environment is ready to build `mmojo-server` and `mmojo-server-one`.
+
+Next step: [1. Download](1-Download.md).
