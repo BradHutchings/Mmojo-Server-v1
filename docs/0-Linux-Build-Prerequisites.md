@@ -1,4 +1,4 @@
-## 0. Linux Build Prerequisites.md
+## 0. Linux Build Prerequisites
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
