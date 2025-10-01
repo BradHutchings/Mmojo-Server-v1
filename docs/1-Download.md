@@ -13,6 +13,9 @@ Skip ahead to: [2. Build Cosmopolitan](2-Build-Cosmopolitan.md).
 Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
+MODEL_MAP="model-map.txt"
+MODEL_MAP_URL="https://huggingface.co/bradhutchings/Mmojo-Server/resolve/main/model-map.txt"
+
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
@@ -25,14 +28,56 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
-### Download Models
-Download the models from Hugging Face:
+### Create Download Directory
+Create the `1-DOWNLOAD` directory, and add a simple model map to it.
 ```
-MODEL_FILE="Google-Gemma-1B-Instruct-v3-q8_0.gguf"
 mkdir -p ~/$DOWNLOAD_DIR
 cd ~/$DOWNLOAD_DIR
-URL="https://huggingface.co/bradhutchings/Mmojo-Server/resolve/main/models/$MODEL_FILE?download=true"
-if [ ! -f $MODEL_FILE ]; then wget $URL --show-progress --quiet -O $MODEL_FILE ; fi
+cat << EOF > $MODEL_MAP
+Google-Gemma-1B-Instruct-v3-q8_0.gguf mmojo-server-Google-Gemma-1B-Instruct-v3
+EOF
+printf "\n**********\n*\n* FINISHED: Create Download Directory.\n*\n**********\n\n"
+```
+
+---
+### OPTIONAL: Download Model Map
+If you plan to create `mmojo-server-one` Actual Portable Executables (APEs) with embedded models, you should download some models that are tested to work with `mmojo-server`. We'll download a model map from Hugging Face.
+```
+if [ ! -f $MODEL_MAP ]; then
+  wget $MODEL_MAP_URL --quiet -O $MODEL_MAP
+fi
+```
+
+#### OPTIONAL: Edit the Model Map
+All these models will take a long time to download, so you can edit the model map and remove models you don't want.
+```
+nano $MODEL_MAP
+```
+
+
+
+---
+### Download Models
+Download the models from Hugging Face.
+```
+DownloadModel() {
+  MODEL_FILE=$1
+  URL="https://huggingface.co/bradhutchings/Mmojo-Server/resolve/main/models/$MODEL_FILE?download=true"
+  if [ ! -f $MODEL_FILE ]; then wget $URL --show-progress --quiet -O $MODEL_FILE ; fi
+}
+
+unset apefiles
+declare -A apefiles
+
+while IFS=$' ' read -r gguf apefile ; do
+  if [[ "$gguf" != "#" ]] && [[ -n "$gguf" ]]; then
+    apefiles["${gguf}"]="${apefile}"
+  fi
+done < "$MODEL_MAP"
+
+for key in "${!apefiles[@]}"; do
+  DownloadModel $key 
+done
 printf "\n**********\n*\n* FINISHED: Download Models.\n*\n**********\n\n"
 ```
 
@@ -50,10 +95,24 @@ printf "\n**********\n*\n* FINISHED: Mount the share.\n*\n**********\n\n"
 
 Copy the models:
 ```
-MODEL_FILE="Google-Gemma-1B-Instruct-v3-q8_0.gguf"
-mkdir -p ~/$DOWNLOAD_DIR
-cd ~/$DOWNLOAD_DIR
-cp /mnt/hyperv/models/$MODEL_FILE ~/$DOWNLOAD_DIR
+CopyModel() {
+  MODEL_FILE=$1
+  echo "Copying $MODEL_FILE.\n"
+  if [ ! -f $MODEL_FILE ]; then cp -v /mnt/hyperv/models/$MODEL_FILE . ; fi
+}
+
+unset apefiles
+declare -A apefiles
+
+while IFS=$' ' read -r gguf apefile ; do
+  if [[ "$gguf" != "#" ]] && [[ -n "$gguf" ]]; then
+    apefiles["${gguf}"]="${apefile}"
+  fi
+done < "$MODEL_MAP"
+
+for key in "${!apefiles[@]}"; do
+  CopyModel $key 
+done
 printf "\n**********\n*\n* FINISHED: Copy Models from Share.\n*\n**********\n\n"
 ```
 
