@@ -77,6 +77,8 @@ The output should look like this:
 /usr/lib/aarch64-linux-gnu/libcrypto.a
 ```
 
+I hope to be able to use these to replace the length openssl build at some point. They aren't currently compatible with Cosmopolitan because `_FORTIFY_SOURCE` was used to build these static libraries.
+
 ---
 ### Next Step: Build Mmojo Server with Cosmopolitan
 
