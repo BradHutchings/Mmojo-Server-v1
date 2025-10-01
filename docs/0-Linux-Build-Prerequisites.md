@@ -7,7 +7,7 @@ Before you can build `mmojo-server` and `mmojo-server-one`, you need to set up y
 
 You only need to set up your environment once. 
 
-Skip ahead to: [1. Dwonload](1-Download.md).
+Skip ahead to: [1. Download](1-Download.md).
 
 ---
 ### System Requirements
