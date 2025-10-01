@@ -96,6 +96,7 @@ CopyModel() {
   if [ ! -f $MODEL_FILE ]; then 
     echo "Copying $MODEL_FILE.\n"
     cp -v /mnt/hyperv/models/$MODEL_FILE .
+    chmod a-x $MODEL_FILE
   fi
 }
 
