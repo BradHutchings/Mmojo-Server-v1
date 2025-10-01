@@ -5,6 +5,12 @@ brad@bradhutchings.com
 
 The fourth step in building Mmojo Server is to clone the OpenSSL repo, fix problems that affect building with Cosmopolitan, and build it. You don't need to do this every time you build Mmojo Server.
 
+We need to build our own `libssl.a` and `libcrypto.a` becuase:
+1. Actual Portable Executable (APE) does not support dynamic loading of libraries.
+2. The `libssl.a` and `libcrypto.a` we get by installing `libssl-dev` is built with `_FORTIFY_SOURCE` and will not link against Cosmo's `libc.a`.
+
+This is how I understand the problem. My understanding might be incorrect, but it bears out in trying to find workarounds.
+
 Skip ahead to: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
 
 ---
