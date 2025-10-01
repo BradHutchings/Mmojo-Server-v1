@@ -93,8 +93,10 @@ Copy the models:
 ```
 CopyModel() {
   MODEL_FILE=$1
-  echo "Copying $MODEL_FILE.\n"
-  if [ ! -f $MODEL_FILE ]; then cp -v /mnt/hyperv/models/$MODEL_FILE . ; fi
+  if [ ! -f $MODEL_FILE ]; then 
+    echo "Copying $MODEL_FILE.\n"
+    cp -v /mnt/hyperv/models/$MODEL_FILE .
+  fi
 }
 
 unset apefiles
