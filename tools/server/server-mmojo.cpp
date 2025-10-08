@@ -35,9 +35,10 @@
 #include <unordered_set>
 
 // mmojo-server START
-#ifdef COSMOCC
-#include <cosmo.h>
-#endif
+// #ifdef COSMOCC
+// #include <cosmo.h>
+// #endif
+#include "mmojo-args.h"
 
 // pre C++20 helpers.
 bool starts_with (std::string const &fullString, std::string const &beginning);
@@ -4168,7 +4169,8 @@ inline void signal_handler(int signal) {
 int main(int argc, char ** argv) {
     // mmojo-server START
     // This implements an args file feature inspired by llamafile's.
-    #ifdef COSMOCC
+    // #ifdef COSMOCC
+    
     // Keep the build from showing up as ape in the process list.
     pthread_setname_np(pthread_self(), "mmojo-server");
     
@@ -4181,14 +4183,16 @@ int main(int argc, char ** argv) {
     //     command (User supplied args)
     
     if (stat (argsFilename.c_str(), &buffer) == 0) {
-        argc = cosmo_args(argsFilename.c_str(), &argv);
+        // argc = cosmo_args(argsFilename.c_str(), &argv);
+        argc = mmojo_args(argsFilename.c_str(), &argv);
     }
     
     // At this point, argc, argv represent:
     //     command (argsFilename args) (User supplied args)
 
     if (stat (zipArgsFilename.c_str(), &buffer) == 0) {
-        argc = cosmo_args(zipArgsFilename.c_str(), &argv);
+        // argc = cosmo_args(zipArgsFilename.c_str(), &argv);
+        argc = mmojo_args(zipArgsFilename.c_str(), &argv);
     }
 
     // At this point, argc, argv represent:
@@ -4197,7 +4201,8 @@ int main(int argc, char ** argv) {
     // Yep, this is counterintuitive, but how the cosmo_args command works.
     // argsFilename args override zipArgsFilename file args.
     // User supplied args override argsFilename and zipArgsFilename args.
-    #endif
+    
+    // #endif
     // mmojo-server END
 
     // own arguments required by this example
