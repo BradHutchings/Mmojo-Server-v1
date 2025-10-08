@@ -23,8 +23,9 @@
   patched up includes.
 */
 
+#include "mmojo-args.h"
 #include "libc/calls/calls.h"
-#include "libc/cosmo.h"
+// #include "libc/cosmo.h"
 #include "libc/ctype.h"
 #include "libc/cxxabi.h"
 #include "libc/errno.h"
