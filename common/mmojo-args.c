@@ -114,9 +114,9 @@ static void cosmo_args_free(void *list) {
   free(list);
 }
 
-static void cosmo_args_free_atexit(void) {
-    cosmo_args_free(args_ptr);
-}
+// static void cosmo_args_free_atexit(void) {
+//     cosmo_args_free(args_ptr);
+// }
 
 /**
  * Replaces argument list with `/zip/.args` contents if it exists.
