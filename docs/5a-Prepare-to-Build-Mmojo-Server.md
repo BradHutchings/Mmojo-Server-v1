@@ -48,7 +48,6 @@ printf "\n**********\n*\n* FINISHED: Clone this Repo and Dependent Repos Locally
 
 **Optional:** Use the `work-in-progress` branch where I implement and test my own changes and where I test upstream changes from `llama.cpp`.
 ```
-cd ~/$BUILD_MMOJO_SERVER_DIR
 git checkout work-in-progress
 printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n\n"
 ```
@@ -56,7 +55,6 @@ printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n
 ---
 ### Fix llama.cpp Source Code and Build Code
 ```
-cd ~/$BUILD_MMOJO_SERVER_DIR
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/fix-source-mmojo.sh
 printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
@@ -94,6 +92,13 @@ printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**
 **Suggested:** Rollback the `tools/server/webui` to the pre-Svelte version. The new Svelte UI doesn't like running on non-root web server path. We'll remove this step when the new UI is fixed upstream in llama.cpp.
 
 ```
+chmod a+x scripts-mmojo/*.sh
+./scripts-mmojo/customize-web-ui-rollback.sh
+printf "\n**********\n*\n* FINISHED: Customize WebUI - Rollback.\n*\n**********\n\n"
+```
+
+<!-- The old way before moving this stuff into a repo script. Delete soon.
+```
 rm -r -f tools/server/webui
 git checkout 6c019cb04e86e2dacfe62ce7666c64e9717dde1f tools/server/webui/
 
@@ -101,10 +106,18 @@ APP_NAME='Mmojo Chat'
 sed -i -e "s/>.*llama.cpp.*</>$APP_NAME</g" tools/server/webui/index.html
 sed -i -e "s/>.*llama.cpp.*</>$APP_NAME</g" tools/server/webui/src/components/Header.tsx
 ```
+-->
 
 The `npm build` command writes over `tools/server/public`, so we save `loading-mmojo.html` and
 copy it back in after.
 
+```
+chmod a+x scripts-mmojo/*.sh
+./scripts-mmojo/customize-web-ui.sh
+printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
+```
+
+<!-- The old way before moving this stuff into a repo script. Delete soon.
 ```
 APP_NAME='Mmojo Chat'
 sed -i -e "s/>llama.cpp<\/h1>/>$APP_NAME<\/h1>/g" tools/server/webui/src/lib/components/app/chat/ChatScreen/ChatScreen.svelte
@@ -119,6 +132,7 @@ sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/scripts.js
 sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/bookmark-scripts.js
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ```
+-->
 
 #### Uh. Oh. npm Spit Out Errors
 
