@@ -106,8 +106,6 @@ static int esc(int c) {
   }
 }
 
-char **args_ptr = 0;
-
 static void cosmo_args_free(void *list) {
   char **args = list;
   char *arg;
@@ -186,7 +184,7 @@ int mmojo_args(const char *path, char ***argv) {
   // argument array builder
   int args_cap = 0;
   int args_len = 0;
-  // char **args_ptr = 0;
+  char **args_ptr = 0;
     
   // initialize memory
   CLEAR(var);
