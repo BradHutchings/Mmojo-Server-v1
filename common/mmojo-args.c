@@ -35,7 +35,26 @@
 #include "libc/str/tab.h"
 #include "libc/sysv/consts/o.h"
 
-__static_yoink("zipos");
+// __static_yoink("zipos");
+
+alignas(int8_t) const int8_t kHexToInt[256] = {
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x00
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x10
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x20
+    0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  -1, -1, -1, -1, -1, -1,  // 0x30
+    -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x40
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x50
+    -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x60
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x70
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x80
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x90
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0xa0
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0xb0
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0xc0
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0xd0
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0xe0
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0xf0
+};
 
 #define CLEAR(b)                                        \
   do {                                                  \
@@ -89,12 +108,18 @@ static int esc(int c) {
   }
 }
 
+char **args_ptr = 0;
+
 static void cosmo_args_free(void *list) {
   char **args = list;
   char *arg;
   while ((arg = *args++))
     free(arg);
   free(list);
+}
+
+static void cosmo_args_free_atexit(void) {
+    cosmo_args_free(args_ptr);
 }
 
 /**
@@ -145,7 +170,7 @@ static void cosmo_args_free(void *list) {
  *
  * @return argc on success, or -1 w/ errno
  */
-int cosmo_args(const char *path, char ***argv) {
+int mmojo_args(const char *path, char ***argv) {
 
   // the file
   int fd = -1;
@@ -163,8 +188,8 @@ int cosmo_args(const char *path, char ***argv) {
   // argument array builder
   int args_cap = 0;
   int args_len = 0;
-  char **args_ptr = 0;
-
+  // char **args_ptr = 0;
+    
   // initialize memory
   CLEAR(var);
   CLEAR(arg);
@@ -202,7 +227,8 @@ int cosmo_args(const char *path, char ***argv) {
   if (*argvp) {
     APPEND_DUP(args, *argvp++);
   } else {
-    APPEND_DUP(args, GetProgramExecutableName());
+    // APPEND_DUP(args, GetProgramExecutableName());
+    APPEND_DUP(args, "mmojo-server");
   }
 
   // perform i/o
@@ -576,7 +602,8 @@ int cosmo_args(const char *path, char ***argv) {
     APPEND_DUP(args, *argvp++);
 
   // return result
-  __cxa_atexit(cosmo_args_free, args_ptr, 0);
+  // __cxa_atexit(cosmo_args_free, args_ptr, 0);
+  // atexit(cosmo_args_free_atexit);
   *argv = args_ptr;
   free(arg_ptr);
   free(var_ptr);
