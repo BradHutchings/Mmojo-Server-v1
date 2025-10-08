@@ -57,6 +57,15 @@ printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n
 ### Fix llama.cpp Source Code and Build Code
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
+chmod a+x fix-source-mmojo.sh
+./fix-source-mmojo.sh
+printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
+```
+
+
+<!-- The old way before moving this stuff into a repo script. Delete soon.
+```
+cd ~/$BUILD_MMOJO_SERVER_DIR
 sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' miniaudio/miniaudio.h
 sed -i -e 's/arg.cpp/arg-mmojo.cpp/g' common/CMakeLists.txt
 sed -i -e 's/common.cpp/common-mmojo.cpp/g' common/CMakeLists.txt
@@ -76,6 +85,8 @@ if ! grep -q "#include <algorithm>" "src/llama-hparams.cpp" ; then
 fi
 printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
 ```
+-->
+
 
 ---
 ### Customize WebUI
