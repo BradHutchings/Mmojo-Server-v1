@@ -19,8 +19,8 @@
 
 /*
   Modified for Mmojo Server by Brad Hutchings.
-  cosmo_args() --> mmojo_args().
-  patched up includes.
+  - Get cosmo_args definition from libc/cosmo.h.
+  - cosmo_args() --> mmojo_args().
 */
 
 int mmojo_args(const char *, char ***);
