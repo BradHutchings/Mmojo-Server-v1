@@ -23,4 +23,12 @@
   - cosmo_args() --> mmojo_args().
 */
 
-int mmojo_args(const char *, char ***);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    int mmojo_args(const char *, char ***);
+
+#ifdef __cplusplus
+}
+#endif
