@@ -19,8 +19,9 @@
 
 /*
   Modified for Mmojo Server by Brad Hutchings.
-  cosmo_args() --> mmojo_args().
-  patched up includes.
+  - Start with: tool/args/args2.c.
+  - cosmo_args() --> mmojo_args().
+  - Patch up includes.
 */
 
 #include "mmojo-args.h"
