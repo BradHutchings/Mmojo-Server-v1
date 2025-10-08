@@ -25,15 +25,12 @@
 */
 
 #include "mmojo-args.h"
-#include "libc/calls/calls.h"
-// #include "libc/cosmo.h"
-#include "libc/ctype.h"
-#include "libc/cxxabi.h"
-#include "libc/errno.h"
-#include "libc/mem/mem.h"
-#include "libc/runtime/runtime.h"
-#include "libc/str/tab.h"
-#include "libc/sysv/consts/o.h"
+#include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 // __static_yoink("zipos");
 
