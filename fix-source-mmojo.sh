@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# This script patches up source code right before we compile so I don't have to maintain all the changed files in the forked repo. -Brad
+
+# Cosmo compatibility
+sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' miniaudio/miniaudio.h
+if ! grep -q "#include <cstdlib>" "tools/mtmd/deprecation-warning.cpp" ; then
+  sed -i '3i #include <cstdlib>' tools/mtmd/deprecation-warning.cpp
+fi
+if ! grep -q "#include <algorithm>" "src/llama-hparams.cpp" ; then
+  sed -i '4i #include <algorithm>' src/llama-hparams.cpp
+fi
+
+# Update the CMake files.
+sed -i -e 's/arg.cpp/arg-mmojo.cpp/g' common/CMakeLists.txt
+sed -i -e 's/common.cpp/common-mmojo.cpp/g' common/CMakeLists.txt
+sed -i -e 's/server.cpp/server-mmojo.cpp/g' tools/server/CMakeLists.txt
+sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' tools/server/CMakeLists.txt
+sed -i -e 's/loading.html/loading-mmojo.html/g' tools/server/CMakeLists.txt
+
+# Use lbssl.a and libcrypto.a static libraries.
+sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
+
+# Delete the rejection test for OpenSSL.
+sed -i -e '/#include <openssl\/opensslv.h>/d' common/CMakeLists.txt
+sed -i -e '/error bad version/d' common/CMakeLists.txt
+
+# Future: Just patch common/argc.cpp and eliminate common/argc-mmojo.cpp
+# Future: In tools/server/server-mmojo.cpp, replace "defer(" with "defer_task(" to make Cosmo STL happy.
+# Future: Move loading-mmojo.html to loading.html instead of mangling server-mmojo.cpp. 
