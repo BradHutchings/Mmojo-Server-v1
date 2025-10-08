@@ -14,7 +14,7 @@ fi
 # Update the CMake files.
 sed -i -e 's/arg.cpp/arg-mmojo.cpp/g' common/CMakeLists.txt
 sed -i -e 's/common.cpp/common-mmojo.cpp/g' common/CMakeLists.txt
-sed -i -e '/log.h/a \    mmojo-args.h\n\    mmojo-args.cpp' common/CMakeLists.txt
+sed -i -e '/log.h/a \    mmojo-args.h\n\    mmojo-args.c' common/CMakeLists.txt
 sed -i -e 's/server.cpp/server-mmojo.cpp/g' tools/server/CMakeLists.txt
 sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' tools/server/CMakeLists.txt
 sed -i -e 's/loading.html/loading-mmojo.html/g' tools/server/CMakeLists.txt
