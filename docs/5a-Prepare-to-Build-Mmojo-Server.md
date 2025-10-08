@@ -31,7 +31,7 @@ _Note that if you copy each code block from the guide and paste it into your ter
 
 ---
 ### Clone this Repo Locally
-Clone this repo and repos this repo depends on into a `~\2-BUILD-mmojo-server` directory.
+Clone this repo and repos this repo depends on into a `~\5-BUILD-mmojo` directory.
 ```
 cd ~
 git clone https://github.com/BradHutchings/mmojo-server.git ~/$BUILD_MMOJO_SERVER_DIR
