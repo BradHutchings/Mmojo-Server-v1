@@ -25,6 +25,9 @@ sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' 
 sed -i -e '/#include <openssl\/opensslv.h>/d' common/CMakeLists.txt
 sed -i -e '/error bad version/d' common/CMakeLists.txt
 
-# Future: Just patch common/argc.cpp and eliminate common/argc-mmojo.cpp
 # Future: In tools/server/server-mmojo.cpp, replace "defer(" with "defer_task(" to make Cosmo STL happy.
-# Future: Move loading-mmojo.html to loading.html instead of mangling server-mmojo.cpp. 
+# To-do: next sync with upstream of tools/server/server-mmojo.cpp, remove manual edits to defer().
+sed -i -e 's/defer(/defer_task(/g' tools/server/server-mmojo.cpp
+
+# Future: Just patch common/argc.cpp and eliminate common/argc-mmojo.cpp
+# Future: Move loading-mmojo.html to loading.html instead of mangling server-mmojo.cpp. Will this work with .hpp, etc?
