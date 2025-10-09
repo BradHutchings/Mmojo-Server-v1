@@ -24,9 +24,6 @@ EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -60,13 +57,24 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n
 **Optional:** Test the build. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 ./build-platform/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
+    --threads-http 8 --ctx-size 0 --mlock
 ```
 
 **Optional:** If you're profiling, get some profile output.
 ```
 gprof build-platform/bin/mmojo-server gmon.out > build-platform/profile.txt
 more build-platform/profile.txt
+```
+
+---
+### (Optional) Copy completion-ui to Local Space
+After testing the completion UI, copy it to local space. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
+
+```
+cd ~/$BUILD_MMOJO_SERVER_DIR
+mount-host-share.sh
+sudo cp -r completion-ui-original /mnt/hyperv/web-apps/completion-ui
 ```
 
 ---

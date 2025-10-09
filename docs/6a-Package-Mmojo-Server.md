@@ -29,9 +29,6 @@ DEFAULT_ARGS="default-args"
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -214,23 +211,12 @@ Hit `ctrl-C` on your keyboard to stop it.
 
 ---
 ### Copy mmojo-server for Deployment
-Congratulations! You are ready to copy `mmojo-server` executable to the share for deployment.
+Congratulations! You are ready to copy `mmojo-server` executable to the share for deployment. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
 
 ```
+mount-host-share.sh
 sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER
 sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER.exe
 sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server for Deployment.\n*\n**********\n\n"
-```
-
----
-### Copy completion-ui to Local Space
-Copy completion-ui to local space.
-
-```
-cd ~/$BUILD_MMOJO_SERVER_DIR
-sudo cp -r completion-ui /mnt/hyperv/web-apps
-sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
-sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
-cd ~/$PACKAGE_DIR
 ```

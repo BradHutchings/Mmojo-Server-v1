@@ -22,18 +22,17 @@ EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
+<!--
 **Optional:** Set `$EXTRA_FLAGS` for profiling.
 ```
 EXTRA_FLAGS=" -g -pg "
 ```
+-->
 
 ---
 ### Build Mmojo Server for x86_64.
@@ -59,14 +58,17 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n********
 **Optional:** Test the build if you're building on an x86 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 ./build-cosmo-amd64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
+    --threads-http 8 --ctx-size 0 --mlock
 ```
 
+<!--
 **Optional:** If you're profiling, get some profile output.
 ```
 gprof build-cosmo-amd64/bin/mmojo-server gmon.out > build-cosmo-amd64/profile.txt
 more build-cosmo-amd64/profile.txt
 ```
+-->
 
 ---
 ### Build Mmojo Server for ARM.
@@ -92,14 +94,17 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\
 **Optional:** Test the build if you're building on an ARM system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 ./build-cosmo-aarch64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
+    --threads-http 8 --ctx-size 0 --mlock
 ```
 
+<!--
 **Optional:** If you're profiling, get some profile output.
 ```
 gprof build-cosmo-aarch64/bin/mmojo-server gmon.out > build-cosmo-aarch64/profile.txt
 more build-cosmo-aarch64/profile.txt
 ```
+-->
 
 ---
 ### Build mmojo-server Actual Portable Executable (APE)
@@ -119,7 +124,8 @@ printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executab
 Let's test our combined build:
 ```
 ./mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
+    --threads-http 8 --ctx-size 0 --mlock
 ```
 
 ---

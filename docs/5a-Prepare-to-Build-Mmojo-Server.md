@@ -21,9 +21,6 @@ COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -53,38 +50,13 @@ printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n
 ```
 
 ---
-### Fix llama.cpp Source Code and Build Code
+### Patch llama.cpp Source Code and Build Code
+The goal is to have most/all the changes to llama.cpp source code in this script, instead of having to patch individual files manually every time they updated upstream. Don't skip this step.
 ```
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/fix-source-mmojo.sh
 printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
 ```
-
-
-<!-- The old way before moving this stuff into a repo script. Delete soon.
-```
-cd ~/$BUILD_MMOJO_SERVER_DIR
-sed -i -e 's/#if defined(_WIN32) || defined(__COSMOPOLITAN__)/#if defined(_WIN32)/g' miniaudio/miniaudio.h
-sed -i -e 's/arg.cpp/arg-mmojo.cpp/g' common/CMakeLists.txt
-sed -i -e 's/common.cpp/common-mmojo.cpp/g' common/CMakeLists.txt
-sed -i -e 's/server.cpp/server-mmojo.cpp/g' tools/server/CMakeLists.txt
-sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' tools/server/CMakeLists.txt
-sed -i -e 's/loading.html/loading-mmojo.html/g' tools/server/CMakeLists.txt
-# Use lbssl.a and libcrypto.a static libraries.
-sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
-# Delete the rejection test for OpenSSL.
-sed -i -e '/#include <openssl\/opensslv.h>/d' common/CMakeLists.txt
-sed -i -e '/error bad version/d' common/CMakeLists.txt
-if ! grep -q "#include <cstdlib>" "tools/mtmd/deprecation-warning.cpp" ; then
-  sed -i '3i #include <cstdlib>' tools/mtmd/deprecation-warning.cpp
-fi
-if ! grep -q "#include <algorithm>" "src/llama-hparams.cpp" ; then
-  sed -i '4i #include <algorithm>' src/llama-hparams.cpp
-fi
-printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
-```
--->
-
 
 ---
 ### Customize WebUI
@@ -97,42 +69,12 @@ chmod a+x scripts-mmojo/*.sh
 printf "\n**********\n*\n* FINISHED: Customize WebUI - Rollback.\n*\n**********\n\n"
 ```
 
-<!-- The old way before moving this stuff into a repo script. Delete soon.
-```
-rm -r -f tools/server/webui
-git checkout 6c019cb04e86e2dacfe62ce7666c64e9717dde1f tools/server/webui/
-
-APP_NAME='Mmojo Chat'
-sed -i -e "s/>.*llama.cpp.*</>$APP_NAME</g" tools/server/webui/index.html
-sed -i -e "s/>.*llama.cpp.*</>$APP_NAME</g" tools/server/webui/src/components/Header.tsx
-```
--->
-
-The `npm build` command writes over `tools/server/public`, so we save `loading-mmojo.html` and
-copy it back in after.
-
+**Required:** Customize the web UI, rebuild all the web files.
 ```
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/customize-web-ui.sh
 printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
 ```
-
-<!-- The old way before moving this stuff into a repo script. Delete soon.
-```
-APP_NAME='Mmojo Chat'
-sed -i -e "s/>llama.cpp<\/h1>/>$APP_NAME<\/h1>/g" tools/server/webui/src/lib/components/app/chat/ChatScreen/ChatScreen.svelte
-sed -i -e "s/>llama.cpp<\/h1>/>$APP_NAME<\/h1>/g" tools/server/webui/src/lib/components/app/chat/ChatSidebar/ChatSidebar.svelte
-cp tools/server/public/loading-mmojo.html ./loading-mmojo.html
-cd tools/server/webui
-npm i
-npm run build
-cd ~/$BUILD_MMOJO_SERVER_DIR
-mv loading-mmojo.html tools/server/public/loading-mmojo.html
-sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/scripts.js
-sed -i -e "s/\[\[UPDATED\]\]/$TODAY/g" completion-ui/completion/bookmark-scripts.js
-printf "\n**********\n*\n* FINISHED: Customize WebUI.\n*\n**********\n\n"
-```
--->
 
 #### Uh. Oh. npm Spit Out Errors
 
