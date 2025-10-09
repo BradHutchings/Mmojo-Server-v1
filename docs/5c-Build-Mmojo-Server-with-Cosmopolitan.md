@@ -59,7 +59,8 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n********
 **Optional:** Test the build if you're building on an x86 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 ./build-cosmo-amd64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
+    --threads-http 8 --ctx-size 0 --mlock
 ```
 
 **Optional:** If you're profiling, get some profile output.
@@ -92,7 +93,8 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\
 **Optional:** Test the build if you're building on an ARM system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 ./build-cosmo-aarch64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
-    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 --ctx-size 0 --mlock
+    --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
+    --threads-http 8 --ctx-size 0 --mlock
 ```
 
 **Optional:** If you're profiling, get some profile output.
