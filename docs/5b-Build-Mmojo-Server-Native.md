@@ -24,9 +24,9 @@ EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-if [ -z "$TODAY" ]; then
-  export TODAY=$(date +%Y-%m-%d)
-fi
+# if [ -z "$TODAY" ]; then
+#  export TODAY=$(date +%Y-%m-%d)
+# fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -77,9 +77,9 @@ After testing the completion UI, copy it to local space. These commands use Brad
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 mount-host-share.sh
-sudo cp -r completion-ui /mnt/hyperv/web-apps
-sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
-sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
+sudo cp -r completion-ui-original /mnt/hyperv/web-apps/completion-ui
+# sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
+# sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
 ```
 
 ---
