@@ -22,7 +22,7 @@ if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
 if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
+  export TODAY=$(date +%Y-%m-%d)
 fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
