@@ -53,7 +53,8 @@ printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n
 ```
 
 ---
-### Fix llama.cpp Source Code and Build Code
+### Patch llama.cpp Source Code and Build Code
+The goal is to have most/all the changes to llama.cpp source code in this script, instead of having to patch individual files manually every time they updated upstream. Don't skip this step.
 ```
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/fix-source-mmojo.sh
