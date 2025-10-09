@@ -21,6 +21,8 @@ COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
+# To do: Make a copy of the completion-ui directory for saving locally. Update date on original for building.
+# Don't carry the $TODAY variable through process.
 if [ -z "$TODAY" ]; then
   export TODAY=$(date +%Y-%m-%d)
 fi
