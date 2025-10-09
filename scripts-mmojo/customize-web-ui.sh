@@ -10,10 +10,11 @@ APP_NAME='Mmojo Chat'
 sed -i -e "s/>llama.cpp<\/h1>/>$APP_NAME<\/h1>/g" tools/server/webui/src/lib/components/app/chat/ChatScreen/ChatScreen.svelte
 sed -i -e "s/>llama.cpp<\/h1>/>$APP_NAME<\/h1>/g" tools/server/webui/src/lib/components/app/chat/ChatSidebar/ChatSidebar.svelte
 cp tools/server/public/loading-mmojo.html ./loading-mmojo.html
+SAVE_WD=$(pwd)
 cd tools/server/webui
 npm i
 npm run build
-cd ~/$BUILD_MMOJO_SERVER_DIR
+cd $SAVE_WD
 mv loading-mmojo.html tools/server/public/loading-mmojo.html
 TODAY=$(date +%Y-%m-%d)
 cp -r completion-ui completion-ui-original
