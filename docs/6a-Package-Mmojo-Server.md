@@ -214,7 +214,7 @@ Hit `ctrl-C` on your keyboard to stop it.
 
 ---
 ### Copy mmojo-server for Deployment
-Congratulations! You are ready to copy `mmojo-server` executable to the share for deployment. These commands use Brad's `mount-host-share.sh` script and /mnt/hyperv share.
+Congratulations! You are ready to copy `mmojo-server` executable to the share for deployment. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
 
 ```
 mount-host-share.sh
