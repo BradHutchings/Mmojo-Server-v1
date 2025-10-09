@@ -236,20 +236,11 @@ Hit `ctrl-C` on your keyboard to stop it.
 
 ---
 ### Copy mmojo-server-one for Deployment
-Let's copy `mmojo-server-one` to `/mnt/hyperv` for eventual deployment.
+Congratulations! You are ready to copy `mmojo-server-one` executable to the share for deployment. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
+
 ```
+mount-host-share.sh
 sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/mac-linux/$MMOJO_SERVER_ONE_GGUF
 sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/windows/$MMOJO_SERVER_ONE_GGUF.exe
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server-one for Deployment.\n*\n**********\n\n"
-```
-
----
-### Copy completion-ui to Local Space
-Copy completion-ui to local space.
-
-```
-cd ~/$BUILD_MMOJO_SERVER_DIR
-sudo cp -r completion-ui /mnt/hyperv/web-apps
-sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
-sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
 ```
