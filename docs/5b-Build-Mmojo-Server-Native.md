@@ -71,6 +71,18 @@ more build-platform/profile.txt
 ```
 
 ---
+### (Optional) Copy completion-ui to Local Space
+After testing the completion UI, copy it to local space. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
+
+```
+cd ~/$BUILD_MMOJO_SERVER_DIR
+mount-host-share.sh
+sudo cp -r completion-ui /mnt/hyperv/web-apps
+sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
+sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
+```
+
+---
 ### Next Step: Build Mmojo Server with Cosmopolitan
 
 You've built the `mmojo-server` application for the build platform.
