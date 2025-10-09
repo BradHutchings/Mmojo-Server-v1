@@ -69,7 +69,7 @@ chmod a+x scripts-mmojo/*.sh
 printf "\n**********\n*\n* FINISHED: Customize WebUI - Rollback.\n*\n**********\n\n"
 ```
 
-**Required:** Customize the web UI, rebuild all the web files.
+**Required:** Customize the web UI, rebuild all the web files. If you did the **Suggested** step above, you will see 2 `sed` errors.
 ```
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/customize-web-ui.sh
