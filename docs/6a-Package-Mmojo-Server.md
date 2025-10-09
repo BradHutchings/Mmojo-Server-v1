@@ -1,9 +1,14 @@
-## 6. Configure Mmojo Server
+## 6a. Package Mmojo Server
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The sixth step in building Mmojo Server is to configfure the zip archive is also the the Mmojo Server Actual Portable Executable (APE).
+The sixth step in building Mmojo Server is to package the `mmojo-server` Actual Portable Executable (APE) for deployment.
+
+We are going to package `mmojo-server` without an embedded `.gguf` model file.
+
+If you would like to package `mmojo-server-one` with an embedded `.gguf` model file, use this step instead:
+- [6b. Package Mmojo Server One](6b-Package-Mmojo-Server-One.md).
 
 ---
 ### Environment Variables
@@ -15,7 +20,7 @@ BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="4-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-CONFIGURE_DIR="6-CONFIGURE-mmojo-server"
+PACKAGE_DIR="6a-PACKAGE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_ZIP="mmojo-server.zip"
@@ -33,16 +38,16 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
-### Create Configure Directory
+### Create PACKAGE Directory
 
-Next, let's create a directory where we'll configure `mmojo-server`. We copy `mmojo-server` to the directory as `mmojo-server.zip` because the `zip` command will not add or delete files to an archive that does not have a `.` in the name. Crazy, right?
+Next, let's create a directory where we'll package `mmojo-server`. We copy `mmojo-server` to the directory as `mmojo-server.zip` because the `zip` command will not add or delete files to an archive that does not have a `.` in the name. Crazy, right?
 ```
 cd ~
-rm -r -f ~/$CONFIGURE_DIR
-mkdir -p $CONFIGURE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$CONFIGURE_DIR/$MMOJO_SERVER_ZIP
-cd ~/$CONFIGURE_DIR
-printf "\n**********\n*\n* FINISHED: Create Configuration Directory.\n*\n**********\n\n"
+rm -r -f ~/$PACKAGE_DIR
+mkdir -p $PACKAGE_DIR
+cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ZIP
+cd ~/$PACKAGE_DIR
+printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```
 
 ---
@@ -159,12 +164,13 @@ printf "\n**********\n*\n* FINISHED: Verify default-args File in Archive.\n*\n**
 ```
 
 ---
-### Remove .zip Extension
+### Remove .zip Extension, Delete Local Files
 
-Remove the `.zip` from our working file:
+Remove the `.zip` from our working file and delete the local copy of the model file:
 ```
 mv $MMOJO_SERVER_ZIP $MMOJO_SERVER
-printf "\n**********\n*\n* FINISHED: Remove .zip Extension.\n*\n**********\n\n"
+rm -r -f certs default-args website
+printf "\n**********\n*\n* FINISHED: Remove .zip Extension, Delete Local Files.\n*\n**********\n\n"
 ```
 
 ---
@@ -226,5 +232,5 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 sudo cp -r completion-ui /mnt/hyperv/web-apps
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/scripts.js
 sudo sed -i -e "s/$TODAY/\[\[UPDATED\]\]/g" /mnt/hyperv/web-apps/completion-ui/completion/bookmark-scripts.js
-
+cd ~/$PACKAGE_DIR
 ```

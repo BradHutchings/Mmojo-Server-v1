@@ -1,8 +1,0 @@
-Google-Gemma-270M-Instruct-v3-q8_0.gguf mmojo-server-Google-Gemma-270M-Instruct-v3
-Google-Gemma-1B-Instruct-v3-q8_0.gguf mmojo-server-Google-Gemma-1B-Instruct-v3
-Google-Gemma-4B-Instruct-v3-q8_0.gguf mmojo-server-Google-Gemma-4B-Instruct-v3
-Google-Gemma-9B-Instruct-v2-q8_0.gguf mmojo-server-Google-Gemma-9B-Instruct-v2
-Google-Gemma-E2B-Instruct-v3n-q8_0.gguf mmojo-server-Google-Gemma-E2B-Instruct-v3n
-Google-Gemma-E4B-Instruct-v3n-q8_0.gguf mmojo-server-Google-Gemma-E4B-Instruct-v3n
-IBM-Granite-2B-Instruct-v3.3-q8_0.gguf mmojo-server-IBM-Granite-2B-Instruct-v3.3
-IBM-Granite-8B-Instruct-v3.3-q8_0.gguf mmojo-server-IBM-Granite-8B-Instruct-v3.3

@@ -35,9 +35,10 @@
 #include <unordered_set>
 
 // mmojo-server START
-#ifdef COSMOCC
-#include <cosmo.h>
-#endif
+// #ifdef COSMOCC
+// #include <cosmo.h>
+// #endif
+#include "mmojo-args.h"
 
 // pre C++20 helpers.
 bool starts_with (std::string const &fullString, std::string const &beginning);
@@ -4168,36 +4169,51 @@ inline void signal_handler(int signal) {
 int main(int argc, char ** argv) {
     // mmojo-server START
     // This implements an args file feature inspired by llamafile's.
-    #ifdef COSMOCC
+    // It does not require Cosmo anymore, as the mmojo_args function is part of mmojo-server now.
+    
     // Keep the build from showing up as ape in the process list.
     pthread_setname_np(pthread_self(), "mmojo-server");
     
     // Args files if present. The names are different to remove confusion during packaging.
     const std::string& argsFilename = "mmojo-server-args";
     const std::string& zipArgsFilename = "/zip/default-args";
+
+    // mmojo-server-support/default-args will be an option for platform optimized builds.
+    const std::string& supportArgsFilename = "mmojo-server-support/default-args";
     struct stat buffer;
 
     // At this point, argc, argv represent:
     //     command (User supplied args)
     
     if (stat (argsFilename.c_str(), &buffer) == 0) {
-        argc = cosmo_args(argsFilename.c_str(), &argv);
+        // argc = cosmo_args(argsFilename.c_str(), &argv);
+        argc = mmojo_args(argsFilename.c_str(), &argv);
     }
     
     // At this point, argc, argv represent:
     //     command (argsFilename args) (User supplied args)
 
     if (stat (zipArgsFilename.c_str(), &buffer) == 0) {
-        argc = cosmo_args(zipArgsFilename.c_str(), &argv);
+        // argc = cosmo_args(zipArgsFilename.c_str(), &argv);
+        argc = mmojo_args(zipArgsFilename.c_str(), &argv);
     }
 
     // At this point, argc, argv represent:
     //     command (zipArgsFilename args) (argsFilename args) (User supplied args)
-    
+
+    if (stat (supportArgsFilename.c_str(), &buffer) == 0) {
+        // argc = cosmo_args(supportArgsFilename.c_str(), &argv);
+        argc = mmojo_args(supportArgsFilename.c_str(), &argv);
+    }
+
+    // At this point, argc, argv represent:
+    //     command (supportArgsFilename args) (zipArgsFilename args) (argsFilename args) (User supplied args)
+
     // Yep, this is counterintuitive, but how the cosmo_args command works.
-    // argsFilename args override zipArgsFilename file args.
-    // User supplied args override argsFilename and zipArgsFilename args.
-    #endif
+    // zipArgsFilename file args overrides supportArgsFilename file args.
+    // argsFilename args override zipArgsFilename file args and supportArgsFilename file args.
+    // User supplied args override argsFilename and zipArgsFilename args and supportArgsFilename file args.
+    
     // mmojo-server END
 
     // own arguments required by this example
