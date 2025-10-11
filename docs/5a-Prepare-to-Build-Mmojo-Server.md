@@ -97,4 +97,4 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 
 You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
-Next step: [5b. Build Mmojo Server - Native](5b-Build-Mmojo-Server-Native.md).
+Next step: [5b. Build mmojo-server](b-Build-mmojo-server.md).
