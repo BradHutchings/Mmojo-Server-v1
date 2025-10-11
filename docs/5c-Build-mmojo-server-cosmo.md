@@ -3,9 +3,11 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The fifth step in building Mmojo Server is to build the Mmojo Server.
+The fifth step in building Mmojo Server is to build the `mmojo-server` executables.
 
-In this third substep, we will build a Mmojo Server with Cosmopoltan. The resulting combined binary file will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems.
+In this substep, we will build `mmojo-server-cosmo` for x86_64 and arm64. We will then package them in an Actual Portable Executable (APE) file. 
+
+The APE will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems. As a zip file, the APE can also hold configuration files and .gguf models. The APE will not perform as well as platform-specifc builds. It does not have the most optimized GGML CPU code and does not use GGML GPU options. Tradeoffs.
 
 ---
 ### Environment Variables
@@ -93,7 +95,7 @@ export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
-	-o mmojo-server build-cosmo-amd64/bin/mmojo-server build-cosmo-aarch64/bin/mmojo-server
+	-o mmojo-server-cosmo build-cosmo-amd64/bin/mmojo-server build-cosmo-aarch64/bin/mmojo-server
 export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
 ```
@@ -106,7 +108,7 @@ Let's test our combined build:
 ```
 
 ---
-### Next Step: Configure Mmojo Server
+### Next Step: Package Mmojo Server
 
 You've built the Mmojo Server. The `mmojo-server` binary with run on x86_64 and ARM CPUs, across Windows, Linux, and macOS.
 
