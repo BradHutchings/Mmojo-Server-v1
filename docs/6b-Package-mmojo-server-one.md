@@ -1,11 +1,11 @@
-## 6b. Package Mmojo Server One (Embedded Model)
+## 6b. Package mmojo-server-one
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The sixth step in building Mmojo Server is to package the `mmojo-server` Actual Portable Executable (APE) for deployment.
+The sixth step in building Mmojo Server is to package the Mmojo Server builds.
 
-We are going to package `mmojo-server-one` with an embedded `.gguf` model file.
+In this substep, we are going to package `mmojo-server-one` with an embedded `.gguf` model file.
 
 If you would like to package `mmojo-server` without an embedded `.gguf` model file, use this step instead:
 - [6a. Package Mmojo Server](6a-Package-Mmojo-Server.md).
@@ -237,7 +237,7 @@ Congratulations! You are ready to copy `mmojo-server-one` executable to the shar
 
 ```
 mount-host-share.sh
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/mac-linux/$MMOJO_SERVER_ONE_GGUF
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server-One/windows/$MMOJO_SERVER_ONE_GGUF.exe
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/mmojo-server-one/mac-linux/$MMOJO_SERVER_ONE_GGUF
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/mmojo-server-one/windows/$MMOJO_SERVER_ONE_GGUF.exe
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server-one for Deployment.\n*\n**********\n\n"
 ```
