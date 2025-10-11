@@ -77,8 +77,8 @@ sudo cp -r completion-ui-original /mnt/hyperv/web-apps/completion-ui
 ```
 
 ---
-### Next Step: Build Mmojo Server with Cosmopolitan
+### Next Step: Build mmojo-server-cosmo
 
-You've built the `mmojo-server` application for the build platform.
+You've built the `mmojo-server` application for your build environment platform.
 
-Next step: [5c. Build Mmojo Server with Cosmopolitan](5c-Build-Mmojo-Server-with-Cosmopolitan.md).
+Next step: [5c. Build mmojo-server-cosmo](5c-Build-mmojo-server-cosmo.md).
