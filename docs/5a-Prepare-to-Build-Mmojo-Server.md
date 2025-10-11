@@ -93,7 +93,7 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 ```
 
 ---
-### Next Step: Build Mmojo Server - Native
+### Next Step: Build mmojo-server
 
 You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
