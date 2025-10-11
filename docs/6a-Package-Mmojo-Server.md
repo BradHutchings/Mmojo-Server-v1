@@ -215,8 +215,8 @@ Congratulations! You are ready to copy `mmojo-server` executable to the share fo
 
 ```
 mount-host-share.sh
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/$MMOJO_SERVER.exe
+sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/mmojo-server/$MMOJO_SERVER
+sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/mmojo-server/$MMOJO_SERVER.exe
 sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server for Deployment.\n*\n**********\n\n"
 ```
