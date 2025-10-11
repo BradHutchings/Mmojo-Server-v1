@@ -7,7 +7,7 @@ The fifth step in building Mmojo Server is to build the `mmojo-server` executabl
 
 In this subsetp, we will build `mmojo-server` for your build environment platform. You don't need to do this. You can use it to test and debug features of mmojo-server that are not specific to any particular build.
 
-Skip ahead to: [5c. Build Mmojo Server with Cosmopolitan](5c-Build-Mmojo-Server-with-Cosmopolitan.md).
+Skip ahead to: [5c. Build mmojo-server-cosmo](5c-Build-mmojo-server-cosmo.md).
 
 ---
 ### Environment Variables
