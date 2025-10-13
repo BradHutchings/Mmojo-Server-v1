@@ -4114,8 +4114,6 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
     ).set_examples({LLAMA_EXAMPLE_SERVER}));
 
     // mmojo-server START
-    // LOG_INF("%s", "Adding mmojo-server parameter handlers.\n");
-    
     add_opt(common_arg(
         {"--default-ui-endpoint"}, "STRING",
         "endpoint for accessing the default chat user interface",
@@ -4130,14 +4128,6 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
         "sleep time in milliseconds after processing each batch; to keep CPUs and GPUs cool.",
         [](common_params & params, int value) {
             params.n_batch_sleep_ms = value;
-        }
-    ).set_examples({LLAMA_EXAMPLE_SERVER}));
-
-    add_opt(common_arg(
-        {"--chat"},
-        "force server to use chat user interface at root endpoint",
-        [](common_params & params) {
-            params.chat = true;
         }
     ).set_examples({LLAMA_EXAMPLE_SERVER}));
     // mmojo-server END
