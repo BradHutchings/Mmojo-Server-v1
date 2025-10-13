@@ -4132,6 +4132,14 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
             params.n_batch_sleep_ms = value;
         }
     ).set_examples({LLAMA_EXAMPLE_SERVER}));
+
+    add_opt(common_arg(
+        {"--chat"},
+        "force server to use chat user interface at root endpoint",
+        [](common_params & params) {
+            params.chat = true;
+        }
+    ).set_examples({LLAMA_EXAMPLE_SERVER}));
     // mmojo-server END
     
     return ctx_arg;
