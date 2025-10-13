@@ -69,7 +69,7 @@ chmod a+x scripts-mmojo/*.sh
 printf "\n**********\n*\n* FINISHED: Customize WebUI - Rollback.\n*\n**********\n\n"
 ```
 
-**Required:** Customize the web UI, rebuild all the web files.
+**Required:** Customize the web UI, rebuild all the web files. If you did the **Suggested** step above, you will see 2 `sed` errors.
 ```
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/customize-web-ui.sh
@@ -93,8 +93,8 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 ```
 
 ---
-### Next Step: Build Mmojo Server - Native
+### Next Step: Build mmojo-server
 
 You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
-Next step: [5b. Build Mmojo Server - Native](5b-Build-Mmojo-Server-Native.md).
+Next step: [5b. Build mmojo-server](5b-Build-mmojo-server.md).
