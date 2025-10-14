@@ -36,8 +36,8 @@ printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\
 ```
 
 ---
-### Next Step: Build llamfile
+### Next Step: Build llamafile
 
 You've cloned the Cosmopolitan repo, fixed a couple issues, and built it. You don't need to do this every time you build Mmojo Server.
 
-Next step: [3. Build llamfile](3-Build-llamafile.md).
+Next step: [3. Build llamafile](3-Build-llamafile.md).
