@@ -63,7 +63,7 @@ sudo apt install -y libssl-dev:arm64
 sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
 ```
 
-#### Debian: x86_64 support on aarch64 (ARM64)
+#### Debian: x86_64 Support on aarch64 (arm64)
 Do this if you're running on aarch64/arm64:
 ```
 # Coming soon
