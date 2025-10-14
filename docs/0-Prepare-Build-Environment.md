@@ -1,4 +1,4 @@
-## 0. Build Environment
+## 0. Prepare Build Environment
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
