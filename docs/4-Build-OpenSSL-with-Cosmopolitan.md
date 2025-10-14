@@ -27,18 +27,17 @@ EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
+<!--
 **Optional:** Set `$EXTRA_FLAGS` for profiling.
 ```
 EXTRA_FLAGS=" -pg "
 ```
+-->
 
 ---
 ### Create Build Directory
@@ -51,7 +50,7 @@ printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
 
 ---
 ### Build openssl with Cosmo
-We need cross-architectire `libssl` and `libcrypto` static libraries to support SSL in `mmojo-server`.
+We need cross-architectire `libssl.a` and `libcrypto.a` static libraries to support SSL in Cosmo builds of `mmojo-server`.
 ```
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 export CC="cosmocc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -O3 $EXTRA_FLAGS "
