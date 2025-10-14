@@ -15,13 +15,6 @@ Let's define some environment variables:
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
-EXTRA_FLAGS=""
-if [ -z "$SAVE_PATH" ]; then
-  export SAVE_PATH=$PATH
-fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
