@@ -7,7 +7,7 @@ Before you can build `mmojo-server`, `mmojo-server-one`, and other targets, you 
 - Ubuntu 24.04 Server (Debian 13 Trixie) for x86_64 in a virtual machine.
 - Raspberry Pi 5 (ARM64) running Raspberry Pi OS (Debian 13 Trixie).
 
-If you want to support Debian 12 Bookworm, use Ubuntu 23.04 Server for x86_64 and Bookworm version of Raspberry Pi OS. The compatibility issue is that you need to link against the earliest glibc that you support. This only affects platform native builds. Cosmo builds statically link against the Cosmo glibc.
+If you want your platform native builds to support Debian 12 Bookworm, use Ubuntu 23.04 Server for x86_64 and Bookworm version of Raspberry Pi OS. The compatibility issue is that you need to link against the earliest glibc that you support. This only affects platform native builds. Cosmo builds statically link against the Cosmo glibc.
 
 I plan to add into my regular mix and provide custom build instructions in the future:
 - RHEL, CentOS Stream, Oracle Linux, etc. for x86_64 in a virtual machine.
