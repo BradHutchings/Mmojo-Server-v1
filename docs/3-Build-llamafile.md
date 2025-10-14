@@ -3,7 +3,7 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-The third step in building Mmojo Server is to clone the llamafile repo and build it. This will give us access to llamafile's `zipalign` tool. You don't need to do this every time you build Mmojo Server.
+The third step in building Mmojo Server is to clone the llamafile repo and build it. This will give us access to llamafile's `zipalign` tool for packaging `mmojo-server-one`. You don't need to do this every time you build Mmojo Server.
 
 Skip ahead to: [4. Build OpenSSL with Cosmopolitan](4-Build-OpenSSL-with-Cosmopolitan.md).
 
@@ -38,6 +38,6 @@ Now, `zipalign` exists at `~/3-BUILD-llamafile/bin/zipalign`.
 ---
 ### Next Step: Build OpenSSL with Cosmopolitan
 
-You've cloned the Cosmopolitan repo, fixed a couple issues, and built it. You don't need to do this every time you build Mmojo Server.
+You've cloned the llamafile repo and built it so you'll have access to the `zipalign` tool for packaging `mmojo-server-one`. You don't need to do this every time you build Mmojo Server.
 
 Next step: [4. Build OpenSSL with Cosmopolitan](4-Build-OpenSSL-with-Cosmopolitan.md).
