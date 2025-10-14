@@ -14,13 +14,6 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 MODEL_MAP="model-map.txt"
-
-if [ -z "$SAVE_PATH" ]; then
-  export SAVE_PATH=$PATH
-fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
