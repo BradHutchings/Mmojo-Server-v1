@@ -15,9 +15,6 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-if [ -z "$SAVE_PATH" ]; then
-  export SAVE_PATH=$PATH
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
