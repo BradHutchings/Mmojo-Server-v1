@@ -1,4 +1,4 @@
-## 13. Set up Cross Compile aarch64 on x86_64
+## 14. Set up Cross Compile aarch64 on x86_64
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -29,5 +29,5 @@ sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64
 ---
 ### Proceed
 **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
-- **Previous:** [12. Install Dependencies](NEW-12-Install-Dependencies.md)
-- **Next:** [14. Set up Cross Compile - x86_64 on aarch64](NEW-14-Set-up-Cross-Compile-x86_64-on-aarch64.md)
+- **Previous:** [13. Install Dependencies](NEW-13-Install-Dependencies.md)
+- **Next:** [15. Set up Cross Compile - x86_64 on aarch64](NEW-15-Set-up-Cross-Compile-x86_64-on-aarch64.md)
