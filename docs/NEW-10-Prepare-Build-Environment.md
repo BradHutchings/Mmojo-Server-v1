@@ -22,9 +22,9 @@ Skip ahead to: [10. Gather Pieces](NEW-20-Gather-Pieces.md).
 ---
 ### Preparing Your Build Environment
 Here are the things you need to do:
-- [Set Timezone](NEW-11-Set-Timezone.md)
-- [Install Dependencies](NEW-12-Install-Dependencies.md)
-- [Set up Cross Compile - aarch64 on x86_64](NEW-13-Setup-up-Cross-Compile-aarch64-on-x86_64.md)
-- [Set up Cross Compile - x86_64 on aarch64](NEW-Setup-up-Cross-Compile-x86_64-on-aarch64.md)
+- [11. Set Timezone](NEW-11-Set-Timezone.md)
+- [12. Install Dependencies](NEW-12-Install-Dependencies.md)
+- [13. Set up Cross Compile - aarch64 on x86_64](NEW-13-Setup-up-Cross-Compile-aarch64-on-x86_64.md)
+- [14. Set up Cross Compile - x86_64 on aarch64](NEW-14-Setup-up-Cross-Compile-x86_64-on-aarch64.md)
 
 **Get Started:** [Set Timezone](NEW-11-Set-Timezone.md)
