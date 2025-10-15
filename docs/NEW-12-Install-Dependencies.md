@@ -3,8 +3,6 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
-This is a placeholder for new documentation, coming soon. It will be better organized, and more focused on specific tasks.
-
 ---
 ### Install Dependencies
 Here are some packages that should be adequate for creating a working build system. You may need to install more.
