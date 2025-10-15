@@ -1,4 +1,4 @@
-## 13. Cross Compile aarch64 on x86_64
+## 13. Set up Cross Compile aarch64 on x86_64
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
