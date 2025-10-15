@@ -22,5 +22,5 @@ Reference: [Timedatectl can control your Linux time and time zone](https://www.n
 ---
 ### Proceed
 **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
-- **Next:** [12. Install Dependencies](NEW-12-Install-Dependencies.md)
+- **Next:** [12. Mount Mmojo Share](NEW-12-Mount-Mmojo-Share.md)
 
