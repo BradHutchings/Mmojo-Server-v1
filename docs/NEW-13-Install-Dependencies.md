@@ -1,4 +1,4 @@
-## 12. Install Dependencies
+## 13. Install Dependencies
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -25,7 +25,7 @@ printf "\n**********\n*\n* FINISHED: Build Dependencies.\n*\n**********\n\n"
 ---
 ### Proceed
 **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
-- **Previous:** [11. Set Timzezone](NEW-11-Set-Timezone.md)
-- **Next:** [13. Set up Cross Compile - aarch64 on x86_64](NEW-13-Set-up-Cross-Compile-aarch64-on-x86_64.md)
+- **Previous:** [12. Mount Mmojo Share](NEW-12-Mount-Mmojo-Share.md)
+- **Next:** [14. Set up Cross Compile - aarch64 on x86_64](NEW-14-Set-up-Cross-Compile-aarch64-on-x86_64.md)
 
 
