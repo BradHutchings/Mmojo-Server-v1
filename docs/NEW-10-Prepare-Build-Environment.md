@@ -27,4 +27,4 @@ Here are the things you need to do:
 - [13. Set up Cross Compile - aarch64 on x86_64](NEW-13-Set-up-Cross-Compile-aarch64-on-x86_64.md)
 - [14. Set up Cross Compile - x86_64 on aarch64](NEW-14-Set-up-Cross-Compile-x86_64-on-aarch64.md)
 
-**Get Started:** [Set Timezone](NEW-11-Set-Timezone.md)
+**Get Started:** [11. Set Timezone](NEW-11-Set-Timezone.md)
