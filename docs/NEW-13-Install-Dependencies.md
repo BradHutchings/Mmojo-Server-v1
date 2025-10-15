@@ -25,7 +25,7 @@ printf "\n**********\n*\n* FINISHED: Build Dependencies.\n*\n**********\n\n"
 ---
 ### Proceed
 **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
-- **Previous:** [12. Mount Mmojo Share](NEW-12-Mount-Mmojo-Share.md)
+- **Previous:** [12. Create Mmojo Share](NEW-12-Create-Mmojo-Share.md)
 - **Next:** [14. Set up Cross Compile - aarch64 on x86_64](NEW-14-Set-up-Cross-Compile-aarch64-on-x86_64.md)
 
 
