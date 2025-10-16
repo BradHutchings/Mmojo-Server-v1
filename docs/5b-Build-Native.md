@@ -7,7 +7,7 @@ The fifth step in building Mmojo Server is to build the `mmojo-server` executabl
 
 In this subsetp, we will build `mmojo-server` for your native build environment platform. You don't need to do this. You can use it to test and debug features of mmojo-server that are not specific to any particular build.
 
-Skip ahead to: [5c. Build mmojo-server-cosmo](5c-Build-mmojo-server-cosmo.md).
+Skip ahead to: [5c. Build Cross-Platform](5c-Build-Cross-Platform.md).
 
 ---
 ### Environment Variables
@@ -149,4 +149,4 @@ sudo cp -r completion-ui-original /mnt/hyperv/web-apps/completion-ui
 
 You've built the `mmojo-server` application for your native build environment platform.
 
-Next step: [5c. Build mmojo-server-cosmo](5c-Build-mmojo-server-cosmo.md).
+Next step: [5c. Build Cross-Platform](5c-Build-Cross-Platform.md).
