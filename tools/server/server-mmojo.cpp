@@ -4543,13 +4543,15 @@ int main(int argc, char ** argv) {
     // At this point, argc, argv represent:
     //     command (supportArgsPath args) (argsPath args) (User supplied args)
 
+    #ifdef COSMOCC
     if (stat (zipArgsPath.c_str(), &buffer) == 0) {
         argc = mmojo_args(zipArgsPath.c_str(), &argv);
     }
 
     // At this point, argc, argv represent:
     //     command (zipArgsPath args) (supportArgsPath args) (argsPath args) (User supplied args)
-
+    #endif
+    
     // Yep, this is counterintuitive, but how the cosmo_args command works.
     
     // mmojo-server END
@@ -4560,6 +4562,11 @@ int main(int argc, char ** argv) {
     if (!common_params_parse(argc, argv, params, LLAMA_EXAMPLE_SERVER)) {
         return 1;
     }
+
+    // mmojo-server START
+    // fix params -- model, path, ssl-key-file, ssl-cert-file
+    // if they are relative paths, fix to absolute relative to executable
+    // mmojo-server END
 
     common_init();
 
