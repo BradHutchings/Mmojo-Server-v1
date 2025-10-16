@@ -1,4 +1,4 @@
-## 5a. Prepare to Build Mmojo Server
+## 5a. Prepare to Build
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
