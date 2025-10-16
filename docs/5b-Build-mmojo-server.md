@@ -52,11 +52,39 @@ cmake --build build-platform --config Release
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n**********\n\n"
 ```
 
-**Optional:** Test the build. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
+**Optional:** Test the build. Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
+rm -f ./build-platform/bin/mmojo-server-args
 ./build-platform/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
+```
+
+**Optional:** Test the build with a `mmojo-server-args` file. Requires previously downloaded model to the `1-DOWNLOAD` directory.
+```
+cat << EOF > ./build-platform/bin/mmojo-server-args
+--model
+$HOME/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf
+--host
+0.0.0.0
+--port
+8080
+--ctx-size
+0
+--threads-http
+8
+--batch-size
+64
+--batch-sleep-ms
+0
+--path
+$(pwd)/completion-ui
+--default-ui-endpoint
+chat
+--mlock
+...
+EOF
+./build-platform/bin/mmojo-server 
 ```
 
 **Optional:** If you're profiling, get some profile output.
