@@ -31,7 +31,7 @@ _Note that if you copy each code block from the guide and paste it into your ter
 
 ---
 ### Build Mmojo Server for x86_64.
-We now use CMake to build Mmojo Server. Note that we make a temporary change to `xx` to statically link with OpenSSL libraries.
+We now use CMake to build Mmojo Server for x86_64. Note that we make a temporary change to `common/CMakeLists.txt` to statically link with OpenSSL libraries.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
@@ -47,8 +47,6 @@ sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' 
 cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64
 mv common/CMakeLists-orig.txt common/CMakeLists.txt
-# cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
-#    -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64
 cmake --build build-cosmo-amd64 --config Release
 export PATH=$SAVE_PATH
 
@@ -63,8 +61,8 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n********
 ```
 
 ---
-### Build Mmojo Server for ARM.
-We now use CMake to build Mmojo Server.
+### Build Mmojo Server for ARM64.
+We now use CMake to build Mmojo Server for ARM64. Note that we make a temporary change to `common/CMakeLists.txt` to statically link with OpenSSL libraries.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
@@ -75,15 +73,18 @@ export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nost
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl/.aarch64/"
 export AR="cosmoar"
+cp common/CMakeLists.txt common/CMakeLists-orig.txt
+sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
 cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64
+mv common/CMakeLists-orig.txt common/CMakeLists.txt
 cmake --build build-cosmo-aarch64 --config Release
 export PATH=$SAVE_PATH
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\n\n"
 ```
 
-**Optional:** Test the build if you're building on an ARM system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
+**Optional:** Test the build if you're building on an ARM64 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 ./build-cosmo-aarch64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
