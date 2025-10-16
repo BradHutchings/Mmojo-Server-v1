@@ -4475,51 +4475,82 @@ inline void signal_handler(int signal) {
 
 int main(int argc, char ** argv) {
     // mmojo-server START
-    // This implements an args file feature inspired by llamafile's.
-    // It does not require Cosmo anymore, as the mmojo_args function is part of mmojo-server now.
-    
+
     // Keep the build from showing up as ape in the process list.
     pthread_setname_np(pthread_self(), "mmojo-server");
+
+    // This implements an args file feature inspired by llamafile's.
+    // It does not require Cosmo anymore, as the mmojo_args function is part of mmojo-server now.
+    // Path parameters passed on command line or in args files should be full paths.
     
+    char pathChar[PATH_MAX];
+    pathChar[0] = '\0'; 
+    ssize_t len = readlink("/proc/self/exe", pathChar, sizeof(pathChar) - 1);
+    if (len != -1) {
+        pathChar[len] = '\0'; // Null-terminate the string
+        printf("Executable path: %s\n", pathChar);
+
+        char* lastSlash = strrchr(pathChar, '/');
+        if (lastSlash != NULL) {
+          lastSlash[1] = '\0';
+        }
+    }
+
     // Args files if present. The names are different to remove confusion during packaging.
     const std::string& argsFilename = "mmojo-server-args";
-    const std::string& zipArgsFilename = "/zip/default-args";
-
-    // mmojo-server-support/default-args will be an option for platform optimized builds.
     const std::string& supportArgsFilename = "mmojo-server-support/default-args";
+    const std::string& zipArgsPath = "/zip/default-args";
+
+    std::string path = pathChar;
+    std::string argsPath = path + argsFilename;    
+    std::string supportArgsPath = path + supportArgsFilename;
+
+    /*
+    printf("-            path: %s\n", path.c_str());
+    printf("-        argsPath: %s\n", argsPath.c_str());
+    printf("- supportArgsPath: %s\n", supportArgsPath.c_str());
+
+    struct stat buffer1;
+    if (stat(path.c_str(), &buffer1) == 0) {
+        printf("- path exists: %s\n", path.c_str());
+    }
+    if (stat(argsPath.c_str(), &buffer1) == 0) {
+        printf("- argsPath exists: %s\n", argsPath.c_str());
+    }
+    if (stat(supportArgsPath.c_str(), &buffer1) == 0) {
+        printf("- supportArgsPath exists: %s\n", supportArgsPath.c_str());
+    }
+    */
+    
+    // mmojo-server-support/default-args will be an option for platform optimized builds.
+    // const std::string& supportArgsFilename = "mmojo-server-support/default-args";
     struct stat buffer;
 
     // At this point, argc, argv represent:
     //     command (User supplied args)
-    
-    if (stat (argsFilename.c_str(), &buffer) == 0) {
-        // argc = cosmo_args(argsFilename.c_str(), &argv);
-        argc = mmojo_args(argsFilename.c_str(), &argv);
-    }
-    
-    // At this point, argc, argv represent:
-    //     command (argsFilename args) (User supplied args)
 
-    if (stat (zipArgsFilename.c_str(), &buffer) == 0) {
-        // argc = cosmo_args(zipArgsFilename.c_str(), &argv);
-        argc = mmojo_args(zipArgsFilename.c_str(), &argv);
+    if (stat (argsPath.c_str(), &buffer) == 0) {
+        argc = mmojo_args(argsPath.c_str(), &argv);
     }
 
     // At this point, argc, argv represent:
-    //     command (zipArgsFilename args) (argsFilename args) (User supplied args)
+    //     command (argsPath args) (User supplied args)
 
-    if (stat (supportArgsFilename.c_str(), &buffer) == 0) {
-        // argc = cosmo_args(supportArgsFilename.c_str(), &argv);
-        argc = mmojo_args(supportArgsFilename.c_str(), &argv);
+    if (stat (supportArgsPath.c_str(), &buffer) == 0) {
+        argc = mmojo_args(supportArgsPath.c_str(), &argv);
     }
 
     // At this point, argc, argv represent:
-    //     command (supportArgsFilename args) (zipArgsFilename args) (argsFilename args) (User supplied args)
+    //     command (supportArgsPath args) (argsPath args) (User supplied args)
+
+    if (stat (zipArgsPath.c_str(), &buffer) == 0) {
+        argc = mmojo_args(zipArgsPath.c_str(), &argv);
+    }
+
+    // At this point, argc, argv represent:
+    //     command (zipArgsPath args) (supportArgsPath args) (argsPath args) (User supplied args)
 
     // Yep, this is counterintuitive, but how the cosmo_args command works.
-    // zipArgsFilename file args overrides supportArgsFilename file args.
-    // argsFilename args override zipArgsFilename file args and supportArgsFilename file args.
-    // User supplied args override argsFilename and zipArgsFilename args and supportArgsFilename file args.
     
     // mmojo-server END
 
