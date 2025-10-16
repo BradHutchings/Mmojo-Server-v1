@@ -11,7 +11,7 @@ We need to build our own `libssl.a` and `libcrypto.a` becuase:
 
 This is how I understand the problem. My understanding might be incorrect, but it bears out in trying to find workarounds.
 
-Skip ahead to: [5. Build Mmojo Server](docs/5-Build-Mmojo-Server.md).
+Skip ahead to: [5. Build Mmojo Server](5-Build-Mmojo-Server.md).
 
 ---
 ### Environment Variables
@@ -76,4 +76,4 @@ printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\
 
 You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
 
-Next step: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
+Next step: [5. Build Mmojo Server](5-Build-Mmojo-Server.md).
