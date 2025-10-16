@@ -11,7 +11,7 @@ We need to build our own `libssl.a` and `libcrypto.a` becuase:
 
 This is how I understand the problem. My understanding might be incorrect, but it bears out in trying to find workarounds.
 
-Skip ahead to: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
+Skip ahead to: [5. Build Mmojo Server](docs/5-Build-Mmojo-Server.md).
 
 ---
 ### Environment Variables
