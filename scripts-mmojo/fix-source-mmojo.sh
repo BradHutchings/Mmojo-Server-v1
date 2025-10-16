@@ -19,15 +19,15 @@ sed -i -e 's/server.cpp/server-mmojo.cpp/g' tools/server/CMakeLists.txt
 sed -i -e 's/set(TARGET llama-server)/set(TARGET mmojo-server)/g' tools/server/CMakeLists.txt
 sed -i -e 's/loading.html/loading-mmojo.html/g' tools/server/CMakeLists.txt
 
-# Use lbssl.a and libcrypto.a static libraries.
-sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
+# OBSOLETE: Use lbssl.a and libcrypto.a static libraries.
+# We only do this tempoararily for Cosmo builds now.
+# sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
 
 # Delete the rejection test for OpenSSL.
 sed -i -e '/#include <openssl\/opensslv.h>/d' common/CMakeLists.txt
 sed -i -e '/error bad version/d' common/CMakeLists.txt
 
-# Future: In tools/server/server-mmojo.cpp, replace "defer(" with "defer_task(" to make Cosmo STL happy.
-# To-do: next sync with upstream of tools/server/server-mmojo.cpp, remove manual edits to defer().
+# In tools/server/server-mmojo.cpp, replace "defer(" with "defer_task(" to make Cosmo STL happy.
 sed -i -e 's/defer(/defer_task(/g' tools/server/server-mmojo.cpp
 
 # Future: Just patch common/argc.cpp and eliminate common/argc-mmojo.cpp
