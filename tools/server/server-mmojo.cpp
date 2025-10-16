@@ -4505,22 +4505,26 @@ int main(int argc, char ** argv) {
     std::string argsPath = path + argsFilename;    
     std::string supportArgsPath = path + supportArgsFilename;
 
-    /*
+    #if 0
     printf("-            path: %s\n", path.c_str());
     printf("-        argsPath: %s\n", argsPath.c_str());
     printf("- supportArgsPath: %s\n", supportArgsPath.c_str());
+    printf("-     zipArgsPath: %s\n", zipArgsPath.c_str());
 
     struct stat buffer1;
     if (stat(path.c_str(), &buffer1) == 0) {
-        printf("- path exists: %s\n", path.c_str());
+        printf("-            path exists: %s\n", path.c_str());
     }
     if (stat(argsPath.c_str(), &buffer1) == 0) {
-        printf("- argsPath exists: %s\n", argsPath.c_str());
+        printf("-        argsPath exists: %s\n", argsPath.c_str());
     }
     if (stat(supportArgsPath.c_str(), &buffer1) == 0) {
         printf("- supportArgsPath exists: %s\n", supportArgsPath.c_str());
     }
-    */
+    if (stat(zipArgsPath.c_str(), &buffer1) == 0) {
+        printf("-     zipArgsPath exists: %s\n", zipArgsPath.c_str());
+    }
+    #endif
     
     // mmojo-server-support/default-args will be an option for platform optimized builds.
     // const std::string& supportArgsFilename = "mmojo-server-support/default-args";
