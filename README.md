@@ -33,7 +33,7 @@ I welcome any of my changes being implemented in the official llama.cpp.
 ---
 ### Documentation
 Follow these guides in order to build, package, and deploy `mmojo-server`:
-- My start-to-finish guide for building `mmojo-server` with Cosmo [starts here](docs/1-Download.md).
+- My start-to-finish guide for building `mmojo-server` with Cosmo [starts here](docs/0-Prepare-Build-Environment.md).
 
 ---
 ### Modifications to llama.cpp
@@ -85,6 +85,7 @@ In no particular order of importance, these are the things that bother me:
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
