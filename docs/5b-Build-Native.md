@@ -1,11 +1,11 @@
-## 5b. Build mmojo-server
+## 5b. Build Native
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
 The fifth step in building Mmojo Server is to build the `mmojo-server` executables.
 
-In this subsetp, we will build `mmojo-server` for your build environment platform. You don't need to do this. You can use it to test and debug features of mmojo-server that are not specific to any particular build.
+In this subsetp, we will build `mmojo-server` for your native build environment platform. You don't need to do this. You can use it to test and debug features of mmojo-server that are not specific to any particular build.
 
 Skip ahead to: [5c. Build mmojo-server-cosmo](5c-Build-mmojo-server-cosmo.md).
 
@@ -34,7 +34,7 @@ EXTRA_FLAGS=" -pg "
 ```
 
 ---
-### Build Mmojo Server for build platform.
+### Build Mmojo Server for native build environment platform.
 We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
@@ -46,19 +46,19 @@ else
     export CC="cc $EXTRA_FLAGS "
     export CXX="c++ $EXTRA_FLAGS "
 fi
-cmake -B build-platform -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
-cmake --build build-platform --config Release
+cmake -B build-native -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
+cmake --build build-native --config Release
 
-printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Build Mmojo Server for native build environment platform.\n*\n**********\n\n"
 ```
 
 ---
 ### OPTIONAL: Test the Build - Command-Line Arguments.
 Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
-rm -f ./build-platform/bin/mmojo-server-args
-rm -r -f ./build-platform/bin/mmojo-server-support
-./build-platform/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+rm -f ./build-native/bin/mmojo-server-args
+rm -r -f ./build-native/bin/mmojo-server-support
+./build-native/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
@@ -67,9 +67,9 @@ rm -r -f ./build-platform/bin/mmojo-server-support
 ### OPTIONAL: Test the Build - `mmojo-server-args` File.
 Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
-rm -f ./build-platform/bin/mmojo-server-args
-rm -r -f ./build-platform/bin/mmojo-server-support
-cat << EOF > ./build-platform/bin/mmojo-server-args
+rm -f ./build-native/bin/mmojo-server-args
+rm -r -f ./build-native/bin/mmojo-server-support
+cat << EOF > ./build-native/bin/mmojo-server-args
 --model
 $HOME/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf
 --host
@@ -91,17 +91,17 @@ chat
 --mlock
 ...
 EOF
-./build-platform/bin/mmojo-server 
+./build-native/bin/mmojo-server 
 ```
 
 ---
 ### OPTIONAL: Test the Build - `mmojo-server-support` Directory.
 Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
-rm -f ./build-platform/bin/mmojo-server-args
-rm -r -f ./build-platform/bin/mmojo-server-support
-mkdir -p ./build-platform/bin/mmojo-server-support
-cat << EOF > ./build-platform/bin/mmojo-server-support/default-args
+rm -f ./build-native/bin/mmojo-server-args
+rm -r -f ./build-native/bin/mmojo-server-support
+mkdir -p ./build-native/bin/mmojo-server-support
+cat << EOF > ./build-native/bin/mmojo-server-support/default-args
 --model
 $HOME/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf
 --host
@@ -123,15 +123,15 @@ chat
 --mlock
 ...
 EOF
-./build-platform/bin/mmojo-server 
+./build-native/bin/mmojo-server 
 ```
 
 ---
 ### OPTIONAL: Profile Output.
 If you're profiling, get some profile output.
 ```
-gprof build-platform/bin/mmojo-server gmon.out > build-platform/profile.txt
-more build-platform/profile.txt
+gprof build-native/bin/mmojo-server gmon.out > build-native/profile.txt
+more build-native/profile.txt
 ```
 
 ---
@@ -147,6 +147,6 @@ sudo cp -r completion-ui-original /mnt/hyperv/web-apps/completion-ui
 ---
 ### Next Step: Build mmojo-server-cosmo
 
-You've built the `mmojo-server` application for your build environment platform.
+You've built the `mmojo-server` application for your native build environment platform.
 
 Next step: [5c. Build mmojo-server-cosmo](5c-Build-mmojo-server-cosmo.md).
