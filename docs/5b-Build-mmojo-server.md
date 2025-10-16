@@ -52,16 +52,23 @@ cmake --build build-platform --config Release
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for build platform.\n*\n**********\n\n"
 ```
 
-**Optional:** Test the build. Requires previously downloaded model to the `1-DOWNLOAD` directory.
+---
+### OPTIONAL: Test the Build - Command-Line Arguments.
+Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
 rm -f ./build-platform/bin/mmojo-server-args
+rm -r -f ./build-platform/bin/mmojo-server-support
 ./build-platform/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
 
-**Optional:** Test the build with a `mmojo-server-args` file. Requires previously downloaded model to the `1-DOWNLOAD` directory.
+---
+### OPTIONAL: Test the Build - `mmojo-server-args` File.
+Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
+rm -f ./build-platform/bin/mmojo-server-args
+rm -r -f ./build-platform/bin/mmojo-server-support
 cat << EOF > ./build-platform/bin/mmojo-server-args
 --model
 $HOME/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf
@@ -87,7 +94,41 @@ EOF
 ./build-platform/bin/mmojo-server 
 ```
 
-**Optional:** If you're profiling, get some profile output.
+---
+### OPTIONAL: Test the Build - `mmojo-server-support` Directory.
+Requires previously downloaded model to the `1-DOWNLOAD` directory.
+```
+rm -f ./build-platform/bin/mmojo-server-args
+rm -r -f ./build-platform/bin/mmojo-server-support
+mkdir -p ./build-platform/bin/mmojo-server-support
+cat << EOF > ./build-platform/bin/mmojo-server-support/default-args
+--model
+$HOME/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf
+--host
+0.0.0.0
+--port
+8080
+--ctx-size
+0
+--threads-http
+8
+--batch-size
+64
+--batch-sleep-ms
+0
+--path
+$(pwd)/completion-ui
+--default-ui-endpoint
+chat
+--mlock
+...
+EOF
+./build-platform/bin/mmojo-server 
+```
+
+---
+### OPTIONAL: Profile Output.
+If you're profiling, get some profile output.
 ```
 gprof build-platform/bin/mmojo-server gmon.out > build-platform/profile.txt
 more build-platform/profile.txt
