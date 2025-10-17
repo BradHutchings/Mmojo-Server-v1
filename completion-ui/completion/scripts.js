@@ -5,7 +5,7 @@
 const isMmojoPage = true;
 const kLogging = false;
 const kMaxCopyPastes = 20;
-const kUpdated = '[[UPDATED]]';
+const kUpdated = '2025-10-17';
 const kWaitToComplete = 2000;
 const kReplayDelay = 25;
 
@@ -84,7 +84,6 @@ script.manualStop = false;
 script.completedContent = '';
 script.completionStartedMS = 0;
 script.completionEndedMS = 0;
-script.evaluatingEtaMS = 0;
 script.evaluatingEstimatedMS = 0;
 script.evaluatingTokensProcessed = 0;
 script.evaluatingTokensTotal = 0;
@@ -454,7 +453,6 @@ function Complete() {
         script.statusMode = kStatusMode.evaluating;
         script.completionStartedMS = Date.now();
         script.completionEndedMS = 0;
-        script.evaluatingEtaMS = 0;
         script.evaluatingEstimatedMS = 0;
         script.evaluatingTokensProcessed = 0;
         script.evaluatingTokensTotal = 0;
@@ -622,15 +620,17 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                         let total = lineData.data.prompt_progress.total;
 
                         let elapsedMS = Date.now() - script.completionStartedMS;
-                        script.evaluatingEtaMS = ((elapsedMS * total) / processed) - elapsedMS;
-                        script.evaluatingEstimatedMS = ((elapsed * total) / processed);
+   			            let estimatedMS = (elapsedMS * total) / processed;
+			            estimatedMS += (10 * 0000);
+			            estimatedMS = 10000* Math.floor(estimatedMS / 10000);
+
+                        script.evaluatingEstimatedMS = estimatedMS;
                         script.evaluatingTokensProcessed = processed;
                         script.evaluatingTokensTotal = total;
 
                         if (kLogging || logThis) console.log("n_past: " + processed);
                         if (kLogging || logThis) console.log("n_prompt_tokens: " + total);
                         if (kLogging || logThis) console.log("elapsedMS: " + elapsedMS);
-                        if (kLogging || logThis) console.log("evaluatingEtaMS: " + script.evaluatingEtaMS);
                         if (kLogging || logThis) console.log("evaluatingEstimatedMS: " + script.evaluatingEstimatedMS);
 
                         if (processed < total) {
@@ -894,7 +894,6 @@ function UpdateStatus() {
         if (kLogging || logThis) console.log("evaluating_progress");
         if (kLogging || logThis) console.log("- evaluatingTokensProcessed: " + script.evaluatingTokensProcessed);
         if (kLogging || logThis) console.log("- evaluatingTokensTotal: " + script.evaluatingTokensTotal);
-        if (kLogging || logThis) console.log("- evaluatingEtaMS: " + script.evaluatingEtaMS);
         if (kLogging || logThis) console.log("- evaluatingEstimatedMS: " + script.evaluatingEstimatedMS);
 
         if (script.evaluatingTokensTotal > 0) {
