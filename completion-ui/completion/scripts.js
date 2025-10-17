@@ -622,7 +622,7 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                         let elapsedMS = Date.now() - script.completionStartedMS;
    			            let estimatedMS = (elapsedMS * total) / processed;
 			            estimatedMS += (10 * 0000);
-			            estimatedMS = 10000* Math.floor(estimatedMS / 10000);
+			            estimatedMS = 10000 * Math.ceil(estimatedMS / 10000);
 
                         script.evaluatingEstimatedMS = estimatedMS;
                         script.evaluatingTokensProcessed = processed;
@@ -1745,6 +1745,7 @@ function GetElapsedTimeString(ms) {
 
     return result;
 }
+
 
 
 
