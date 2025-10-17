@@ -85,6 +85,7 @@ script.completedContent = '';
 script.completionStartedMS = 0;
 script.completionEndedMS = 0;
 script.evaluatingEtaMS = 0;
+script.evaluatingEstimatedMS = 0;
 script.evaluatingTokensProcessed = 0;
 script.evaluatingTokensTotal = 0;
 script.stoppedByWord = "";
@@ -454,6 +455,7 @@ function Complete() {
         script.completionStartedMS = Date.now();
         script.completionEndedMS = 0;
         script.evaluatingEtaMS = 0;
+        script.evaluatingEstimatedMS = 0;
         script.evaluatingTokensProcessed = 0;
         script.evaluatingTokensTotal = 0;
         script.stoppedByWord = "";
@@ -621,6 +623,7 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
 
                         let elapsedMS = Date.now() - script.completionStartedMS;
                         script.evaluatingEtaMS = ((elapsedMS * total) / processed) - elapsedMS;
+                        script.evaluatingEstimatedMS = ((elapsed * total) / processed);
                         script.evaluatingTokensProcessed = processed;
                         script.evaluatingTokensTotal = total;
 
@@ -628,6 +631,7 @@ async function StartCompleting(workAreaText, temperature, tokens, stopWords) {
                         if (kLogging || logThis) console.log("n_prompt_tokens: " + total);
                         if (kLogging || logThis) console.log("elapsedMS: " + elapsedMS);
                         if (kLogging || logThis) console.log("evaluatingEtaMS: " + script.evaluatingEtaMS);
+                        if (kLogging || logThis) console.log("evaluatingEstimatedMS: " + script.evaluatingEstimatedMS);
 
                         if (processed < total) {
                             script.statusMode = kStatusMode.evaluating_progress;
@@ -891,21 +895,10 @@ function UpdateStatus() {
         if (kLogging || logThis) console.log("- evaluatingTokensProcessed: " + script.evaluatingTokensProcessed);
         if (kLogging || logThis) console.log("- evaluatingTokensTotal: " + script.evaluatingTokensTotal);
         if (kLogging || logThis) console.log("- evaluatingEtaMS: " + script.evaluatingEtaMS);
+        if (kLogging || logThis) console.log("- evaluatingEstimatedMS: " + script.evaluatingEstimatedMS);
 
         if (script.evaluatingTokensTotal > 0) {
-            status = status + script.evaluatingTokensProcessed + " / " + script.evaluatingTokensTotal;
-
-            if (script.evaluatingEtaMS > 0) {
-                let etaMinutes = Math.round((script.evaluatingEtaMS / 1000) / 60);
-                if (kLogging || logThis) console.log("- etaMinutes: " + script.etaMinutes);
-                if (etaMinutes == 1) {
-                    status = status + " (1 minute)";
-                }
-                else if (etaMinutes > 1) {
-                    status = status + " (" + etaMinutes + " minutes)";
-                }
-            }
-            status = status + ".";
+            status = status + script.evaluatingTokensProcessed + " / " + script.evaluatingTokensTotal + ".";
         }
         else {
             status = status.trimEnd() + ".";
@@ -913,7 +906,13 @@ function UpdateStatus() {
 
         let elapsedMS = Date.now() - script.completionStartedMS;
         if (elapsedMS > 0) {
-            status += " <b>Time:</b> " + GetElapsedTimeString(elapsedMS) + ".";
+            status += " <b>Time:</b> " + GetElapsedTimeString(elapsedMS);
+
+            if (script.evaluatingEstimatedMS > 0) {
+                status += " / " + GetElapsedTimeString(script.evaluatingEstimatedMS);
+            }
+
+            status += ".";
         }
     }
     else if (script.statusMode == kStatusMode.evaluating_finishing) {
@@ -1747,5 +1746,6 @@ function GetElapsedTimeString(ms) {
 
     return result;
 }
+
 
 
