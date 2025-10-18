@@ -84,10 +84,11 @@ printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n*******
 
 Add self-signed certs to the archive. CA cert is added to the website folder.
 ```
+mount-mmojo-share.sh
 mkdir certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.crt certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.key certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt certs
+cp /mnt/mmojo/Mmojo-certs/mmojo.local.crt certs
+cp /mnt/mmojo/Mmojo-certs/mmojo.local.key certs
+cp /mnt/mmojo/Mmojo-certs/selfsignCA.crt certs
 zip -0 -r $MMOJO_SERVER_ONE_ZIP certs/*
 printf "\n**********\n*\n* FINISHED: Add Certs to Archive.\n*\n**********\n\n"
 ```
@@ -105,9 +106,10 @@ printf "\n**********\n*\n* FINISHED: Verify certs Directory in Archive.\n*\n****
 
 `llama.cpp` has a built in chat UI. If you'd like to provide a custom UI, you should add a `website` directory to the `mmojo-server` archive. `llama.cpp`'s chat UI is optimized for serving inside the project's source code. But we can copy the unoptimized source:
 ```
+mount-mmojo-share.sh
 mkdir website
 cp -r ~/$BUILD_MMOJO_SERVER_DIR/completion-ui/* website
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt website/CA.crt
+cp /mnt/mmojo/Mmojo-certs/selfsignCA.crt website/CA.crt
 zip -0 -r $MMOJO_SERVER_ONE_ZIP website/*
 printf "\n**********\n*\n* FINISHED: Create website Directory in Archive.\n*\n**********\n\n"
 ```
@@ -237,7 +239,7 @@ Congratulations! You are ready to copy `mmojo-server-one` executable to the shar
 
 ```
 mount-host-share.sh
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/mmojo-server-one/mac-linux/$MMOJO_SERVER_ONE_GGUF
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/mmojo-server-one/windows/$MMOJO_SERVER_ONE_GGUF.exe
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/mmojo/Mmojo-Server/mmojo-server-one/mac-linux/$MMOJO_SERVER_ONE_GGUF
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/mmojo/Mmojo-Server/mmojo-server-one/windows/$MMOJO_SERVER_ONE_GGUF.exe
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server-one for Deployment.\n*\n**********\n\n"
 ```
