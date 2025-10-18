@@ -65,11 +65,11 @@ rm -r -f ./build-native/bin/mmojo-server-support
 
 ---
 ### OPTIONAL: Test the Build - `mmojo-server-args` File.
-Requires previously downloaded model to the `1-DOWNLOAD` directory.
+The `mmojo-server-args` file is saved in the working directory. Requires previously downloaded model to the `1-DOWNLOAD` directory. 
 ```
-rm -f ./build-native/bin/mmojo-server-args
-rm -r -f ./build-native/bin/mmojo-server-support
-cat << EOF > ./build-native/bin/mmojo-server-args
+rm -f mmojo-server-args
+rm -r -f mmojo-server-support
+cat << EOF > mmojo-server-args
 --model
 $HOME/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf
 --host
@@ -98,10 +98,10 @@ EOF
 ### OPTIONAL: Test the Build - `mmojo-server-support` Directory.
 Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
-rm -f ./build-native/bin/mmojo-server-args
-rm -r -f ./build-native/bin/mmojo-server-support
-mkdir -p ./build-native/bin/mmojo-server-support
-cat << EOF > ./build-native/bin/mmojo-server-support/default-args
+rm -f mmojo-server-args
+rm -r -f mmojo-server-support
+mkdir -p mmojo-server-support
+cat << EOF > mmojo-server-support/default-args
 --model
 $HOME/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf
 --host
