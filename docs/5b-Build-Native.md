@@ -136,12 +136,13 @@ more build-native/profile.txt
 
 ---
 ### OPTIONAL: Copy `completion-ui` to Local Space
-After testing the completion UI, copy it to local space. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
+After testing the completion UI, copy it to local space. These commands use the `mount-mmojo-share.sh` script and `/mnt/mmojo` share.
 
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
-mount-host-share.sh
-sudo cp -r completion-ui-original /mnt/hyperv/web-apps/completion-ui
+mount-mmojo-share.sh
+sudo mkdir -p /mnt/mmojo/web-apps
+sudo cp -r completion-ui-original /mnt/mmojo/web-apps/completion-ui
 ```
 
 ---
