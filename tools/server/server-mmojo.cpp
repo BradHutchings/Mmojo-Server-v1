@@ -4481,24 +4481,13 @@ int main(int argc, char ** argv) {
 
     // This implements an args file feature inspired by llamafile's.
     // It does not require Cosmo anymore, as the mmojo_args function is part of mmojo-server now.
-    // Path parameters passed on command line or in args files should be full paths.
-    
-    char pathChar[PATH_MAX];
-    pathChar[0] = '\0'; 
-    
-    // THIS IS NOT CORRECT FOR APE BUILD:
-    //     Executable path: /home/linux/.ape-1.10
-    //     -            path: /home/linux/
-    
-    ssize_t len = readlink("/proc/self/exe", pathChar, sizeof(pathChar) - 1);
-    if (len != -1) {
-        pathChar[len] = '\0'; // Null-terminate the string
-        printf("Executable path: %s\n", pathChar);
+    // Path parameters passed on command line or in args files are relative to the working directory.
 
-        char* lastSlash = strrchr(pathChar, '/');
-        if (lastSlash != NULL) {
-          lastSlash[1] = '\0';
-        }
+    char pathChar[PATH_MAX];
+    pathChar[0] = '\0';
+
+    if (getcwd(pathChar, sizeof(pathChar) - 1)) {
+        strcat(pathChar, "/");
     }
 
     // Args files if present. The names are different to remove confusion during packaging.
@@ -4513,6 +4502,7 @@ int main(int argc, char ** argv) {
     std::string supportArgsPath = supportPath + supportArgsFilename;
 
     #if 1
+    printf('Paths of things we care about:\n');
     printf("-            path: %s\n", path.c_str());
     printf("-        argsPath: %s\n", argsPath.c_str());
     printf("-     supportPath: %s\n", supportPath.c_str());
@@ -4565,7 +4555,6 @@ int main(int argc, char ** argv) {
     #endif
     
     // Yep, this is counterintuitive, but how the cosmo_args command works.
-    
     // mmojo-server END
 
     // own arguments required by this example
@@ -4577,7 +4566,7 @@ int main(int argc, char ** argv) {
 
     // mmojo-server START
     // fix params -- model, path, ssl-key-file, ssl-cert-file
-    // if they are relative paths, fix to absolute relative to executable
+    // if they are relative paths, fix to absolute relative to working directory
     if (supportPath != "") {
         const std::string& mmojoRootPath = "/mmojo/";
         if (starts_with(params.model.path, mmojoRootPath)) {
@@ -4601,8 +4590,6 @@ int main(int argc, char ** argv) {
             printf("  - new ssl-cert-file path: %s\n", s.c_str());
         }
     }
-
-    // exit(0);
     // mmojo-server END
 
     common_init();
