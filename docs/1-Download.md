@@ -72,13 +72,13 @@ printf "\n**********\n*\n* FINISHED: Download Models.\n*\n**********\n\n"
 
 
 ---
-### [Brad] Copy Models from Share
-If you're lucky enough to be using Brad's environment, copying from a local file share is faster than downloading from Hugging Face.
+### Copy Models from Mmojo Share
+If you've created a Mmojo share on your network, copying from that share is much faster than downloading from Hugging Face.
 
 Mount the share:
 ```
-mount-host-share.sh
-ls -al /mnt/hyperv
+mount-mmojo-share.sh
+ls -al /mnt/mmojo
 printf "\n**********\n*\n* FINISHED: Mount the share.\n*\n**********\n\n"
 ```
 
@@ -88,7 +88,7 @@ CopyModel() {
   MODEL_FILE=$1
   if [ ! -f $MODEL_FILE ]; then 
     echo "Copying $MODEL_FILE.\n"
-    cp -v /mnt/hyperv/models/$MODEL_FILE .
+    cp -v /mnt/mmojo/models/$MODEL_FILE .
     chmod a-x $MODEL_FILE
   fi
 }
@@ -105,7 +105,7 @@ done < "$MODEL_MAP"
 for key in "${!apefiles[@]}"; do
   CopyModel $key 
 done
-printf "\n**********\n*\n* FINISHED: Copy Models from Share.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Copy Models from Mmojo Share.\n*\n**********\n\n"
 ```
 
 ---
