@@ -29,19 +29,23 @@ The Mmojo Share is a file share where I keep files for local access and complete
 6. Create a `mount-mmojo-share.sh` script, edit with your details.
    ```
    cat << EOF > "$SCRIPTS_DIR/$MOUNT_SCRIPT"
-   sudo mount -t cifs -o user=[USER] //[COMPUTER]/mmojo $SHARE_DIR
+   if [[ ! \$(findmnt $SHARE_DIR) ]]; then
+       sudo mount -t cifs -o user=[USER] //[COMPUTER]/mmojo $SHARE_DIR
+   fi
    EOF
    ```
 7. Edit the script to put your COMPUTER and USER names in. "Ctrl-X" then "Y" to exit and save.
    ```
    nano "$SCRIPTS_DIR/$MOUNT_SCRIPT"
    ```
-9. Add `~/scripts` to your `$PATH` in `.bashrc` and `source` it.
+9. If `~/scripts` is not already in the `$PATH`, add `~/scripts` to your `$PATH` in `.bashrc` and `source` `.bashrc`.
    ```
-   cat << EOF >> ~/.bashrc
-   export PATH="$PATH:$SCRIPTS_DIR"
-   EOF
-   source ~/.bashrc
+   if [[ "$PATH" != *"$SCRIPTS_DIR"* ]]; then
+       cat << EOF >> ~/.bashrc
+       export PATH="$PATH:$SCRIPTS_DIR"
+       EOF
+       source ~/.bashrc
+   fi
    ```
 
 ---
