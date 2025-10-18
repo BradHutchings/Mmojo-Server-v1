@@ -65,7 +65,7 @@ rm -r -f ./build-native/bin/mmojo-server-support
 
 ---
 ### OPTIONAL: Test the Build - `mmojo-server-args` File.
-The `mmojo-server-args` file is saved in the working directory. Requires previously downloaded model to the `1-DOWNLOAD` directory. 
+The `mmojo-server-args` file is saved in the current working directory. Requires previously downloaded model to the `1-DOWNLOAD` directory. 
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
@@ -96,7 +96,7 @@ EOF
 
 ---
 ### OPTIONAL: Test the Build - `mmojo-server-support` Directory.
-Requires previously downloaded model to the `1-DOWNLOAD` directory.
+The `mmojo-server-support` directory is saved in the current working directory. Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
