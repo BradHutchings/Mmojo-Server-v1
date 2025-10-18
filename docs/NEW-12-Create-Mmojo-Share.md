@@ -34,7 +34,7 @@ The Mmojo Share is a file share where I keep files for local access and complete
    fi
    EOF
    ```
-7. Edit the script to put your COMPUTER and USER names in. "Ctrl-X" then "Y" to exit and save.
+7. Edit the script to put your `COMPUTER` and `USER` names in. "Ctrl-X" then "Y" to exit and save.
    ```
    nano "$SCRIPTS_DIR/$MOUNT_SCRIPT"
    ```
