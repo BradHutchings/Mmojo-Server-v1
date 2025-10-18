@@ -42,10 +42,10 @@ The Mmojo Share is a file share where I keep files for local access and complete
 9. If `~/scripts` is not already in the `$PATH`, add `~/scripts` to your `$PATH` in `.bashrc` and `source` `.bashrc`.
    ```
    if [[ "$PATH" != *"$SCRIPTS_DIR"* ]]; then
-       cat << EOF >> ~/.bashrc
-       export PATH="$PATH:$SCRIPTS_DIR"
-       EOF
-       source ~/.bashrc
+   cat << EOF >> $HOME/.bashrc
+   export PATH="$PATH:$SCRIPTS_DIR"
+   EOF
+   source $HOME/.bashrc
    fi
    ```
 
