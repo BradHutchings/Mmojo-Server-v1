@@ -4502,7 +4502,7 @@ int main(int argc, char ** argv) {
     std::string supportArgsPath = supportPath + supportArgsFilename;
 
     #if 1
-    printf('Paths of things we care about:\n');
+    printf("Paths of things we care about:\n");
     printf("-            path: %s\n", path.c_str());
     printf("-        argsPath: %s\n", argsPath.c_str());
     printf("-     supportPath: %s\n", supportPath.c_str());
