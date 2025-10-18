@@ -35,6 +35,8 @@ I welcome any of my changes being implemented in the official llama.cpp.
 Follow these guides in order to build, package, and deploy `mmojo-server`:
 - My start-to-finish guide for building `mmojo-server` with Cosmo [starts here](docs/0-Prepare-Build-Environment.md).
 
+I am in the process of rewriting the documentation to use a multi-machine build system, shared builds and products on an SMB share, and get more optimal performance out of targeted builds. That journey [starts here](docs/NEW-10-Prepare-Build-Environment.md) and currently leads into the cuurent documentation after the buid environment is prepared.
+
 ---
 ### Modifications to llama.cpp
 
@@ -77,14 +79,15 @@ Here are some projects and pages you should be familiar with if you want to get 
 In no particular order of importance, these are the things that bother me:
 - GPU support without a complicated kludge, and that can support all supported platform / CPU / GPU triads. Perhaps a plugin system with shared library dispatch? Invoking dev tools on Apple Metal like llamafile does is "complicated".
 - Code signing instructions. Might have to sign executables within the zip package, plus the package itself.
-- Copy the `cosmo_args` function into `server.cpp` so it could potentially be incorporated upstream in non-Cosmo builds. `common/arg2.cpp` might be a good landing spot. License in [Cosmo source code](https://github.com/jart/cosmopolitan/blob/master/tool/args/args2.c) appears to be MIT compatible with attribution.
-  - The args thing is cute, but it might be easier as a yaml file. Key value pairs. Flags can be keys with null values.
-- Clean up remaining build warnings, either by fixing source (i.e. Cosmo) or finding the magical compiler flags.
+- The `mmojo-args` (from `cosmo-args`) thing is cute, but it might be easier for users as a yaml file. Key value pairs. Flags can be keys with null values.
+- ~~Copy the `cosmo_args` function into `server.cpp` so it could potentially be incorporated upstream in non-Cosmo builds. `common/arg2.cpp` might be a good landing spot. License in [Cosmo source code](https://github.com/jart/cosmopolitan/blob/master/tool/args/args2.c) appears to be MIT compatible with attribution.~~ Implemented.
+- ~~Clean up remaining build warnings, either by fixing source (i.e. Cosmo) or finding the magical compiler flags.~~ Implemented.
 - ~~Write docs for a Deploying step. It should address the args file, removing the extra executable depending on platform, models, host, port. context size.~~ Mostly implemented.
 - ~~Package gguf file into executable file. The zip item needs to be aligned for mmap. There is a zipalign.c tool source in llamafile that seems loosely inspired by the Android zipalign too. I feel like there should be a more generic solution for this problem.~~ Implemented.
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
