@@ -12,6 +12,7 @@ The Mmojo Share is a file share where I keep files for local access and complete
    ```
    SHARE_DIR="/mnt/mmojo"
    SCRIPTS_DIR="$HOME/scripts"
+   TILDE_SCRIPTS="~/scripts"
    MOUNT_SCRIPT="mount-mmojo-share.sh"
    ```
 4. Create `/mnt/mmojo` directory.
@@ -20,7 +21,7 @@ The Mmojo Share is a file share where I keep files for local access and complete
        sudo mkdir -p $SHARE_DIR
    fi
    ```
-5. Create `~/scripts` directory.
+5. Create `$HOME/scripts` directory.
    ```
    if [ ! -d "$SCRIPTS_DIR" ]; then
        mkdir -p $SCRIPTS_DIR
@@ -41,12 +42,13 @@ The Mmojo Share is a file share where I keep files for local access and complete
    ```
 9. If `~/scripts` is not already in the `$PATH`, add `~/scripts` to your `$PATH` in `.bashrc` and `source` `.bashrc`.
    ```
-   if [[ "$PATH" != *"$SCRIPTS_DIR"* ]]; then
+   if [[ "${PATH}" != *"${SCRIPTS_DIR}"* ]] && [[ "${PATH}" != *"${TILDE_SCRIPTS}"* ]]; then
    cat << EOF >> $HOME/.bashrc
    export PATH="$PATH:$SCRIPTS_DIR"
    EOF
    source $HOME/.bashrc
    fi
+   echo $PATH
    ```
 
 ---
