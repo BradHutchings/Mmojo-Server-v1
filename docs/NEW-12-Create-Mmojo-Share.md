@@ -32,6 +32,7 @@ The Mmojo Share is a file share where I keep files for local access and complete
    if [[ ! \$(findmnt $SHARE_DIR) ]]; then
        sudo mount -t cifs -o user=[USER] //[COMPUTER]/mmojo $SHARE_DIR
    fi
+   chmod a+x "$SCRIPTS_DIR/$MOUNT_SCRIPT"
    EOF
    ```
 7. Edit the script to put your `COMPUTER` and `USER` names in. "Ctrl-X" then "Y" to exit and save.
