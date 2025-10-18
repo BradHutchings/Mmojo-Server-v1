@@ -4485,6 +4485,11 @@ int main(int argc, char ** argv) {
     
     char pathChar[PATH_MAX];
     pathChar[0] = '\0'; 
+    
+    // THIS IS NOT CORRECT FOR APE BUILD:
+    //     Executable path: /home/linux/.ape-1.10
+    //     -            path: /home/linux/
+    
     ssize_t len = readlink("/proc/self/exe", pathChar, sizeof(pathChar) - 1);
     if (len != -1) {
         pathChar[len] = '\0'; // Null-terminate the string
