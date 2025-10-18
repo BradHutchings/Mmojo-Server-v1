@@ -15,9 +15,10 @@ I plan to add into my regular mix and provide custom build instructions in the f
 - RHEL, CentOS Stream, Oracle Linux, etc. for x86_64 in a virtual machine.
 - macOS on Mac Mini M4.
 
-You only need to set up each build environment once. 
+You only need to prepare each build environment once. 
 
-Skip ahead to: [10. Gather Pieces](NEW-20-Gather-Pieces.md).
+If you have already prepared your build environment, skip ahead to: 
+- [20. Gather Pieces](NEW-20-Gather-Pieces.md).
 
 ---
 ### Preparing Your Build Environment
