@@ -56,8 +56,8 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for native build environ
 ### OPTIONAL: Test the Build - Command-Line Arguments.
 Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
-rm -f ./build-native/bin/mmojo-server-args
-rm -r -f ./build-native/bin/mmojo-server-support
+rm -f mmojo-server-args
+rm -r -f mmojo-server-support
 ./build-native/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
