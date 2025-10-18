@@ -11,7 +11,7 @@ The Mmojo Share is a file share where I keep files for local access and complete
 2. We need some variables:
    ```
    SHARE_DIR="/mnt/mmojo"
-   SCRIPTS_DIR="~/scripts"
+   SCRIPTS_DIR="$HOME/scripts"
    MOUNT_SCRIPT="mount-mmojo-share.sh"
    ```
 4. Create `/mnt/mmojo` directory.
