@@ -4503,11 +4503,11 @@ int main(int argc, char ** argv) {
     const std::string& zipArgsPath = "/zip/default-args";
 
     std::string path = pathChar;
-    std::string argsPath = path + argsFilename;    
-    std::string supportPath = path + supportDirectoryName;    
-    std::string supportArgsPath = path + supportDirectoryName + "/" + supportArgsFilename;
+    std::string argsPath = path + argsFilename;
+    std::string supportPath = path + supportDirectoryName + "/";
+    std::string supportArgsPath = supportPath + supportArgsFilename;
 
-    #if 0
+    #if 1
     printf("-            path: %s\n", path.c_str());
     printf("-        argsPath: %s\n", argsPath.c_str());
     printf("-     supportPath: %s\n", supportPath.c_str());
@@ -4575,28 +4575,29 @@ int main(int argc, char ** argv) {
     // if they are relative paths, fix to absolute relative to executable
     if (supportPath != "") {
         const std::string& mmojoRootPath = "/mmojo/";
-        if (starts_with(params.model.path, mmojoRootPath) {
+        if (starts_with(params.model.path, mmojoRootPath)) {
             printf("--model path starts with %s.\n",  mmojoRootPath.c_str());
-            printf("  - new model path: %s\n", s);
+            std::string s = params.model.path.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new model path: %s\n", s.c_str());
         }
-        if (starts_with(params.public_path, mmojoRootPath) {
+        if (starts_with(params.public_path, mmojoRootPath)) {
             printf("--path path starts with %s.\n",  mmojoRootPath.c_str());
-            std:string s = params.public_path.replace(0, mmojoRootPath.length(), supportPath);
-            printf("  - new path path: %s\n", s);
+            std::string s = params.public_path.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new path path: %s\n", s.c_str());
         }
-        if (starts_with(params.ssl_file_key, mmojoRootPath) {
+        if (starts_with(params.ssl_file_key, mmojoRootPath)) {
             printf("--ssl-key-file path starts with %s.\n",  mmojoRootPath.c_str());
-            std:string s = params.ssl_file_key.replace(0, mmojoRootPath.length(), supportPath);
-            printf("  - new ssl-key-file path: %s\n", s);
+            std::string s = params.ssl_file_key.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new ssl-key-file path: %s\n", s.c_str());
         }
-        if (starts_with(params.ssl_file_cert, mmojoRootPath) {
+        if (starts_with(params.ssl_file_cert, mmojoRootPath)) {
             printf("--ssl-cert-file path starts with %s.\n",  mmojoRootPath.c_str());
-            std:string s = params.ssl_file_cert.replace(0, mmojoRootPath.length(), supportPath);
-            printf("  - new ssl-cert-file path: %s\n", s);
+            std::string s = params.ssl_file_cert.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new ssl-cert-file path: %s\n", s.c_str());
         }
     }
 
-    exit 0;
+    // exit(0);
     // mmojo-server END
 
     common_init();
