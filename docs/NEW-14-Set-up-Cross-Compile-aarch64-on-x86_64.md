@@ -26,6 +26,8 @@ sudo mv ubuntu-arm64.sources /etc/apt/sources.list.d/ubuntu-arm64.sources
 sudo apt update
 sudo apt install -y libssl-dev:arm64
 sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
+
+printf "\n**********\n*\n* FINISHED: Set up Cross Compile aarch64 (arm64) on x86_64.\n*\n**********\n\n"
 ```
 
 ---
