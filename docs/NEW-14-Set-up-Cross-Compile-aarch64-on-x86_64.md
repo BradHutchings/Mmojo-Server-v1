@@ -30,6 +30,23 @@ sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64
 printf "\n**********\n*\n* FINISHED: Set up Cross Compile aarch64 (arm64) on x86_64.\n*\n**********\n\n"
 ```
 
+#### Verify that libssl.a and libcrypto.a are Installed for Both Architectures
+Find where the files are under `/usr/lib`:
+```
+find /usr/lib -name "libssl.a"
+find /usr/lib -name "libcrypto.a"
+```
+
+The output should look like this:
+```
+/usr/lib/x86_64-linux-gnu/libssl.a
+/usr/lib/aarch64-linux-gnu/libssl.a
+/usr/lib/x86_64-linux-gnu/libcrypto.a
+/usr/lib/aarch64-linux-gnu/libcrypto.a
+```
+
+I hope to be able to use these to replace the lengthy openssl build with cosmocc at some point. They aren't currently compatible with Cosmopolitan because `_FORTIFY_SOURCE` was used to build these static libraries.
+
 ---
 ### Proceed
 **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
