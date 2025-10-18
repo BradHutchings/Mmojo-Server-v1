@@ -26,6 +26,7 @@ ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
 MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
 
 MMOJO_SERVER="mmojo-server"
+MMOJO_SERVER_COSMO="mmojo-server-cosmo"
 MMOJO_SERVER_ONE_ZIP="mmojo-server-one.zip"
 MMOJO_SERVER_ONE="mmojo-server-one"
 GGUF_SUFFIX="Google-Gemma-1B-Instruct-v3"
@@ -48,7 +49,7 @@ Next, let's create a directory where we'll package `mmojo-server`. We copy `mmoj
 cd ~
 rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
+cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ZIP
 cd ~/$PACKAGE_DIR
 printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```
