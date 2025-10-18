@@ -239,7 +239,7 @@ Hit `ctrl-C` on your keyboard to stop it.
 Congratulations! You are ready to copy `mmojo-server-one` executable to the share for deployment. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
 
 ```
-mount-host-share.sh
+mount-mmojo-share.sh
 sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/mmojo/Mmojo-Server/mmojo-server-one/mac-linux/$MMOJO_SERVER_ONE_GGUF
 sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/mmojo/Mmojo-Server/mmojo-server-one/windows/$MMOJO_SERVER_ONE_GGUF.exe
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server-one for Deployment.\n*\n**********\n\n"
