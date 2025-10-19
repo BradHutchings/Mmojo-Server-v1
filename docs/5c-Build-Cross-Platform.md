@@ -23,6 +23,9 @@ BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="24-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="30-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
+BUILD_COSMO_AMD64="build-cosmo-amd64"
+BUILD_COSMO_AARCH64="build-cosmo-aarch"
+BUILD_COSMO="build-cosmo"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -47,10 +50,10 @@ export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nost
 export AR="cosmoar"
 cp common/CMakeLists.txt common/CMakeLists-orig.txt
 sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
-cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
+cmake -B $BUILD_COSMO_AMD64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64
 mv common/CMakeLists-orig.txt common/CMakeLists.txt
-cmake --build build-cosmo-amd64 --config Release
+cmake --build $BUILD_COSMO_AMD64 --config Release
 export PATH=$SAVE_PATH
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n**********\n\n"
@@ -60,7 +63,7 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n********
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./build-cosmo-amd64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_COSMO_AMD64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
@@ -80,10 +83,10 @@ export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nost
 export AR="cosmoar"
 cp common/CMakeLists.txt common/CMakeLists-orig.txt
 sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
-cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
+cmake -B $BUILD_COSMO_AARCH64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64
 mv common/CMakeLists-orig.txt common/CMakeLists.txt
-cmake --build build-cosmo-aarch64 --config Release
+cmake --build $BUILD_COSMO_AARCH64 --config Release
 export PATH=$SAVE_PATH
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\n\n"
@@ -93,7 +96,7 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./build-cosmo-aarch64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_COSMO_AARCH64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
@@ -104,11 +107,12 @@ Now that we have amd64 (x86) and aarch64 (ARM) builds, we can combine them into 
 
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
+mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_COSMO
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
-	-o mmojo-server-cosmo build-cosmo-amd64/bin/mmojo-server build-cosmo-aarch64/bin/mmojo-server
+	-o $BUILD_COSMO/mmojo-server-cosmo $BUILD_COSMO_AMD64/bin/mmojo-server $BUILD_COSMO_AARCH64/bin/mmojo-server
 export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
 ```
@@ -117,7 +121,7 @@ Let's test our combined build:
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./mmojo-server-cosmo --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_COSMO/mmojo-server-cosmo --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
