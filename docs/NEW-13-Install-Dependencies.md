@@ -6,6 +6,10 @@ brad@bradhutchings.com
 **The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
 
 ---
+### About this Step
+Install system package updates, then install packages we will need for our build system.
+
+---
 ### Install Package Updates
 First, let's install any package updates.
 ```
