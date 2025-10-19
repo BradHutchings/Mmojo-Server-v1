@@ -6,13 +6,14 @@ brad@bradhutchings.com
 **The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
 
 ---
-### Build OpenSSL
+### Introduction
 We need to build our own `libssl.a` and `libcrypto.a` becuase:
 1. Actual Portable Executable (APE) does not support dynamic loading of libraries.
 2. The `libssl.a` and `libcrypto.a` we get by installing `libssl-dev` is built with `_FORTIFY_SOURCE` and will not link against Cosmo's `libc.a`.
 
 This is how I understand the problem. My understanding might be incorrect, but it bears out in trying to find workarounds.
 
+---
 ### Environment Variables
 
 Let's define some environment variables:
