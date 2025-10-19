@@ -21,7 +21,7 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
-### Create Build Directory
+### Create Build llamafile Directory
 ```
 cd ~
 mkdir -p ~/$BUILD_LLAMAFILE_DIR
