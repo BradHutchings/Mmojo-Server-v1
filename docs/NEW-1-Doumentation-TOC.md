@@ -19,12 +19,12 @@ Before you can build Mmojo Server, you need a build environment. Depending on wh
 - [14. Set up Cross Compile - aarch64 on x86_64](NEW-14-Set-up-Cross-Compile-aarch64-on-x86_64.md)
 - [15. Set up Cross Compile - x86_64 on aarch64](NEW-15-Set-up-Cross-Compile-x86_64-on-aarch64.md)
 
-[20. Gather Build Pieces](NEW-20-Gather-Pieces.md) - **Not stubbed yet.**
-- [21. Download GGUFs](NEW-21-Download-ggufs.md) - **Not stubbed yet.**
-- [22. Build Cosmopolitan](NEW-22-Build-Cosmopolitan.md) - **Not stubbed yet.**
-- [23. Build llamafile](NEW-23-Build-llamafile.md) - **Not stubbed yet.**
-- [24. Build OpenSSL](NEW-24-Build-OpenSSL.md) - **Not stubbed yet.**
-- [25. Build Vulkan](NEW-25-Build-Vulkan.md) - **Not stubbed yet.**
+[20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
+- [21. Download GGUFs](NEW-21-Download-ggufs.md) - 
+- [22. Build Cosmopolitan](NEW-22-Build-Cosmopolitan.md)
+- [23. Build llamafile](NEW-23-Build-llamafile.md)
+- [24. Build OpenSSL](NEW-24-Build-OpenSSL.md)
+- [25. Build Vulkan](NEW-25-Build-Vulkan.md)
 
 [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md) - **Not stubbed yet.**
 
