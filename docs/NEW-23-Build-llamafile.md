@@ -34,7 +34,7 @@ printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
 We clone and build llamafile so we will have access to its custom `zipalign` tool for packaging. 
 
 ```
-git clone https://github.com/Mozilla-Ocho/llamafile $BUILD_LLAMAFILE_DIR
+git clone https://github.com/Mozilla-Ocho/llamafile ~/$BUILD_LLAMAFILE_DIR
 cd $BUILD_LLAMAFILE_DIR
 make -j8
 make install PREFIX=.
