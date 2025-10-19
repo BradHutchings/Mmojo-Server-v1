@@ -13,7 +13,7 @@ If you have already prepared your build environment, skip ahead to:
 ---
 ### Preparing Your Build Environment
 Here are the things you need to do:
-- [21. Download GGUFs](NEW-21-Download-ggufs.md) - Download `.gguf` model files from Hugging Face or copy from your Mmojo share.
+- [21. Download gguf Files](NEW-21-Download-gguf-Files.md) - Download `.gguf` model files from Hugging Face or copy from your Mmojo share.
 - [22. Build Cosmopolitan](NEW-22-Build-Cosmopolitan.md) - Patch Cosmopolitan and build it.
 - [23. Build llamafile](NEW-23-Build-llamafile.md) - Build `llamafile` so we can use its `zipalign` tool.
 - [24. Build OpenSSL](NEW-24-Build-OpenSSL.md) - Build OpenSSL static libraries with Cosmopolitan.
