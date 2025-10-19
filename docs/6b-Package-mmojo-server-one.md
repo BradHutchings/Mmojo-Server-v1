@@ -20,6 +20,7 @@ BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="24-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="25-BUILD-mmojo"
+BUILD_COSMO_DIR="$BUILD_MMOJO_SERVER_DIR/build-cosmo"
 PACKAGE_DIR="26b-PACKAGE-mmojo-server-one"
 
 ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
@@ -49,7 +50,7 @@ Next, let's create a directory where we'll package `mmojo-server`. We copy `mmoj
 cd ~
 rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
+cp ~/$BUILD_COSMO_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
 cd ~/$PACKAGE_DIR
 printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```
