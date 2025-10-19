@@ -3,6 +3,8 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
+**The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
+
 ---
 ### Introduction
 Welcome to the **Mmojo Server Documentation**. This page is a jump-off point for the things you need to do.
