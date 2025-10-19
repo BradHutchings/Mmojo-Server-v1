@@ -3,6 +3,8 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
+**The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
+
 ---
 ### Create Mmojo Share
 The Mmojo Share is a file share where I keep files for local access and completed builds. It lets me build different items on different build platforms. I use a Ubuntu 24.04 virtual machine to build and test x86_64 and cosmo builds. I use a Raspberry Pi for building and testing ARM64 and Pi specific builds, including with Vulkan support. The Mmojo Share lets me keep .gguf models to test with locally and is where I copy completed and packaged builds. Your Mmojo Share will help you organize your builds as well.
