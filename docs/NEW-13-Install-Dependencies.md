@@ -8,7 +8,7 @@ brad@bradhutchings.com
 First, let's install any package updates.
 ```
 sudo apt update
-sudo apt ugrade -y
+sudo apt upgrade -y
 ```
 
 ---
