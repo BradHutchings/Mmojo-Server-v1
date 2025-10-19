@@ -22,6 +22,7 @@ BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="24-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="30-BUILD-mmojo"
+BUILD_NATIVE="build-native"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -49,8 +50,8 @@ else
     export CC="cc $EXTRA_FLAGS "
     export CXX="c++ $EXTRA_FLAGS "
 fi
-cmake -B build-native -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
-cmake --build build-native --config Release
+cmake -B $BUILD_NATIVE -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
+cmake --build $BUILD_NATIVE --config Release
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for native build environment platform.\n*\n**********\n\n"
 ```
@@ -61,7 +62,7 @@ Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./build-native/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_NATIVE/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
@@ -99,7 +100,7 @@ chat
 --mlock
 ...
 EOF
-./build-native/bin/mmojo-server 
+./$BUILD_NATIVE/bin/mmojo-server 
 ```
 
 #### Verify that there is a `mmojo-server-args` file.
@@ -136,7 +137,7 @@ chat
 --mlock
 ...
 EOF
-./build-native/bin/mmojo-server 
+./$BUILD_NATIVE/bin/mmojo-server 
 ```
 
 #### Verify that there is a `mmojo-server-support` folder.
