@@ -13,8 +13,8 @@ Skip ahead to: [3. Build llamafile](3-Build-llamfile.md).
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="1-DOWNLOAD"
-BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
+DOWNLOAD_DIR="21-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -22,7 +22,7 @@ _Note that if you copy each code block from the guide and paste it into your ter
 
 ---
 ### Clone Cosmopolitan Repo, Build Locally (DO THIS ONCE)
-Clone Cosmopolitan repo into a `~\2-BUILD-cosmopolitan` directory, fix bugs, then build Cosmopolitan. Build this once, and leave the `~\2-BUILD-cosmopolitan` directory between builds.
+Clone Cosmopolitan repo into a `~\22-BUILD-cosmopolitan` directory, fix bugs, then build Cosmopolitan. Build this once, and leave the `~\22-BUILD-cosmopolitan` directory between builds.
 ```
 cd ~
 mkdir -p ~/$DOWNLOAD_DIR
