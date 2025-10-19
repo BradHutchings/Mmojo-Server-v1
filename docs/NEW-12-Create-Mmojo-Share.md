@@ -15,19 +15,19 @@ The Mmojo Share is a file share where I keep files for local access and complete
    TILDE_SCRIPTS="~/scripts"
    MOUNT_SCRIPT="mount-mmojo-share.sh"
    ```
-4. Create `/mnt/mmojo` directory.
+3. Create `/mnt/mmojo` directory.
    ```
    if [ ! -d "$SHARE_DIR" ]; then
        sudo mkdir -p $SHARE_DIR
    fi
    ```
-5. Create `$HOME/scripts` directory.
+4. Create `$HOME/scripts` directory.
    ```
    if [ ! -d "$SCRIPTS_DIR" ]; then
        mkdir -p $SCRIPTS_DIR
    fi
    ```
-6. Create a `mount-mmojo-share.sh` script, edit with your details.
+5. Create a `mount-mmojo-share.sh` script.
    ```
    cat << EOF > "$SCRIPTS_DIR/$MOUNT_SCRIPT"
    if [[ ! \$(findmnt $SHARE_DIR) ]]; then
@@ -36,11 +36,11 @@ The Mmojo Share is a file share where I keep files for local access and complete
    EOF
    chmod a+x "$SCRIPTS_DIR/$MOUNT_SCRIPT"
    ```
-7. Edit the script to put your `COMPUTER` and `USER` names in. "Ctrl-X" then "Y" to exit and save.
+6. Edit the script to put your `COMPUTER` and `USER` names in. "Ctrl-X" then "Y" to exit and save.
    ```
    nano "$SCRIPTS_DIR/$MOUNT_SCRIPT"
    ```
-9. If `~/scripts` is not already in the `$PATH`, add `~/scripts` to your `$PATH` in `.bashrc` and `source` `.bashrc`.
+7. If `~/scripts` is not already in the `$PATH`, add `~/scripts` to your `$PATH` in `.bashrc` and `source` `.bashrc`.
    ```
    if [[ "${PATH}" != *"${SCRIPTS_DIR}"* ]] && [[ "${PATH}" != *"${TILDE_SCRIPTS}"* ]]; then
    cat << EOF >> $HOME/.bashrc
@@ -49,6 +49,11 @@ The Mmojo Share is a file share where I keep files for local access and complete
    source $HOME/.bashrc
    fi
    echo $PATH
+   ```
+8. Mount the Mmojo share and list its contents.
+   ```
+   mount-mmojo-share.sh
+   ls -al /mnt/mmojo
    ```
 
 ---
