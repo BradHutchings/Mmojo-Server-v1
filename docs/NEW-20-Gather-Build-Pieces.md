@@ -3,6 +3,8 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
+**The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
+
 ---
 ### Introduction
 We need a few items ready to build an Actually Portable Executable (APE) with Cosmopolitan and for other build considerations. These only need to be prepared once in each of your build environments and rebuilt occasionally.
