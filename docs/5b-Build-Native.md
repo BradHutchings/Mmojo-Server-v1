@@ -63,6 +63,11 @@ rm -r -f mmojo-server-support
     --threads-http 8 --ctx-size 0 --mlock
 ```
 
+#### Verify that there is no `mmojo-server-args` file or `mmojo-server-support` folder.
+```
+ls -al mmojo-server-args mmojo-server-support
+```
+
 ---
 ### OPTIONAL: Test the Build - `mmojo-server-args` File.
 The `mmojo-server-args` file is saved in the current working directory. Requires previously downloaded model to the `1-DOWNLOAD` directory. 
@@ -92,6 +97,11 @@ chat
 ...
 EOF
 ./build-native/bin/mmojo-server 
+```
+
+#### Verify that there is a `mmojo-server-args` file .
+```
+ls -al mmojo-server-args mmojo-server-support
 ```
 
 ---
@@ -124,6 +134,11 @@ chat
 ...
 EOF
 ./build-native/bin/mmojo-server 
+```
+
+#### Verify that there is a `mmojo-server-support` folder .
+```
+ls -al mmojo-server-args mmojo-server-support
 ```
 
 ---
