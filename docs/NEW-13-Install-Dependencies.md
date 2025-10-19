@@ -4,6 +4,14 @@ Brad Hutchings<br/>
 brad@bradhutchings.com
 
 ---
+### Install Package Updates
+First, let's install any package updates.
+```
+sudo apt update
+sudo apt ugrade -y
+```
+
+---
 ### Install Dependencies
 Here are some packages that should be adequate for creating a working build system. You may need to install more.
 ```
