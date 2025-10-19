@@ -99,7 +99,7 @@ EOF
 ./build-native/bin/mmojo-server 
 ```
 
-#### Verify that there is a `mmojo-server-args` file .
+#### Verify that there is a `mmojo-server-args` file.
 ```
 ls -al mmojo-server-args mmojo-server-support
 ```
@@ -136,7 +136,7 @@ EOF
 ./build-native/bin/mmojo-server 
 ```
 
-#### Verify that there is a `mmojo-server-support` folder .
+#### Verify that there is a `mmojo-server-support` folder.
 ```
 ls -al mmojo-server-args mmojo-server-support
 ```
