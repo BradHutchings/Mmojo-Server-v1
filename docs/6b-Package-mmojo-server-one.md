@@ -15,12 +15,12 @@ If you would like to package `mmojo-server` without an embedded `.gguf` model fi
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="1-DOWNLOAD"
-BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
-BUILD_OPENSSSL_DIR="4-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-PACKAGE_DIR="6b-PACKAGE-mmojo-server-one"
+DOWNLOAD_DIR="21-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
+BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="24-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="25-BUILD-mmojo"
+PACKAGE_DIR="26b-PACKAGE-mmojo-server-one"
 
 ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
 MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
