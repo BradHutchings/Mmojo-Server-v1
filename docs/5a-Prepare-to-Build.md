@@ -55,7 +55,7 @@ The goal is to have most/all the changes to llama.cpp source code in this script
 ```
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/fix-source-mmojo.sh
-printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Patch llama.cpp Source Code and Build Code.\n*\n**********\n\n"
 ```
 
 ---
