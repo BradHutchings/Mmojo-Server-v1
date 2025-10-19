@@ -33,7 +33,7 @@ printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
 ### Clone Cosmopolitan Repo, Build Locally (DO THIS ONCE)
 Clone Cosmopolitan repo into a `~\22-BUILD-cosmopolitan` directory, fix bugs, then build Cosmopolitan. Build this once, and leave the `~\22-BUILD-cosmopolitan` directory between builds.
 ```
-git clone https://github.com/jart/cosmopolitan.git $BUILD_COSMOPOLITAN_DIR
+git clone https://github.com/jart/cosmopolitan.git ~/$BUILD_COSMOPOLITAN_DIR
 cd ~/$BUILD_COSMOPOLITAN_DIR
 # Edit the memchr_sse() function to check params.
 sed -i '39i \  if ((s == NULL) || (n == 0)) return 0;' libc/intrin/memchr.c
