@@ -5,6 +5,36 @@ brad@bradhutchings.com
 
 ---
 ### Build Cosmopolitan
+In this step, we will clone the Cosmopolitan repo, fix known problems, and build it. You don't need to do this every time you build Mmojo Server.
+
+---
+
+### Environment Variables
+
+Let's define some environment variables:
+```
+DOWNLOAD_DIR="21-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
+printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
+```
+
+_Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
+
+---
+### Clone Cosmopolitan Repo, Build Locally (DO THIS ONCE)
+Clone Cosmopolitan repo into a `~\22-BUILD-cosmopolitan` directory, fix bugs, then build Cosmopolitan. Build this once, and leave the `~\22-BUILD-cosmopolitan` directory between builds.
+```
+cd ~
+mkdir -p ~/$DOWNLOAD_DIR
+mkdir -p ~/$BUILD_COSMOPOLITAN_DIR
+git clone https://github.com/jart/cosmopolitan.git $BUILD_COSMOPOLITAN_DIR
+cd ~/$BUILD_COSMOPOLITAN_DIR
+# Edit the memchr_sse() function to check params.
+sed -i '39i \  if ((s == NULL) || (n == 0)) return 0;' libc/intrin/memchr.c
+tool/cosmocc/package.sh
+printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\n**********\n\n"
+```
+
 
 ---
 ### Proceed
