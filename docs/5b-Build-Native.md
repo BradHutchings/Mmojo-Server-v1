@@ -65,7 +65,7 @@ rm -r -f mmojo-server-support
 
 #### Verify that there is no `mmojo-server-args` file or `mmojo-server-support` folder.
 ```
-ls -al mmojo-server-args mmojo-server-support
+ls -ald mmojo-server-args mmojo-server-support
 ```
 
 ---
@@ -101,7 +101,7 @@ EOF
 
 #### Verify that there is a `mmojo-server-args` file.
 ```
-ls -al mmojo-server-args mmojo-server-support
+ls -ald mmojo-server-args mmojo-server-support
 ```
 
 ---
@@ -138,7 +138,7 @@ EOF
 
 #### Verify that there is a `mmojo-server-support` folder.
 ```
-ls -al mmojo-server-args mmojo-server-support
+ls -ald mmojo-server-args mmojo-server-support
 ```
 
 ---
@@ -150,7 +150,7 @@ more build-native/profile.txt
 ```
 
 ---
-### OPTIONAL: Copy `completion-ui` to Local Space
+### OPTIONAL: Copy `completion-ui` to Local Space.
 After testing the completion UI, copy it to local space. These commands use the `mount-mmojo-share.sh` script and `/mnt/mmojo` share.
 
 ```
@@ -161,7 +161,7 @@ sudo cp -r completion-ui-original /mnt/mmojo/web-apps/completion-ui
 ```
 
 ---
-### Next Step: Build mmojo-server-cosmo
+### Next Step: Build Cross Platform
 
 You've built the `mmojo-server` application for your native build environment platform.
 
