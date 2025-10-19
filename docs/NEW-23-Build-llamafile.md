@@ -21,11 +21,18 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
+### Create Build Directory
+```
+mkdir -p ~/$BUILD_LLAMAFILE_DIR
+cd ~/$BUILD_LLAMAFILE_DIR
+printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
+```
+
+---
 ### Clone and Build llamafile
 We clone and build llamafile so we will have access to its custom `zipalign` tool for packaging. 
 
 ```
-cd ~
 git clone https://github.com/Mozilla-Ocho/llamafile $BUILD_LLAMAFILE_DIR
 cd $BUILD_LLAMAFILE_DIR
 make -j8
