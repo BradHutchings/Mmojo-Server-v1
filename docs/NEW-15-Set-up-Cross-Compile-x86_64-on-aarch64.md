@@ -3,6 +3,8 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
+**The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
+
 ---
 ### Set up Cross Compile x86_64 on aarch64 (arm64)
 Do this if you're running on aarch64/arm64:
