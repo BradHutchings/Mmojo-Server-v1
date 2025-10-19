@@ -9,4 +9,5 @@ brad@bradhutchings.com
 ---
 ### Proceed
 **Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
+- **Previous:** [23. Build llamafile](NEW-23-Build-llamafile.md)
 - **Next:** [25. Build Vulkan](NEW-25-Build-Vulkan.md)
