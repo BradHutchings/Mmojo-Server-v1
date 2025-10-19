@@ -1,4 +1,4 @@
-## 5d. Build mmojo-server-linux-x86
+## 5d. Build linux-x86_64
 
 Brad Hutchings<br/>
 brad@bradhutchings.com

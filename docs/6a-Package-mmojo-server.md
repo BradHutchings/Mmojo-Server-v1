@@ -20,6 +20,7 @@ BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
 PACKAGE_DIR="6a-PACKAGE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
+MMOJO_SERVER_COSMO="mmojo-server-cosmo"
 MMOJO_SERVER_ZIP="mmojo-server.zip"
 DEFAULT_ARGS="default-args"
 
@@ -39,7 +40,7 @@ Next, let's create a directory where we'll package `mmojo-server`. We copy `mmoj
 cd ~
 rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ZIP
+cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ZIP
 cd ~/$PACKAGE_DIR
 printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```
@@ -75,10 +76,11 @@ printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n*******
 
 Add self-signed certs to the archive. CA cert is added to the website folder.
 ```
+mount-mmojo-share.sh
 mkdir certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.crt certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.key certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt certs
+cp /mnt/mmojo/Mmojo-certs/mmojo.local.crt certs
+cp /mnt/mmojo/Mmojo-certs/mmojo.local.key certs
+cp /mnt/mmojo/Mmojo-certs/selfsignCA.crt certs
 zip -0 -r $MMOJO_SERVER_ZIP certs/*
 printf "\n**********\n*\n* FINISHED: Add Certs to Archive.\n*\n**********\n\n"
 ```
@@ -96,9 +98,10 @@ printf "\n**********\n*\n* FINISHED: Verify certs Directory in Archive.\n*\n****
 
 `llama.cpp` has a built in chat UI. If you'd like to provide a custom UI, you should add a `website` directory to the `mmojo-server` archive. `llama.cpp`'s chat UI is optimized for serving inside the project's source code. But we can copy the unoptimized source:
 ```
+mount-mmojo-share.sh
 mkdir website
 cp -r ~/$BUILD_MMOJO_SERVER_DIR/completion-ui/* website
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt website/CA.crt
+cp /mnt/mmojo/Mmojo-certs/selfsignCA.crt website/CA.crt
 zip -0 -r $MMOJO_SERVER_ZIP website/*
 printf "\n**********\n*\n* FINISHED: Create website Directory in Archive.\n*\n**********\n\n"
 ```
@@ -211,9 +214,9 @@ Hit `ctrl-C` on your keyboard to stop it.
 Congratulations! You are ready to copy `mmojo-server` executable to the share for deployment. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
 
 ```
-mount-host-share.sh
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/mmojo-server/$MMOJO_SERVER
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Server/mmojo-server/$MMOJO_SERVER.exe
-sudo cp $MMOJO_SERVER /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
+mount-mmojo-share.sh
+sudo cp $MMOJO_SERVER /mnt/mmojo/Mmojo-Server/mmojo-server/$MMOJO_SERVER
+sudo cp $MMOJO_SERVER /mnt/mmojo/Mmojo-Server/mmojo-server/$MMOJO_SERVER.exe
+sudo cp $MMOJO_SERVER /mnt/mmojo/Mmojo-Raspberry-Pi/Mmojo-LLMs/$MMOJO_SERVER
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server for Deployment.\n*\n**********\n\n"
 ```

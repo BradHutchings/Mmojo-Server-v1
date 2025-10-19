@@ -12,7 +12,7 @@ We have two options:
    - Cross platform (Linux, Windows, macOS).
    - Cross architecture (x86_64, ARM64).
      
-2. [6b. Package mmojo-server one](6b-Package-mmojo-server-one.md)
+2. [6b. Package mmojo-server-one](6b-Package-mmojo-server-one.md)
    - Package server as an Actual Portable Executable (APE) file.
    - A model file is included in the `mmojo-server-one` APE file.
    - Cross platform (Linux, Windows, macOS).

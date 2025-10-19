@@ -11,7 +11,7 @@ We need to build our own `libssl.a` and `libcrypto.a` becuase:
 
 This is how I understand the problem. My understanding might be incorrect, but it bears out in trying to find workarounds.
 
-Skip ahead to: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
+Skip ahead to: [5. Build Mmojo Server](5-Build-Mmojo-Server.md).
 
 ---
 ### Environment Variables
@@ -27,18 +27,17 @@ EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
+<!--
 **Optional:** Set `$EXTRA_FLAGS` for profiling.
 ```
 EXTRA_FLAGS=" -pg "
 ```
+-->
 
 ---
 ### Create Build Directory
@@ -51,7 +50,7 @@ printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
 
 ---
 ### Build openssl with Cosmo
-We need cross-architectire `libssl` and `libcrypto` static libraries to support SSL in `mmojo-server`.
+We need cross-architectire `libssl.a` and `libcrypto.a` static libraries to support SSL in Cosmo builds of `mmojo-server`.
 ```
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 export CC="cosmocc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -O3 $EXTRA_FLAGS "
@@ -73,8 +72,8 @@ printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\
 ```
 
 ---
-### Next Step: Prepare to Build Mmojo Server
+### Next Step: Build Mmojo Server
 
 You've cloned the OpenSSL repo, fixed a couple Cosmopolitan-related issues, and built it with Cosmopolitan. You don't need to do this every time you build Mmojo Server.
 
-Next step: [5a. Prepare to Build Mmojo Server](5a-Prepare-to-Build-Mmojo-Server.md).
+Next step: [5. Build Mmojo Server](5-Build-Mmojo-Server.md).

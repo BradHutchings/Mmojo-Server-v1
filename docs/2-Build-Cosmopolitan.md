@@ -15,12 +15,6 @@ Let's define some environment variables:
 ```
 DOWNLOAD_DIR="1-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-if [ -z "$SAVE_PATH" ]; then
-  export SAVE_PATH=$PATH
-fi
-if [ -z "$TODAY" ]; then
-  TODAY=$(date +%Y-%m-%d)
-fi
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -42,8 +36,8 @@ printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\
 ```
 
 ---
-### Next Step: Build llamfile
+### Next Step: Build llamafile
 
 You've cloned the Cosmopolitan repo, fixed a couple issues, and built it. You don't need to do this every time you build Mmojo Server.
 
-Next step: [3. Build llamfile](3-Build-llamafile.md).
+Next step: [3. Build llamafile](3-Build-llamafile.md).

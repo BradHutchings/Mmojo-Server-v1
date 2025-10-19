@@ -26,6 +26,7 @@ ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
 MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
 
 MMOJO_SERVER="mmojo-server"
+MMOJO_SERVER_COSMO="mmojo-server-cosmo"
 MMOJO_SERVER_ONE_ZIP="mmojo-server-one.zip"
 MMOJO_SERVER_ONE="mmojo-server-one"
 GGUF_SUFFIX="Google-Gemma-1B-Instruct-v3"
@@ -48,7 +49,7 @@ Next, let's create a directory where we'll package `mmojo-server`. We copy `mmoj
 cd ~
 rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
+cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
 cd ~/$PACKAGE_DIR
 printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```
@@ -84,10 +85,11 @@ printf "\n**********\n*\n* FINISHED: Verify Contents of Zip Archive.\n*\n*******
 
 Add self-signed certs to the archive. CA cert is added to the website folder.
 ```
+mount-mmojo-share.sh
 mkdir certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.crt certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/mmojo.local.key certs
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt certs
+cp /mnt/mmojo/Mmojo-certs/mmojo.local.crt certs
+cp /mnt/mmojo/Mmojo-certs/mmojo.local.key certs
+cp /mnt/mmojo/Mmojo-certs/selfsignCA.crt certs
 zip -0 -r $MMOJO_SERVER_ONE_ZIP certs/*
 printf "\n**********\n*\n* FINISHED: Add Certs to Archive.\n*\n**********\n\n"
 ```
@@ -105,9 +107,10 @@ printf "\n**********\n*\n* FINISHED: Verify certs Directory in Archive.\n*\n****
 
 `llama.cpp` has a built in chat UI. If you'd like to provide a custom UI, you should add a `website` directory to the `mmojo-server` archive. `llama.cpp`'s chat UI is optimized for serving inside the project's source code. But we can copy the unoptimized source:
 ```
+mount-mmojo-share.sh
 mkdir website
 cp -r ~/$BUILD_MMOJO_SERVER_DIR/completion-ui/* website
-cp /mnt/hyperv/Mmojo-Raspberry-Pi/Mmojo-certs/selfsignCA.crt website/CA.crt
+cp /mnt/mmojo/Mmojo-certs/selfsignCA.crt website/CA.crt
 zip -0 -r $MMOJO_SERVER_ONE_ZIP website/*
 printf "\n**********\n*\n* FINISHED: Create website Directory in Archive.\n*\n**********\n\n"
 ```
@@ -236,8 +239,8 @@ Hit `ctrl-C` on your keyboard to stop it.
 Congratulations! You are ready to copy `mmojo-server-one` executable to the share for deployment. These commands use Brad's `mount-host-share.sh` script and `/mnt/hyperv` share.
 
 ```
-mount-host-share.sh
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/mmojo-server-one/mac-linux/$MMOJO_SERVER_ONE_GGUF
-sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/hyperv/Mmojo-Server/mmojo-server-one/windows/$MMOJO_SERVER_ONE_GGUF.exe
+mount-mmojo-share.sh
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/mmojo/Mmojo-Server/mmojo-server-one/mac-linux/$MMOJO_SERVER_ONE_GGUF
+sudo cp $MMOJO_SERVER_ONE_GGUF /mnt/mmojo/Mmojo-Server/mmojo-server-one/windows/$MMOJO_SERVER_ONE_GGUF.exe
 printf "\n**********\n*\n* FINISHED: Copy mmojo-server-one for Deployment.\n*\n**********\n\n"
 ```

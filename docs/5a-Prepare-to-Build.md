@@ -1,4 +1,4 @@
-## 5a. Prepare to Build Mmojo Server
+## 5a. Prepare to Build
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -55,7 +55,7 @@ The goal is to have most/all the changes to llama.cpp source code in this script
 ```
 chmod a+x scripts-mmojo/*.sh
 ./scripts-mmojo/fix-source-mmojo.sh
-printf "\n**********\n*\n* FINISHED: Fix llama.cpp Source and Build Code.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Patch llama.cpp Source Code and Build Code.\n*\n**********\n\n"
 ```
 
 ---
@@ -97,4 +97,4 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 
 You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
 
-Next step: [5b. Build mmojo-server](5b-Build-mmojo-server.md).
+Next step: [5b. Build Native](5b-Build-Native.md).

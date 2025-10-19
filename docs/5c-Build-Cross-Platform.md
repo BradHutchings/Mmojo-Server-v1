@@ -1,11 +1,11 @@
-## 5c. Build Mmojo Server with Cosmopolitan
+## 5c. Build Cross-Platform
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
 The fifth step in building Mmojo Server is to build the `mmojo-server` executables.
 
-In this substep, we will build `mmojo-server-cosmo` for x86_64 and arm64. We will then package them in an Actual Portable Executable (APE) file. 
+In this substep, we will build `mmojo-server-cosmo` for x86_64 and arm64. We will then package them in an Actual Portable Executable (APE) file which can run cross platform and cross artchitecture. 
 
 The APE will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems. As a zip file, the APE can also hold configuration files and .gguf models. The APE will not perform as well as platform-specifc builds. It does not have the most optimized GGML CPU code and does not use GGML GPU options. Tradeoffs.
 
@@ -31,7 +31,7 @@ _Note that if you copy each code block from the guide and paste it into your ter
 
 ---
 ### Build Mmojo Server for x86_64.
-We now use CMake to build Mmojo Server.
+We now use CMake to build Mmojo Server for x86_64. Note that we make a temporary change to `common/CMakeLists.txt` to statically link with OpenSSL libraries.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
@@ -42,8 +42,11 @@ export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nost
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
 export AR="cosmoar"
+cp common/CMakeLists.txt common/CMakeLists-orig.txt
+sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
 cmake -B build-cosmo-amd64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64
+mv common/CMakeLists-orig.txt common/CMakeLists.txt
 cmake --build build-cosmo-amd64 --config Release
 export PATH=$SAVE_PATH
 
@@ -52,14 +55,16 @@ printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n********
 
 **Optional:** Test the build if you're building on an x86 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
+rm -f mmojo-server-args
+rm -r -f mmojo-server-support
 ./build-cosmo-amd64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
 
 ---
-### Build Mmojo Server for ARM.
-We now use CMake to build Mmojo Server.
+### Build Mmojo Server for ARM64.
+We now use CMake to build Mmojo Server for ARM64. Note that we make a temporary change to `common/CMakeLists.txt` to statically link with OpenSSL libraries.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
@@ -70,16 +75,21 @@ export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nost
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl/.aarch64/"
 export AR="cosmoar"
+cp common/CMakeLists.txt common/CMakeLists-orig.txt
+sed -i -e 's/PUBLIC OpenSSL::SSL OpenSSL::Crypto/PUBLIC libssl.a libcrypto.a/g' common/CMakeLists.txt
 cmake -B build-cosmo-aarch64 -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON \
     -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64
+mv common/CMakeLists-orig.txt common/CMakeLists.txt
 cmake --build build-cosmo-aarch64 --config Release
 export PATH=$SAVE_PATH
 
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\n\n"
 ```
 
-**Optional:** Test the build if you're building on an ARM system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
+**Optional:** Test the build if you're building on an ARM64 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
+rm -f mmojo-server-args
+rm -r -f mmojo-server-support
 ./build-cosmo-aarch64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
@@ -102,7 +112,9 @@ printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executab
 
 Let's test our combined build:
 ```
-./mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+rm -f mmojo-server-args
+rm -r -f mmojo-server-support
+./mmojo-server-cosmo --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```

@@ -4475,52 +4475,86 @@ inline void signal_handler(int signal) {
 
 int main(int argc, char ** argv) {
     // mmojo-server START
-    // This implements an args file feature inspired by llamafile's.
-    // It does not require Cosmo anymore, as the mmojo_args function is part of mmojo-server now.
-    
+
     // Keep the build from showing up as ape in the process list.
     pthread_setname_np(pthread_self(), "mmojo-server");
-    
+
+    // This implements an args file feature inspired by llamafile's.
+    // It does not require Cosmo anymore, as the mmojo_args function is part of mmojo-server now.
+    // Path parameters passed on command line or in args files are relative to the working directory.
+
+    char pathChar[PATH_MAX];
+    pathChar[0] = '\0';
+
+    if (getcwd(pathChar, sizeof(pathChar) - 1)) {
+        strcat(pathChar, "/");
+    }
+
     // Args files if present. The names are different to remove confusion during packaging.
     const std::string& argsFilename = "mmojo-server-args";
-    const std::string& zipArgsFilename = "/zip/default-args";
+    const std::string& supportDirectoryName = "mmojo-server-support";
+    const std::string& supportArgsFilename = "default-args";
+    const std::string& zipArgsPath = "/zip/default-args";
 
+    std::string path = pathChar;
+    std::string argsPath = path + argsFilename;
+    std::string supportPath = path + supportDirectoryName + "/";
+    std::string supportArgsPath = supportPath + supportArgsFilename;
+
+    #if 1
+    printf("Paths of things we care about:\n");
+    printf("-            path: %s\n", path.c_str());
+    printf("-        argsPath: %s\n", argsPath.c_str());
+    printf("-     supportPath: %s\n", supportPath.c_str());
+    printf("- supportArgsPath: %s\n", supportArgsPath.c_str());
+    printf("-     zipArgsPath: %s\n", zipArgsPath.c_str());
+
+    struct stat buffer1;
+    if (stat(path.c_str(), &buffer1) == 0) {
+        printf("-            path exists: %s\n", path.c_str());
+    }
+    if (stat(argsPath.c_str(), &buffer1) == 0) {
+        printf("-        argsPath exists: %s\n", argsPath.c_str());
+    }
+    if (stat(supportArgsPath.c_str(), &buffer1) == 0) {
+        printf("- supportArgsPath exists: %s\n", supportArgsPath.c_str());
+    }
+    if (stat(zipArgsPath.c_str(), &buffer1) == 0) {
+        printf("-     zipArgsPath exists: %s\n", zipArgsPath.c_str());
+    }
+    #endif
+    
     // mmojo-server-support/default-args will be an option for platform optimized builds.
-    const std::string& supportArgsFilename = "mmojo-server-support/default-args";
+    // const std::string& supportArgsFilename = "mmojo-server-support/default-args";
     struct stat buffer;
 
     // At this point, argc, argv represent:
     //     command (User supplied args)
+
+    if (stat (argsPath.c_str(), &buffer) == 0) {
+        argc = mmojo_args(argsPath.c_str(), &argv);
+    }
+
+    // At this point, argc, argv represent:
+    //     command (argsPath args) (User supplied args)
+
+    if (stat (supportArgsPath.c_str(), &buffer) == 0) {
+        argc = mmojo_args(supportArgsPath.c_str(), &argv);
+    }
+
+    // At this point, argc, argv represent:
+    //     command (supportArgsPath args) (argsPath args) (User supplied args)
+
+    #ifdef COSMOCC
+    if (stat (zipArgsPath.c_str(), &buffer) == 0) {
+        argc = mmojo_args(zipArgsPath.c_str(), &argv);
+    }
+
+    // At this point, argc, argv represent:
+    //     command (zipArgsPath args) (supportArgsPath args) (argsPath args) (User supplied args)
+    #endif
     
-    if (stat (argsFilename.c_str(), &buffer) == 0) {
-        // argc = cosmo_args(argsFilename.c_str(), &argv);
-        argc = mmojo_args(argsFilename.c_str(), &argv);
-    }
-    
-    // At this point, argc, argv represent:
-    //     command (argsFilename args) (User supplied args)
-
-    if (stat (zipArgsFilename.c_str(), &buffer) == 0) {
-        // argc = cosmo_args(zipArgsFilename.c_str(), &argv);
-        argc = mmojo_args(zipArgsFilename.c_str(), &argv);
-    }
-
-    // At this point, argc, argv represent:
-    //     command (zipArgsFilename args) (argsFilename args) (User supplied args)
-
-    if (stat (supportArgsFilename.c_str(), &buffer) == 0) {
-        // argc = cosmo_args(supportArgsFilename.c_str(), &argv);
-        argc = mmojo_args(supportArgsFilename.c_str(), &argv);
-    }
-
-    // At this point, argc, argv represent:
-    //     command (supportArgsFilename args) (zipArgsFilename args) (argsFilename args) (User supplied args)
-
     // Yep, this is counterintuitive, but how the cosmo_args command works.
-    // zipArgsFilename file args overrides supportArgsFilename file args.
-    // argsFilename args override zipArgsFilename file args and supportArgsFilename file args.
-    // User supplied args override argsFilename and zipArgsFilename args and supportArgsFilename file args.
-    
     // mmojo-server END
 
     // own arguments required by this example
@@ -4529,6 +4563,34 @@ int main(int argc, char ** argv) {
     if (!common_params_parse(argc, argv, params, LLAMA_EXAMPLE_SERVER)) {
         return 1;
     }
+
+    // mmojo-server START
+    // fix params -- model, path, ssl-key-file, ssl-cert-file
+    // if they are relative paths, fix to absolute relative to working directory
+    if (supportPath != "") {
+        const std::string& mmojoRootPath = "/mmojo/";
+        if (starts_with(params.model.path, mmojoRootPath)) {
+            printf("--model path starts with %s.\n",  mmojoRootPath.c_str());
+            std::string s = params.model.path.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new model path: %s\n", s.c_str());
+        }
+        if (starts_with(params.public_path, mmojoRootPath)) {
+            printf("--path path starts with %s.\n",  mmojoRootPath.c_str());
+            std::string s = params.public_path.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new path path: %s\n", s.c_str());
+        }
+        if (starts_with(params.ssl_file_key, mmojoRootPath)) {
+            printf("--ssl-key-file path starts with %s.\n",  mmojoRootPath.c_str());
+            std::string s = params.ssl_file_key.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new ssl-key-file path: %s\n", s.c_str());
+        }
+        if (starts_with(params.ssl_file_cert, mmojoRootPath)) {
+            printf("--ssl-cert-file path starts with %s.\n",  mmojoRootPath.c_str());
+            std::string s = params.ssl_file_cert.replace(0, mmojoRootPath.length(), supportPath);
+            printf("  - new ssl-cert-file path: %s\n", s.c_str());
+        }
+    }
+    // mmojo-server END
 
     common_init();
 
