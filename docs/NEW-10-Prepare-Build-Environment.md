@@ -3,6 +3,8 @@
 Brad Hutchings<br/>
 brad@bradhutchings.com
 
+**The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
+
 ---
 ### Introduction
 Before you can build `mmojo-server`, `mmojo-server-one`, and other targets, you need to set up a build environment. I use two build environments regularly:
