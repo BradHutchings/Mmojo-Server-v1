@@ -12,12 +12,12 @@ We are going to package `mmojo-server` without an embedded `.gguf` model file.
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="1-DOWNLOAD"
-BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
-BUILD_OPENSSSL_DIR="4-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-PACKAGE_DIR="6a-PACKAGE-mmojo-server"
+DOWNLOAD_DIR="21-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
+BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="24-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="25-BUILD-mmojo"
+PACKAGE_DIR="26a-PACKAGE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_COSMO="mmojo-server-cosmo"
