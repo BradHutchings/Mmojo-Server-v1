@@ -6,6 +6,8 @@ brad@bradhutchings.com
 ---
 ### Build Vulkan
 
+Instructions coming soon.
+
 ---
 ### Proceed
 **Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
