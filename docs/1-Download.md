@@ -12,7 +12,7 @@ Skip ahead to: [2. Build Cosmopolitan](2-Build-Cosmopolitan.md).
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="1-DOWNLOAD"
+DOWNLOAD_DIR="21-DOWNLOAD"
 MODEL_MAP="model-map.txt"
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
@@ -21,7 +21,7 @@ _Note that if you copy each code block from the guide and paste it into your ter
 
 ---
 ### Create Download Directory
-Create the `1-DOWNLOAD` directory, and add a simple model map to it.
+Create the `21-DOWNLOAD` directory, and add a simple model map to it.
 ```
 mkdir -p ~/$DOWNLOAD_DIR
 cd ~/$DOWNLOAD_DIR
