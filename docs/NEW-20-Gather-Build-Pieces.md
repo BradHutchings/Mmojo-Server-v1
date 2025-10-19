@@ -19,4 +19,4 @@ Here are the things you need to do:
 - [24. Build OpenSSL](NEW-24-Build-OpenSSL.md) - Build OpenSSL static libraries with Cosmopolitan.
 - [25. Build Vulkan](NEW-25-Build-Vulkan.md) - Build Vulkan for platform optimized builds.
 
-**Get Started:** [21. Download GGUFs](NEW-21-Download-ggufs.md)
+**Get Started:** [21. Download gguf Files](NEW-21-Download-gguf-Files.md)
