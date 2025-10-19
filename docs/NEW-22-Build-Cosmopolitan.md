@@ -6,7 +6,7 @@ brad@bradhutchings.com
 **The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
 
 ---
-### Build Cosmopolitan
+### About this Step
 In this step, we will clone the Cosmopolitan repo, fix known problems, and build it. You don't need to do this every time you build Mmojo Server.
 
 ---
