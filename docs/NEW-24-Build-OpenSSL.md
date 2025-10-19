@@ -47,7 +47,7 @@ printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
 ```
 
 ---
-### Build openssl with Cosmo
+### Build OpenSSL with Cosmo
 We need cross-architectire `libssl.a` and `libcrypto.a` static libraries to support SSL in Cosmo builds of `mmojo-server`.
 ```
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
