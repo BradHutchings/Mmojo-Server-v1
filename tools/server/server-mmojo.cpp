@@ -34,9 +34,6 @@
 #include <unordered_set>
 
 // mmojo-server START
-// #ifdef COSMOCC
-// #include <cosmo.h>
-// #endif
 #include "mmojo-args.h"
 
 // pre C++20 helpers.
@@ -1617,23 +1614,31 @@ struct server_prompt_cache {
             }
         }
 
+        // average size per token
+        const float size_per_token = std::max<float>(1.0f, float(size()) / (std::max<size_t>(1, n_tokens())));
+
+        // dynamically increase the token limit if it can fit in the memory limit
+        const size_t limit_tokens_cur = limit_size > 0 ? std::max<size_t>(limit_tokens, limit_size/size_per_token) : limit_tokens;
+
         if (limit_tokens > 0) {
-            while (states.size() > 1 && n_tokens() > limit_tokens) {
+            while (states.size() > 1 && n_tokens() > limit_tokens_cur) {
                 if (states.empty()) {
                     break;
                 }
 
-                SRV_WRN(" - cache token limit reached, removing oldest entry (size = %.3f MiB)\n", states.front().size() / (1024.0 * 1024.0));
+                SRV_WRN(" - cache token limit (%zu, est: %zu) reached, removing oldest entry (size = %.3f MiB)\n",
+                        limit_tokens, limit_tokens_cur, states.front().size() / (1024.0 * 1024.0));
 
                 states.pop_front();
             }
         }
 
-        SRV_WRN(" - cache state: %zu prompts, %.3f MiB (limits: %.3f MiB, %zu tokens)\n",
-                states.size(), size() / (1024.0 * 1024.0), limit_size / (1024.0 * 1024.0), limit_tokens);
+        SRV_WRN(" - cache state: %zu prompts, %.3f MiB (limits: %.3f MiB, %zu tokens, %zu est)\n",
+                states.size(), size() / (1024.0 * 1024.0), limit_size / (1024.0 * 1024.0), limit_tokens, limit_tokens_cur);
 
         for (const auto & state : states) {
-            SRV_WRN("   - prompt %p: %7d tokens, checkpoints: %2zu, %9.3f MiB\n", (const void *)&state, state.n_tokens(), state.checkpoints.size(), state.size() / (1024.0 * 1024.0));
+            SRV_WRN("   - prompt %p: %7d tokens, checkpoints: %2zu, %9.3f MiB\n",
+                    (const void *)&state, state.n_tokens(), state.checkpoints.size(), state.size() / (1024.0 * 1024.0));
         }
     }
 };
@@ -3836,7 +3841,7 @@ struct server_context {
                             if (slot.n_past > 0 && slot.n_past < (int) slot.prompt.tokens.size()) {
                                 const auto pos_min = llama_memory_seq_pos_min(llama_get_memory(ctx), slot.id);
                                 if (pos_min == -1) {
-                                    SLT_ERR(slot, "n_past = %d, cache_tokens.size() = %d, seq_id = %d, pos_min = %d\n", slot.n_past, (int) slot.prompt.tokens.size(), slot.id, pos_min);
+                                    SLT_ERR(slot, "n_past = %d, slot.prompt.tokens.size() = %d, seq_id = %d, pos_min = %d\n", slot.n_past, (int) slot.prompt.tokens.size(), slot.id, pos_min);
                                     GGML_ABORT("pos_min == -1, but n_past > 0 - should not happen: https://github.com/ggml-org/llama.cpp/pull/13833#discussion_r2116181237");
                                 }
 
@@ -3863,14 +3868,14 @@ struct server_context {
 
                                         {
                                             const auto token = slot.prompt.tokens[i];
-                                            const auto piece = common_token_to_piece(ctx, token);
+                                            const auto piece = token != LLAMA_TOKEN_NULL ? common_token_to_piece(ctx, token) : "[mtmd]";
                                             ss0 << piece;
                                             st0 << std::setw(8) << token;
                                         }
 
                                         {
                                             const auto token = slot.task->tokens[i];
-                                            const auto piece = common_token_to_piece(ctx, token);
+                                            const auto piece = token != LLAMA_TOKEN_NULL ? common_token_to_piece(ctx, token) : "[mtmd]";
                                             ss1 << piece;
                                             st1 << std::setw(8) << token;
                                         }
@@ -3884,7 +3889,7 @@ struct server_context {
                                 }
 
                                 if (pos_min > pos_min_thold) {
-                                    SLT_WRN(slot, "n_past = %d, cache_tokens.size() = %d, seq_id = %d, pos_min = %d, n_swa = %d\n", slot.n_past, (int) slot.prompt.tokens.size(), slot.id, pos_min, n_swa);
+                                    SLT_WRN(slot, "n_past = %d, slot.prompt.tokens.size() = %d, seq_id = %d, pos_min = %d, n_swa = %d\n", slot.n_past, (int) slot.prompt.tokens.size(), slot.id, pos_min, n_swa);
 
                                     // search for a context checkpoint
                                     const auto it = std::find_if(
@@ -4052,7 +4057,7 @@ struct server_context {
                         }
                     }
 
-                    // SLT_INF(slot, "new cache_tokens: %s\n", slot.cache_tokens.str().c_str());
+                    // SLT_INF(slot, "new slot.prompt.tokens: %s\n", slot.slot.prompt.tokens.str().c_str());
 
                     SLT_INF(slot, "prompt processing progress, n_past = %d, n_tokens = %d, progress = %f\n", slot.n_past, batch.n_tokens, (float) slot.n_past / slot.n_prompt_tokens());
 
@@ -4591,7 +4596,7 @@ int main(int argc, char ** argv) {
         }
     }
     // mmojo-server END
-
+    
     common_init();
 
     // struct that contains llama context and inference
@@ -5790,7 +5795,7 @@ int main(int argc, char ** argv) {
         });        
     }
     // mmojo-server END        
-    
+        
     // register API routes
     svr->Get (params.api_prefix + "/health",              handle_health); // public endpoint (no API key check)
     svr->Get (params.api_prefix + "/v1/health",           handle_health); // public endpoint (no API key check)
