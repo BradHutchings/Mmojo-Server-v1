@@ -27,6 +27,15 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
+### Create Build Mmojo Directory
+```
+cd ~
+mkdir -p ~/$BUILD_MMOJO_SERVER_DIR
+cd ~/$BUILD_MMOJO_SERVER_DIR
+printf "\n**********\n*\n* FINISHED: Create Build Mmojo Directory.\n*\n**********\n\n"
+```
+
+---
 ### Clone this Repo Locally
 Clone this repo and repos this repo depends on into a `~\5-BUILD-mmojo` directory.
 ```
