@@ -19,4 +19,5 @@ The resulting executable will run on any Linux x86_64 system. Support files can 
 ---
 ### Proceed
 **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
+- **Previous:** [33. Build linux x86_64](NEW-33-Build-linux-x86_64.md)
 - **Next:** [35. Build pi5](NEW-35-Build-pi5.md)
