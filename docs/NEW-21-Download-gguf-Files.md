@@ -14,6 +14,7 @@ In this step, we will download some `gguf` files we will need from Hugging Face 
 
 Let's define some environment variables:
 ```
+cd ~
 DOWNLOAD_DIR="21-DOWNLOAD"
 MODEL_MAP="model-map.txt"
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
