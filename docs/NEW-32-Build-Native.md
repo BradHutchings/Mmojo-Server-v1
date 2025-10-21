@@ -52,7 +52,7 @@ fi
 cmake -B $BUILD_NATIVE -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
 cmake --build $BUILD_NATIVE --config Release
 
-printf "\n**********\n*\n* FINISHED: Build Mmojo Server for native build environment platform.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Build Mmojo Server for native...\n*\n**********\n\n"
 ```
 
 ---
