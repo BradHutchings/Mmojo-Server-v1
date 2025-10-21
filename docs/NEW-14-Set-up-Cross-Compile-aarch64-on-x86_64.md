@@ -39,6 +39,7 @@ Find where the files are under `/usr/lib`:
 ```
 find /usr/lib -name "libssl.a"
 find /usr/lib -name "libcrypto.a"
+printf "\n**********\n*\n* FINISHED: Verify that libssl.a and libcrypto.a are Installed.\n*\n**********\n\n"
 ```
 
 The output should look like this:
