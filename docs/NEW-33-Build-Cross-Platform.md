@@ -1,4 +1,4 @@
-## 32. Build Cross Platform
+## 33. Build Cross Platform
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -126,6 +126,6 @@ rm -r -f mmojo-server-support
 
 ---
 ### Proceed
-- **Next:** [33. Build linux x86_64](NEW-33-Build-linux-x86_64.md)
-- **Previous:** [31. Build Native](NEW-31-Build-Native.md)
+- **Next:** [34. Build linux x86_64](NEW-34-Build-linux-x86_64.md)
+- **Previous:** [32. Build Native](NEW-32-Build-Native.md)
 - **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
