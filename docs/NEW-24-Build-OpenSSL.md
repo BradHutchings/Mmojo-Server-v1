@@ -43,7 +43,6 @@ EXTRA_FLAGS=" -pg "
 ---
 ### Create Build OpenSSL Directory
 ```
-cd ~
 mkdir -p ~/$BUILD_OPENSSSL_DIR
 cd ~/$BUILD_OPENSSSL_DIR
 cp -r ~/$COSMO_DIR .
