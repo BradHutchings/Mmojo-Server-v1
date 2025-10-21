@@ -12,9 +12,12 @@ Instructions coming soon.
 
 ---
 ### Proceed
-**Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
+- **Next:** This is the last article in this section.
 - **Previous:** [24. Build OpenSSL](NEW-24-Build-OpenSSL.md)
+- **Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
 
+---
+### Next Section
 - **Next Section:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
 
 Jump instead to the old documentation: [5. Build Mmojo Server](5-Build-Mmojo-Server.md).
