@@ -8,7 +8,7 @@ brad@bradhutchings.com
 
 In this setp, we will build Mmojo Server (`mmojo-server`) for your native build environment platform. You don't need to do this. You can use it to test and debug features of Mmojo Server that are not specific to any particular build.
 
-Skip ahead to: [32. Build Cross-Platform](32-Build-Cross-Platform.md).
+Skip ahead to: [32. Build Cross-Platform](NEW-32-Build-Cross-Platform.md).
 
 ---
 ### Environment Variables
@@ -165,4 +165,4 @@ sudo cp -r completion-ui-original /mnt/mmojo/web-apps/completion-ui
 ---
 ### Proceed
 **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
-- **Next:** [32. Build Cross-Platform](32-Build-Cross-Platform.md)
+- **Next:** [32. Build Cross-Platform](NEW-32-Build-Cross-Platform.md)
