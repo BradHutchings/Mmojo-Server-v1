@@ -14,6 +14,7 @@ In this step, we will clone the llamafile repo and build it. This will give us a
 
 Let's define some environment variables:
 ```
+cd ~
 DOWNLOAD_DIR="21-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
