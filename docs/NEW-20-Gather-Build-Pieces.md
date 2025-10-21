@@ -10,8 +10,8 @@ brad@bradhutchings.com
 We need a few items ready to build an Actually Portable Executable (APE) with Cosmopolitan and for other build considerations. These only need to be prepared once in each of your build environments and rebuilt occasionally.
 
 If you have already prepared your build environment, skip ahead to: 
-- ~~[30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)~~.
-- [OLD DOCS - 5.Build Mmojo Server](5-Build-Mmojo-Server). 
+- [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
+- ~~[OLD DOCS - 5.Build Mmojo Server](5-Build-Mmojo-Server)~~ 
 
 ---
 ### Preparing Your Build Environment
