@@ -6,7 +6,7 @@ brad@bradhutchings.com
 **The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
 
 ---
-### About this Step
+### About this Step - DO THIS ONCE
 In this step, we will download some `gguf` files we will need from Hugging Face and copy them to our Mmojo share for later use.
 
 ---
