@@ -39,9 +39,10 @@ _Note that if you copy each code block from the guide and paste it into your ter
 We now use CMake to build Mmojo Server for x86_64. Note that we make a temporary change to `common/CMakeLists.txt` to statically link with OpenSSL libraries.
 ```
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
-export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc -O3 $EXTRA_FLAGS "
-export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 \
-    -Wno-format-truncation $EXTRA_FLAGS \
+export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib \
+    -DCOSMOCC=1 -nostdinc -O3 $EXTRA_FLAGS "
+export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include \
+    -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 -Wno-format-truncation $EXTRA_FLAGS \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl"
@@ -72,9 +73,10 @@ We now use CMake to build Mmojo Server for ARM64. Note that we make a temporary 
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
-export CC="aarch64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc -O3 $EXTRA_FLAGS "
-export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 \
-    -Wno-format-truncation $EXTRA_FLAGS \
+export CC="aarch64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib \
+    -DCOSMOCC=1 -nostdinc -O3 $EXTRA_FLAGS "
+export CXX="aarch64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include \
+    -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 -Wno-format-truncation $EXTRA_FLAGS \
     -I$(pwd)/cosmocc/include/third_party/libcxx \
     -I$(pwd)/openssl/include \
     -L$(pwd)/cosmocc/lib -L$(pwd)/openssl/.aarch64/"
