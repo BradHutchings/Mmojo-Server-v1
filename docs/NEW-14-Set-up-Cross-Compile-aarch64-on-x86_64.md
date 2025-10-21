@@ -53,6 +53,6 @@ I hope to be able to use these to replace the lengthy openssl build with cosmocc
 
 ---
 ### Proceed
-**Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
-- **Previous:** [13. Install Dependencies](NEW-13-Install-Dependencies.md)
 - **Next:** [15. Set up Cross Compile - x86_64 on aarch64](NEW-15-Set-up-Cross-Compile-x86_64-on-aarch64.md)
+- **Previous:** [13. Install Dependencies](NEW-13-Install-Dependencies.md)
+- **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
