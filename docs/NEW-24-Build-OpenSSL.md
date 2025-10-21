@@ -74,6 +74,6 @@ printf "\n**********\n*\n* FINISHED: Build openssl with Cosmo.\n*\n**********\n\
 
 ---
 ### Proceed
-**Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
-- **Previous:** [23. Build llamafile](NEW-23-Build-llamafile.md)
 - **Next:** [25. Build Vulkan](NEW-25-Build-Vulkan.md)
+- **Previous:** [23. Build llamafile](NEW-23-Build-llamafile.md)
+- **Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
