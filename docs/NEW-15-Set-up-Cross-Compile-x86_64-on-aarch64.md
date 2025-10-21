@@ -20,10 +20,13 @@ Do this if you're running on aarch64/arm64:
 
 ---
 ### Proceed
-**Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
+- **Next:** This is the last article in this section.
 - **Previous:** [14. Set up Cross Compile - aarch64 on x86_64](NEW-14-Set-up-Cross-Compile-aarch64-on-x86_64.md)
+- **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
 
-**Next Section:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md) (NOT IMPLEMENTED YET.)
+---
+### Next Section
+- **Next Section:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
 
 Jump instead to the old documentation: [1. Download](1-Download.md).
 
