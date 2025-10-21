@@ -26,6 +26,7 @@ Reference: [Timedatectl can control your Linux time and time zone](https://www.n
 
 ---
 ### Proceed
-**Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
 - **Next:** [12. Create Mmojo Share](NEW-12-Create-Mmojo-Share.md)
+- **Previous:** This is the first article in this section.
+- **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
 
