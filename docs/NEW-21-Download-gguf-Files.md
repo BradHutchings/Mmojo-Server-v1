@@ -112,6 +112,7 @@ printf "\n**********\n*\n* FINISHED: Copy Models from Mmojo Share.\n*\n*********
 
 ---
 ### Proceed
-**Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
 - **Next:** [22. Build Cosmopolitan](NEW-22-Build-Cosmopolitan.md)
+- **Previous:** This is the first article in this section.
+- **Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
 
