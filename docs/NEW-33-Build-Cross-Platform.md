@@ -15,7 +15,6 @@ The APE will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating sy
 
 Let's define some environment variables:
 ```
-cd ~
 DOWNLOAD_DIR="21-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
@@ -29,6 +28,7 @@ EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
 fi
+cd ~/$BUILD_MMOJO_SERVER_DIR
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -38,7 +38,6 @@ _Note that if you copy each code block from the guide and paste it into your ter
 ### Build Mmojo Server for x86_64.
 We now use CMake to build Mmojo Server for x86_64. Note that we make a temporary change to `common/CMakeLists.txt` to statically link with OpenSSL libraries.
 ```
-cd ~/$BUILD_MMOJO_SERVER_DIR
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 export CC="x86_64-unknown-cosmo-cc -I$(pwd)/cosmocc/include -L$(pwd)/cosmocc/lib -DCOSMOCC=1 -nostdinc -O3 $EXTRA_FLAGS "
 export CXX="x86_64-unknown-cosmo-c++ -I$(pwd)/cosmocc/include  -DCOSMOCC=1 -nostdinc -nostdinc++ -O3 \
