@@ -112,7 +112,9 @@ export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
-	-o $BUILD_COSMO/mmojo-server-cosmo $BUILD_COSMO_AMD64/bin/mmojo-server $BUILD_COSMO_AARCH64/bin/mmojo-server
+	-o $BUILD_COSMO/mmojo-server-cosmo \
+    $BUILD_COSMO_AMD64/bin/mmojo-server \
+    $BUILD_COSMO_AARCH64/bin/mmojo-server
 export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
 ```
