@@ -11,7 +11,7 @@ In this step, we will clone the Cosmopolitan repo, fix known problems, and build
 
 ---
 
-### Environment Variables
+### Environment Variables (DO THIS ONCE)
 
 Let's define some environment variables:
 ```
@@ -23,7 +23,7 @@ printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 _Note that if you copy each code block from the guide and paste it into your terminal, each block ends with a message so you won't lose your place in this guide._
 
 ---
-### Create Build Cosmopolitan Directory
+### Create Build Cosmopolitan Directory (DO THIS ONCE)
 ```
 cd ~
 mkdir -p ~/$BUILD_COSMOPOLITAN_DIR
