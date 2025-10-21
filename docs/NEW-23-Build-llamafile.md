@@ -48,6 +48,6 @@ Now, `zipalign` exists at `~/23-BUILD-llamafile/bin/zipalign`.
 
 ---
 ### Proceed
-**Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
-- **Previous:** [22. Build Cosmopolitan](NEW-22-Build-Cosmopolitan.md)
 - **Next:** [24. Build OpenSSL](NEW-24-Build-OpenSSL.md)
+- **Previous:** [22. Build Cosmopolitan](NEW-22-Build-Cosmopolitan.md)
+- **Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
