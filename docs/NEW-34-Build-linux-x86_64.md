@@ -1,4 +1,4 @@
-## 33. Build linux x86_64
+## 34. Build linux x86_64
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -18,6 +18,6 @@ The resulting executable will run on any Linux x86_64 system. Support files can 
 
 ---
 ### Proceed
-- **Next:** [34. Build linux aarch64](NEW-34-Build-linux-aarch64.md)
-- **Previous:** [32. Build Cross Platform](NEW-32-Build-Cross-Platform.md)
+- **Next:** [35. Build linux aarch64](NEW-35-Build-linux-aarch64.md)
+- **Previous:** [33. Build Cross Platform](NEW-33-Build-Cross-Platform.md)
 - **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
