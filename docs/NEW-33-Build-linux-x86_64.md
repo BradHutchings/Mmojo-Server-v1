@@ -18,6 +18,6 @@ The resulting executable will run on any Linux x86_64 system. Support files can 
 
 ---
 ### Proceed
-**Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
-- **Previous:** [32. Build Cross Platform](NEW-32-Build-Cross-Platform.md)
 - **Next:** [34. Build linux aarch64](NEW-34-Build-linux-aarch64.md)
+- **Previous:** [32. Build Cross Platform](NEW-32-Build-Cross-Platform.md)
+- **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
