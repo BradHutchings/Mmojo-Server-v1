@@ -25,10 +25,10 @@ If you have already prepared your build environment, skip ahead to:
 ---
 ### Preparing Your Build Environment
 Here are the things you need to do:
-- [11. Set Timezone](NEW-11-Set-Timezone.md)
-- [12. Create Mmojo Shre](NEW-12-Create-Mmojo-Share.md)
-- [13. Install Dependencies](NEW-13-Install-Dependencies.md)
-- [14. Set up Cross Compile - aarch64 on x86_64](NEW-14-Set-up-Cross-Compile-aarch64-on-x86_64.md)
-- [15. Set up Cross Compile - x86_64 on aarch64](NEW-15-Set-up-Cross-Compile-x86_64-on-aarch64.md)
+- [11. Set Timezone](NEW-11-Set-Timezone.md) - Set your build system's time zone so Completion UI reflects correct build date.
+- [12. Create Mmojo Shre](NEW-12-Create-Mmojo-Share.md) - Create and mount a file share to support multiple build environments.
+- [13. Install Dependencies](NEW-13-Install-Dependencies.md) - Install packages needed for your build system.
+- [14. Set up Cross Compile - aarch64 on x86_64](NEW-14-Set-up-Cross-Compile-aarch64-on-x86_64.md) - Cross compiling architecture-specific Linux builds might work well in the future.
+- [15. Set up Cross Compile - x86_64 on aarch64](NEW-15-Set-up-Cross-Compile-x86_64-on-aarch64.md) - Cross compiling architecture-specific Linux builds might work well in the future.
 
 **Get Started:** [11. Set Timezone](NEW-11-Set-Timezone.md)
