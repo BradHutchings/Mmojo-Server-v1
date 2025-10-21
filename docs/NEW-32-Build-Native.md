@@ -1,4 +1,4 @@
-## 31. Build Native
+## 32. Build Native
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -165,6 +165,6 @@ sudo cp -r completion-ui-original /mnt/mmojo/web-apps/completion-ui
 
 ---
 ### Proceed
-- **Next:** [32. Build Cross-Platform](NEW-32-Build-Cross-Platform.md)
-- **Previous:** This is the first article in this section.
+- **Next:** [33. Build Cross-Platform](NEW-33-Build-Cross-Platform.md)
+- **Previous:** [31. Prepare to Build](NEW-31-Prepare-to-Build.md)
 - **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
