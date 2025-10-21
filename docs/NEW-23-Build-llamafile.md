@@ -26,7 +26,6 @@ _Note that if you copy each code block from the guide and paste it into your ter
 ---
 ### Create Build llamafile Directory
 ```
-cd ~
 mkdir -p ~/$BUILD_LLAMAFILE_DIR
 cd ~/$BUILD_LLAMAFILE_DIR
 printf "\n**********\n*\n* FINISHED: Create Build Directory.\n*\n**********\n\n"
