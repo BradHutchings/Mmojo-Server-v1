@@ -15,6 +15,7 @@ The APE will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating sy
 
 Let's define some environment variables:
 ```
+cd ~
 DOWNLOAD_DIR="21-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
