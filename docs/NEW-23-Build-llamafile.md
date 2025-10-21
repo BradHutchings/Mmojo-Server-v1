@@ -6,7 +6,7 @@ brad@bradhutchings.com
 **The new documentation is under construction. Don't bookmark it or any pages in it yet. Links will change.**
 
 ---
-### About this Step
+### About this Step - DO THIS ONCE
 In this step, we will clone the llamafile repo and build it. This will give us access to llamafile's `zipalign` tool for packaging `mmojo-server-one`. You don't need to do this every time you build Mmojo Server.
 
 ---
