@@ -15,6 +15,7 @@ In this step, we will clone the Cosmopolitan repo, fix known problems, and build
 
 Let's define some environment variables:
 ```
+cd ~
 DOWNLOAD_DIR="21-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
