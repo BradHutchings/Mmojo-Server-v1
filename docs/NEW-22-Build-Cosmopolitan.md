@@ -46,6 +46,6 @@ printf "\n**********\n*\n* FINISHED: Clone Cosmopolitan Repo, Build Locally.\n*\
 
 ---
 ### Proceed
-**Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
-- **Previous:** [21. Download gguf Files](NEW-21-Download-gguf-Files.md)
 - **Next:** [23. Build llamafile](NEW-23-Build-llamafile.md)
+- **Previous:** [21. Download gguf Files](NEW-21-Download-gguf-Files.md)
+- **Up:** [20. Gather Build Pieces](NEW-20-Gather-Build-Pieces.md)
