@@ -63,7 +63,7 @@ The Mmojo Share is a file share where I keep files for local access and complete
 
 ---
 ### Proceed
-**Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
-- **Previous:** [11. Set Timezone](NEW-11-Set-Timezone.md)
 - **Next:** [13. Install Dependencies](NEW-13-Install-Dependencies.md)
+- **Previous:** [11. Set Timezone](NEW-11-Set-Timezone.md)
+- **Up:** [10. Prepare Build Environment](NEW-10-Prepare-Build-Environment.md)
 
