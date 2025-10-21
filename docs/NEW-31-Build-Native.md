@@ -164,5 +164,6 @@ sudo cp -r completion-ui-original /mnt/mmojo/web-apps/completion-ui
 
 ---
 ### Proceed
-**Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
 - **Next:** [32. Build Cross-Platform](NEW-32-Build-Cross-Platform.md)
+- **Previous:** This is the first article in this section.
+- **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
