@@ -36,9 +36,9 @@ In addition, these general goals inform development:
 
 * The ability to package default arguments, in an "args" file, into the executable file is important to me. This is implemented for `mmojo-server-one` builds.
 
-* The ability to read arguments from a file adjacent to the executable file is important to me. This is implemented for `mmojo-server-one` and ``mojo-server` builds.
+* The ability to read arguments from a file adjacent to the executable file is important to me. This is implemented for `mmojo-server-one` and `mojo-server` builds.
 
-* The ability to package a gguf model into the executable file is important to me. This is implemented for `mmojo-server-one` and ``mojo-server` builds.
+* The ability to package a gguf model into the executable file is important to me. This is implemented for `mmojo-server-one` and `mojo-server` builds.
 
 * Industry standard OpenAI API.
 
@@ -101,6 +101,7 @@ In no particular order of importance, these are the things that bother me:
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
