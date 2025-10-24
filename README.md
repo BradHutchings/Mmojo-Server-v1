@@ -1,4 +1,4 @@
-## mmojo-server
+## Mmojo Server
 Based on [llama.cpp](https://github.com/ggml-org/llama.cpp).
 
 Brad Hutchings<br/>
@@ -11,7 +11,7 @@ The main project goals are:
 
 1. Create `mmojo-server-one` executables that run anwhere. This was the main goal of the [llamafile project](https://github.com/Mozilla-Ocho/llamafile) project, which inspires me.
 
-   I also want to create `mmojo-server` executables targeted at specific platforms and operating systems, and supporting GPU and NPU computation as llama.cpp does with the same source code, similar packaging, and deployment conventions.
+   I also create `mmojo-server` executables targeted at specific platforms and operating systems, and supporting GPU and NPU computation as llama.cpp does with the same source code, similar packaging, and deployment conventions.
 
    Easy button: Start with `mmojo-server-one`. When you get your installation working, build and install `mmojo-server` optimized for your device.
 
@@ -94,6 +94,7 @@ In no particular order of importance, these are the things that bother me:
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
