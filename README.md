@@ -7,26 +7,33 @@ brad@bradhutchings.com
 ---
 ### Project Goals
 
-The goal of this project is to build a single `mmojo-server` executable file that can run "anywhere":
-- x86_64 Windows
-- x86_64 Linux
-- ARM Windows
-- ARM Linux
-- ARM MacOS
+The main project goals are:
 
-I am inspired by the [llamafile project](https://github.com/Mozilla-Ocho/llamafile). The main drawback of that project is that it has not kept up-to-date with llama.cpp and therefore, does not always support the latest models when llama.cpp supports them. Support for new models in llamafile takes work and time.
+1. Create `mmojo-server-one` executables that run anwhere. This was the main goal of the [llamafile project](https://github.com/Mozilla-Ocho/llamafile) project, which inspires me.
 
-I want to use the MIT license as used by llama.cpp.
+   I also want to create `mmojo-server` executables targeted at specific platforms and operating systems, and supporting GPU and NPU computation as llama.cpp does with the same source code, similar packaging, and deployment conventions.
 
-GPU support is important to me, and can be handled by platform specific builds of llama.cpp. It's complicated to make work with a cross-platform and cross-architecture build. CPU inference is quite adequate for many private end-user applications. Base-level ARM and x86 tuned CPU inference is implemented.
+   Easy button: Start with `mmojo-server-one`. When you get your installation working, build and install `mmojo-server` optimized for your device.
 
-The ability to package support files, such as a custom web UI into the executable file is important to me. This is implemented.
+2. Keep the underlying [llama.cpp](https://github.com/ggml-org/llama.cpp) base up-to-date. This was the (and my) main complaint about llamafile when that project was being updated regularly. Without regular (read "at least weekly") updates to the llama.cpp base, new models and modes of use were not supported.
 
-The ability to package default arguments, in an "args" file, into the executable file is important to me. This is implemented.
+3. Present the **Mmojo Completion** user interface. You shouldn't have to pretend to chat to get knowledge from an LLM.
 
-The ability to read arguments from a file adjacent to the executable file is important to me. This is implemented.
+In addition, these general goals inform development:
 
-The ability to package a gguf model into the executable file is important to me. This is implemented.
+* I want to use the MIT license as used by llama.cpp.
+
+* GPU support is important to me, and can be handled by platform specific builds of llama.cpp. It's complicated to make work with a cross-platform and cross-architecture build. CPU inference is quite adequate for many private end-user applications. Base-level ARM and x86 tuned CPU inference is implemented.
+
+* The ability to package support files, such as a custom web UI into the executable file is important to me. This is implemented for `mmojo-server-one` builds.
+
+* The ability to package default arguments, in an "args" file, into the executable file is important to me. This is implemented for `mmojo-server-one` builds.
+
+* The ability to read arguments from a file adjacent to the executable file is important to me. This is implemented for `mmojo-server-one` and ``mojo-server` builds.
+
+* The ability to package a gguf model into the executable file is important to me. This is implemented for `mmojo-server-one` and ``mojo-server` builds.
+
+* Industry standard OpenAI API.
 
 I welcome any of my changes being implemented in the official llama.cpp.
 
@@ -87,6 +94,7 @@ In no particular order of importance, these are the things that bother me:
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
