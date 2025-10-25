@@ -9,7 +9,7 @@ brad@bradhutchings.com
 ### About this Section
 Before you can build `mmojo-server`, `mmojo-server-one`, and other targets, you need to set up a build environment. I use two build environments regularly:
 - Ubuntu 24.04 Server (Debian 13 Trixie) for x86_64 in a virtual machine.
-- Raspberry Pi 5 (ARM64) running Raspberry Pi OS (Debian 13 Trixie).
+- Raspberry Pi OS (Debian 13 Trixie) for Raspberry Pi 5 (aarch64/arm64).
 
 If you want your platform native builds to support Debian 12 Bookworm, use Ubuntu 23.04 Server for x86_64 and Bookworm version of Raspberry Pi OS. The compatibility issue is that you need to link against the earliest glibc that you support. This only affects platform native builds. Actual Portable Executable (APE) builds statically link against the Cosmo glibc.
 
