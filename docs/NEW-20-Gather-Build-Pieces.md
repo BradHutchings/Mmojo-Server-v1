@@ -11,7 +11,6 @@ We need a few items ready to build an Actually Portable Executable (APE) with Co
 
 If you have already prepared your build environment, skip ahead to: 
 - [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
-- ~~[OLD DOCS - 5.Build Mmojo Server](5-Build-Mmojo-Server)~~ 
 
 ---
 ### Preparing Your Build Environment
