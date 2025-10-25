@@ -1,4 +1,4 @@
-## 32. Build Native
+## 32. Build Test
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -6,7 +6,7 @@ brad@bradhutchings.com
 ---
 ### About this Step
 
-In this setp, we will build Mmojo Server (`mmojo-server`) for your native build environment platform. You don't need to do this. You can use it to test and debug features of Mmojo Server that are not specific to any particular build.
+In this setp, we will build Mmojo Server (`mmojo-server`) for your native build environment platform without any optimizations. You don't need to do this. You can use it to test and debug features of Mmojo Server that are not specific to any particular build.
 
 Skip ahead to: [32. Build Cross-Platform](NEW-32-Build-Cross-Platform.md).
 
@@ -21,7 +21,7 @@ BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="24-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="30-BUILD-mmojo"
-BUILD_NATIVE="build-native"
+BUILD_TEST="build-test"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -37,7 +37,7 @@ EXTRA_FLAGS=" -pg "
 ```
 
 ---
-### Build Mmojo Server for native build environment platform.
+### Build Test Mmojo Server for Native Build Environment Platform.
 We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
@@ -49,10 +49,10 @@ else
     export CC="cc $EXTRA_FLAGS "
     export CXX="c++ $EXTRA_FLAGS "
 fi
-cmake -B $BUILD_NATIVE -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
-cmake --build $BUILD_NATIVE --config Release
+cmake -B $BUILD_TEST -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
+cmake --build $BUILD_TEST --config Release
 
-printf "\n**********\n*\n* FINISHED: Build Mmojo Server for native...\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Build Test Mmojo Server...\n*\n**********\n\n"
 ```
 
 ---
@@ -61,7 +61,7 @@ Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./$BUILD_NATIVE/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_TEST/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
@@ -99,7 +99,7 @@ chat
 --mlock
 ...
 EOF
-./$BUILD_NATIVE/bin/mmojo-server 
+./$BUILD_TEST/bin/mmojo-server 
 ```
 
 #### Verify that there is a `mmojo-server-args` file.
@@ -136,7 +136,7 @@ chat
 --mlock
 ...
 EOF
-./$BUILD_NATIVE/bin/mmojo-server 
+./$BUILD_TEST/bin/mmojo-server 
 ```
 
 #### Verify that there is a `mmojo-server-support` folder.
