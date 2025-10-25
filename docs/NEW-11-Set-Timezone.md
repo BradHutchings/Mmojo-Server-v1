@@ -23,6 +23,18 @@ Set your system's time zone:
 ```
 sudo timedatectl set-timezone America/Los_Angeles
 ```
+```
+sudo timedatectl set-timezone America/Phoenix
+```
+```
+sudo timedatectl set-timezone America/Denver
+```
+```
+sudo timedatectl set-timezone America/Detroit
+```
+```
+sudo timedatectl set-timezone America/New_York
+```
 
 Reference: [Timedatectl can control your Linux time and time zone](https://www.networkworld.com/article/970572/using-the-timedatectl-command-to-control-your-linux-time-and-time-zone.html).
 
