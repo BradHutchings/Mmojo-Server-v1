@@ -9,6 +9,8 @@ brad@bradhutchings.com
 ### About this Step - DO THIS ONCE
 In this step, we will download some `gguf` files we will need from Hugging Face and copy them to our Mmojo share for later use.
 
+Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
+
 ---
 ### Environment Variables
 
