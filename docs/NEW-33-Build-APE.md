@@ -176,7 +176,7 @@ Copy this build to your Mmojo share for assembly into an APE later. This is part
 mount-mmojo-share.sh
 sudo mkdir -p /mnt/mmojo/builds
 sudo mkdir -p /mnt/mmojo/builds/ape
-sudo cp -f ./$BUILD_APE/bin/mmojo-server-ape /mnt/mmojo/builds/ape/mmojo-server-ape
+sudo cp -f ./$BUILD_APE/mmojo-server-ape /mnt/mmojo/builds/ape/mmojo-server-ape
 ```
 
 ---
