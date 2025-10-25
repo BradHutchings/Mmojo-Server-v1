@@ -9,6 +9,8 @@ In this step, we will build Mmojo Server (`mmojo-server-linux-x86`) for general 
 
 The resulting executable will run on any Linux x86_64 system. Support files can be packaged in an adjacent `mmojo-server-support` directory.
 
+Perform this step in your x86_64 build environment. The resulting APE file will be copied to your Mmojo SMB share.
+
 ---
 ## To Do - Build Steps
 
