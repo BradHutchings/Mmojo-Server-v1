@@ -9,7 +9,7 @@ brad@bradhutchings.com
 ### About this Step
 Install system package updates, then install packages we will need for our build system.
 
-Perform this step in both your x86_64 and your aarch65 (arm64) build environments.
+Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
 
 ---
 ### Install Package Updates
