@@ -131,7 +131,7 @@ Now that we have amd64 (x86) and aarch64 (ARM) builds, we can combine them into 
 Do this if you built both x86_64 and aarch64/arm64 in the same build environment.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
-mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_COSMO
+mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_APE
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
@@ -148,7 +148,7 @@ Do this if you built both x86_64 and aarch64/arm64 in different build environmen
 ```
 mount-mmojo-share.sh
 cd ~/$BUILD_MMOJO_SERVER_DIR
-mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_COSMO
+mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_APE
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
