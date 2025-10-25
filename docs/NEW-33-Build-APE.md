@@ -60,13 +60,23 @@ export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for x86_64.\n*\n**********\n\n"
 ```
 
-**Optional:** Test the build if you're building on an x86 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
+#### Optional: Test the build if you're building on an x86 system.
+If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
 ./$BUILD_COSMO_AMD64/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
+```
+
+#### Optional: Copy to Your Mmojo Share
+Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
+```
+mount-mmojo.share.sh
+mkdir -p /mnt/mmojo/builds
+mkdir -p /mnt/mmojo/builds/ape
+cp -f ./$BUILD_COSMO_AMD64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-x86_64
 ```
 
 ---
@@ -94,7 +104,8 @@ export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build Mmojo Server for ARM.\n*\n**********\n\n"
 ```
 
-**Optional:** Test the build if you're building on an ARM64 system. If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
+#### Optional: Test the build if you're building on an aarch64/arm64 system.
+If you've previously downloaded a model to the `1-DOWNLOAD` folder, you can test the build.
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
@@ -103,10 +114,21 @@ rm -r -f mmojo-server-support
     --threads-http 8 --ctx-size 0 --mlock
 ```
 
+#### Optional: Copy to Your Mmojo Share
+Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
+```
+mount-mmojo.share.sh
+mkdir -p /mnt/mmojo/builds
+mkdir -p /mnt/mmojo/builds/ape
+cp -f ./$BUILD_COSMO_AARCH64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-aarch64
+```
+
 ---
 ### Build mmojo-server Actual Portable Executable (APE)
 Now that we have amd64 (x86) and aarch64 (ARM) builds, we can combine them into an Actual Portable Executable (APE) file.
 
+#### Option 1: Assemble from Local Copies
+Do this if you built both x86_64 and aarch64/arm64 in the same build environment.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
 mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_COSMO
@@ -121,13 +143,40 @@ export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
 ```
 
+#### Option 2: Assemble from Your Mmojo Share
+Do this if you built both x86_64 and aarch64/arm64 in different build environments and copied them to your Mmojo share.
+```
+mount-mmojo.share.sh
+cd ~/$BUILD_MMOJO_SERVER_DIR
+mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_COSMO
+export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
+apelink \
+	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
+	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
+	-o $BUILD_APE/mmojo-server-ape \
+    /mnt/mmojo/build/ape/mmojo-server-x86_64 \
+    /mnt/mmojo/build/ape/mmojo-server-aarch64
+export PATH=$SAVE_PATH
+printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
+```
+
+#### Optional: Test the APE.
 Let's test our combined build:
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./$BUILD_APE/mmojo-server-cosmo --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_APE/mmojo-server-ape --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
+```
+
+#### Optional: Copy to Your Mmojo Share
+Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
+```
+mount-mmojo.share.sh
+mkdir -p /mnt/mmojo/builds
+mkdir -p /mnt/mmojo/builds/ape
+cp -f ./$BUILD_APE/bin/mmojo-server-ape /mnt/mmojo/builds/ape/mmojo-server-ape
 ```
 
 ---
