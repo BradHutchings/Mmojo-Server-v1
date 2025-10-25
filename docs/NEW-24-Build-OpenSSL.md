@@ -13,7 +13,7 @@ We need to build our own `libssl.a` and `libcrypto.a` becuase:
 
 This is how I understand the problem. My understanding might be incorrect, but it bears out in trying to find workarounds.
 
-Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
+**Where:** Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
 
 ---
 ### Environment Variables
