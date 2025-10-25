@@ -9,7 +9,7 @@ In this step, we will build Mmojo Server (`mmojo-server-pi5`) for use on Raspber
 
 The resulting executable will run on any Raspberry Pi 3, 4, and 5 runnng Raspberry Pi OS (Trixie). Support files can be packaged in an adjacent `mmojo-server-support` directory.
 
-Perform this step in a Raspberry Pi 5 aarch64 (arm64) build environment. The resulting executable will be copied to your Mmojo SMB share.
+**Where:** Perform this step in a Raspberry Pi 5 aarch64 (arm64) build environment. The resulting executable will be copied to your Mmojo SMB share.
 
 ---
 ## To Do - Build Steps
