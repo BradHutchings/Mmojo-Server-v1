@@ -11,7 +11,7 @@ Cross-compiling llama.cpp does not work very well right now. The llama.cpp CMake
 
 I've had some limited success building for Raspberry Pi (arm64) from x86_64 Ubuntu, but not for optimized builds. For example, a private summary benchmark I have, running on a Pi 5, takes about 45 minutes with the cosmocc build, 18 minutes with a cross-compiled build, and 7 minutes with an optimized build built on the Pi 5. I'm working towards getting optimized cross-compiled builds, but it's a long term goal.
 
-Perform this step in your x86_64 build environment.
+**Where:** Perform this step in your x86_64 build environment.
 
 ---
 ### Set up Cross Compile aarch64 (arm64) on x86_64
