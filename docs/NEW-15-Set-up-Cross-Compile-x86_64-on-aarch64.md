@@ -11,6 +11,8 @@ Cross-compiling llama.cpp does not work very well right now. The llama.cpp CMake
 
 I have not had success yet cross-compiling x86_64 builds on aarch64/arm64.
 
+Perform this step in both your aarch64 (arm64) build environment.
+
 ---
 ### Set up Cross Compile x86_64 on aarch64 (arm64)
 Do this if you're running on aarch64/arm64:
