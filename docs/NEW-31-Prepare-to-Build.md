@@ -8,7 +8,7 @@ brad@bradhutchings.com
 
 In this step, we will clone this Mmojo-Server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
 
-Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
+**Where:** Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
 
 ---
 ### Environment Variables
