@@ -103,6 +103,6 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 
 ---
 ### Proceed
-- **Next:** [32. Build Native](NEW-32-Build-Native.md)
+- **Next:** [32. Build Test](NEW-32-Build-Test.md)
 - **Previous:** This is the first article in this section.
 - **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
