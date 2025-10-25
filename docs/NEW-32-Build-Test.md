@@ -8,7 +8,7 @@ brad@bradhutchings.com
 
 In this step, we will build Mmojo Server (`mmojo-server`) for your native build environment platform without any optimizations. You don't need to do this. You can use it to test and debug features of Mmojo Server that are not specific to any particular build.
 
-Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
+**Where:** Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
 
 ---
 ### Environment Variables
