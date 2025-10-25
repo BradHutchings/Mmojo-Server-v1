@@ -9,7 +9,7 @@ brad@bradhutchings.com
 ### About this Step - DO THIS ONCE
 In this step, we will clone the llamafile repo and build it. This will give us access to llamafile's `zipalign` tool for packaging `mmojo-server-one`. You don't need to do this every time you build Mmojo Server.
 
-Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
+**Where:** Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
 
 ---
 ### Environment Variables
