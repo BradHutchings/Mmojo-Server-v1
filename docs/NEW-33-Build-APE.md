@@ -74,9 +74,9 @@ rm -r -f mmojo-server-support
 Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
 ```
 mount-mmojo.share.sh
-mkdir -p /mnt/mmojo/builds
-mkdir -p /mnt/mmojo/builds/ape
-cp -f ./$BUILD_COSMO_AMD64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-x86_64
+sudo mkdir -p /mnt/mmojo/builds
+sudo mkdir -p /mnt/mmojo/builds/ape
+sudo cp -f ./$BUILD_COSMO_AMD64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-x86_64
 ```
 
 ---
@@ -118,9 +118,9 @@ rm -r -f mmojo-server-support
 Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
 ```
 mount-mmojo.share.sh
-mkdir -p /mnt/mmojo/builds
-mkdir -p /mnt/mmojo/builds/ape
-cp -f ./$BUILD_COSMO_AARCH64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-aarch64
+sudo mkdir -p /mnt/mmojo/builds
+sudo mkdir -p /mnt/mmojo/builds/ape
+sudo cp -f ./$BUILD_COSMO_AARCH64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-aarch64
 ```
 
 ---
@@ -174,9 +174,9 @@ rm -r -f mmojo-server-support
 Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
 ```
 mount-mmojo.share.sh
-mkdir -p /mnt/mmojo/builds
-mkdir -p /mnt/mmojo/builds/ape
-cp -f ./$BUILD_APE/bin/mmojo-server-ape /mnt/mmojo/builds/ape/mmojo-server-ape
+sudo mkdir -p /mnt/mmojo/builds
+sudo mkdir -p /mnt/mmojo/builds/ape
+sudo cp -f ./$BUILD_APE/bin/mmojo-server-ape /mnt/mmojo/builds/ape/mmojo-server-ape
 ```
 
 ---
