@@ -73,7 +73,7 @@ rm -r -f mmojo-server-support
 #### Optional: Copy to Your Mmojo Share
 Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
 ```
-mount-mmojo.share.sh
+mount-mmojo-share.sh
 sudo mkdir -p /mnt/mmojo/builds
 sudo mkdir -p /mnt/mmojo/builds/ape
 sudo cp -f ./$BUILD_COSMO_AMD64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-x86_64
@@ -117,7 +117,7 @@ rm -r -f mmojo-server-support
 #### Optional: Copy to Your Mmojo Share
 Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
 ```
-mount-mmojo.share.sh
+mount-mmojo-share.sh
 sudo mkdir -p /mnt/mmojo/builds
 sudo mkdir -p /mnt/mmojo/builds/ape
 sudo cp -f ./$BUILD_COSMO_AARCH64/bin/mmojo-server /mnt/mmojo/builds/ape/mmojo-server-aarch64
@@ -146,7 +146,7 @@ printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executab
 #### Option 2: Assemble from Your Mmojo Share
 Do this if you built both x86_64 and aarch64/arm64 in different build environments and copied them to your Mmojo share.
 ```
-mount-mmojo.share.sh
+mount-mmojo-share.sh
 cd ~/$BUILD_MMOJO_SERVER_DIR
 mkdir -p ~/$BUILD_MMOJO_SERVER_DIR/$BUILD_COSMO
 export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
@@ -173,7 +173,7 @@ rm -r -f mmojo-server-support
 #### Optional: Copy to Your Mmojo Share
 Copy this build to your Mmojo share for assembly into an APE later. This is particularly useful if you're building the x86_64 and aarch64 binaries in different build environments.
 ```
-mount-mmojo.share.sh
+mount-mmojo-share.sh
 sudo mkdir -p /mnt/mmojo/builds
 sudo mkdir -p /mnt/mmojo/builds/ape
 sudo cp -f ./$BUILD_APE/bin/mmojo-server-ape /mnt/mmojo/builds/ape/mmojo-server-ape
