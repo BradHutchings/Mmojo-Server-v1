@@ -19,5 +19,5 @@ The resulting executable will run on any Linux x86_64 system. Support files can 
 ---
 ### Proceed
 - **Next:** [35. Build linux aarch64](NEW-35-Build-linux-aarch64.md)
-- **Previous:** [33. Build Cross Platform](NEW-33-Build-Cross-Platform.md)
+- **Previous:** [33. Build APE](NEW-33-Build-APE.md)
 - **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
