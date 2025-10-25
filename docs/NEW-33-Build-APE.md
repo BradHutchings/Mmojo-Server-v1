@@ -1,4 +1,4 @@
-## 33. Build Cross Platform
+## 33. Build APE
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -6,7 +6,7 @@ brad@bradhutchings.com
 ---
 ### About this Step
 
-In this setp, we will build Mmojo Server (`mmojo-server-cosmo`) for x86_64 and arm64. We will then package them in an Actual Portable Executable (APE) file which can run cross platform and cross artchitecture. 
+In this step, we will build Mmojo Server (`mmojo-server-cosmo`) for x86_64 and arm64. We will then package them in an Actual Portable Executable (APE) file which can run cross platform and cross artchitecture. 
 
 The APE will run on x86 and ARM CPUs, and Windows, Linux, and macOS operating systems. As a zip file, the APE can also hold configuration files and .gguf models. The APE will not perform as well as platform-specifc builds. It does not have the most optimized GGML CPU code and does not use GGML GPU options. Tradeoffs.
 
@@ -23,7 +23,7 @@ BUILD_MMOJO_SERVER_DIR="30-BUILD-mmojo"
 COSMO_DIR="$BUILD_COSMOPOLITAN_DIR/cosmocc"
 BUILD_COSMO_AMD64="build-cosmo-amd64"
 BUILD_COSMO_AARCH64="build-cosmo-aarch"
-BUILD_COSMO="build-cosmo"
+BUILD_APE="build-ape"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -112,7 +112,7 @@ export PATH="$(pwd)/cosmocc/bin:$SAVE_PATH"
 apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
-	-o $BUILD_COSMO/mmojo-server-cosmo \
+	-o $BUILD_APE/mmojo-server-ape \
     $BUILD_COSMO_AMD64/bin/mmojo-server \
     $BUILD_COSMO_AARCH64/bin/mmojo-server
 export PATH=$SAVE_PATH
@@ -123,7 +123,7 @@ Let's test our combined build:
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./$BUILD_COSMO/mmojo-server-cosmo --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_APE/mmojo-server-cosmo --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
@@ -131,5 +131,5 @@ rm -r -f mmojo-server-support
 ---
 ### Proceed
 - **Next:** [34. Build linux x86_64](NEW-34-Build-linux-x86_64.md)
-- **Previous:** [32. Build Native](NEW-32-Build-Native.md)
+- **Previous:** [32. Build Test](NEW-32-Build-Test.md)
 - **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)
