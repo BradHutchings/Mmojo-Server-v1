@@ -9,6 +9,9 @@ In this step, we will build Mmojo Server (`mmojo-server-linux-aarch64`) for gene
 
 The resulting executable will run on any Linux x86_64 system. Support files can be packaged in an adjacent `mmojo-server-support` directory.
 
+Perform this step in either your aarch64 (arm64) build environment. The resulting executable will be copied to your Mmojo SMB share.
+
+
 ---
 ## To Do - Build Steps
 
