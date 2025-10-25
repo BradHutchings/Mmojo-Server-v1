@@ -154,8 +154,8 @@ apelink \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/x86_64/ape/ape.elf \
 	-l ~/$BUILD_COSMOPOLITAN_DIR/o/aarch64/ape/ape.elf \
 	-o $BUILD_APE/mmojo-server-ape \
-    /mnt/mmojo/build/ape/mmojo-server-x86_64 \
-    /mnt/mmojo/build/ape/mmojo-server-aarch64
+    /mnt/mmojo/builds/ape/mmojo-server-x86_64 \
+    /mnt/mmojo/builds/ape/mmojo-server-aarch64
 export PATH=$SAVE_PATH
 printf "\n**********\n*\n* FINISHED: Build mmojo-server Actual Portable Executable (APE).\n*\n**********\n\n"
 ```
