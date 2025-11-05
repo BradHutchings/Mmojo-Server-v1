@@ -28,6 +28,8 @@ We clone and build llamafile so we will have access to its custom `zipalign` too
 cd ~
 git clone https://github.com/Mozilla-Ocho/llamafile $BUILD_LLAMAFILE_DIR
 cd $BUILD_LLAMAFILE_DIR
+# Revert to May, 2025 release
+git checkout ff0c02e6c560d88324966e88a718485989b41c1e
 make -j8
 make install PREFIX=.
 printf "\n**********\n*\n* FINISHED: Clone and Build llamafile.\n*\n**********\n\n"
