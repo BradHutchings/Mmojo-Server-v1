@@ -4440,17 +4440,6 @@ struct server_context {
         SRV_DBG("%s", "run slots completed\n");
     }
 
-    json model_meta() const {
-        return json {
-            {"vocab_type",  llama_vocab_type       (vocab)},
-            {"n_vocab",     llama_vocab_n_tokens   (vocab)},
-            {"n_ctx_train", llama_model_n_ctx_train(model)},
-            {"n_embd",      llama_model_n_embd     (model)},
-            {"n_params",    llama_model_n_params   (model)},
-            {"size",        llama_model_size       (model)},
-        };
-    }
-
     // mmojo-server START
     // This could be automated by searching for "json model_meta() const {" and replacing 10 lines with this block. -Brad 2025-11-05
     json model_meta() const {
