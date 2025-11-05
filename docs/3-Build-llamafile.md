@@ -12,9 +12,9 @@ Skip ahead to: [4. Build OpenSSL with Cosmopolitan](4-Build-OpenSSL-with-Cosmopo
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="1-DOWNLOAD"
-BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
+DOWNLOAD_DIR="21-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
+BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
 printf "\n**********\n*\n* FINISHED: Environment Variables.\n*\n**********\n\n"
 ```
 
@@ -28,12 +28,14 @@ We clone and build llamafile so we will have access to its custom `zipalign` too
 cd ~
 git clone https://github.com/Mozilla-Ocho/llamafile $BUILD_LLAMAFILE_DIR
 cd $BUILD_LLAMAFILE_DIR
+# Revert to May, 2025 release
+git checkout ff0c02e6c560d88324966e88a718485989b41c1e
 make -j8
 make install PREFIX=.
 printf "\n**********\n*\n* FINISHED: Clone and Build llamafile.\n*\n**********\n\n"
 ```
 
-Now, `zipalign` exists at `~/3-BUILD-llamafile/bin/zipalign`.
+Now, `zipalign` exists at `~/23-BUILD-llamafile/bin/zipalign`.
 
 ---
 ### Next Step: Build OpenSSL with Cosmopolitan

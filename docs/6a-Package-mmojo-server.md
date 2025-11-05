@@ -12,12 +12,13 @@ We are going to package `mmojo-server` without an embedded `.gguf` model file.
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="1-DOWNLOAD"
-BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
-BUILD_OPENSSSL_DIR="4-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-PACKAGE_DIR="6a-PACKAGE-mmojo-server"
+DOWNLOAD_DIR="21-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
+BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="24-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="30-BUILD-mmojo"
+BUILD_COSMO_DIR="$BUILD_MMOJO_SERVER_DIR/build-cosmo"
+PACKAGE_DIR="41-PACKAGE-mmojo-server"
 
 MMOJO_SERVER="mmojo-server"
 MMOJO_SERVER_COSMO="mmojo-server-cosmo"
@@ -40,7 +41,7 @@ Next, let's create a directory where we'll package `mmojo-server`. We copy `mmoj
 cd ~
 rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ZIP
+cp ~/$BUILD_COSMO_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ZIP
 cd ~/$PACKAGE_DIR
 printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```

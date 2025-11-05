@@ -1,4 +1,4 @@
-## 5b. Build Native
+## 32. Build Test
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -6,23 +6,22 @@ brad@bradhutchings.com
 ---
 ### About this Step
 
-The fifth step in building Mmojo Server is to build the `mmojo-server` executables.
+In this step, we will build Mmojo Server (`mmojo-server`) for your native build environment platform without any optimizations. You don't need to do this. You can use it to test and debug features of Mmojo Server that are not specific to any particular build.
 
-In this subsetp, we will build `mmojo-server` for your native build environment platform. You don't need to do this. You can use it to test and debug features of mmojo-server that are not specific to any particular build.
-
-Skip ahead to: [5c. Build Cross-Platform](5c-Build-Cross-Platform.md).
+**Where:** Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
 
 ---
 ### Environment Variables
 
 Let's define some environment variables:
 ```
+cd ~
 DOWNLOAD_DIR="21-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
 BUILD_OPENSSSL_DIR="24-BUILD-openssl"
 BUILD_MMOJO_SERVER_DIR="30-BUILD-mmojo"
-BUILD_NATIVE="build-native"
+BUILD_TEST="build-test"
 EXTRA_FLAGS=""
 if [ -z "$SAVE_PATH" ]; then
   export SAVE_PATH=$PATH
@@ -38,7 +37,7 @@ EXTRA_FLAGS=" -pg "
 ```
 
 ---
-### Build Mmojo Server for native build environment platform.
+### Build Test Mmojo Server for Native Build Environment Platform.
 We now use CMake to build Mmojo Server.
 ```
 cd ~/$BUILD_MMOJO_SERVER_DIR
@@ -50,10 +49,10 @@ else
     export CC="cc $EXTRA_FLAGS "
     export CXX="c++ $EXTRA_FLAGS "
 fi
-cmake -B $BUILD_NATIVE -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
-cmake --build $BUILD_NATIVE --config Release
+cmake -B $BUILD_TEST -DBUILD_SHARED_LIBS=OFF -DLLAMA_CURL=OFF -DLLAMA_OPENSSL=ON
+cmake --build $BUILD_TEST --config Release
 
-printf "\n**********\n*\n* FINISHED: Build Mmojo Server for native build environment platform.\n*\n**********\n\n"
+printf "\n**********\n*\n* FINISHED: Build Test Mmojo Server...\n*\n**********\n\n"
 ```
 
 ---
@@ -62,7 +61,7 @@ Requires previously downloaded model to the `1-DOWNLOAD` directory.
 ```
 rm -f mmojo-server-args
 rm -r -f mmojo-server-support
-./$BUILD_NATIVE/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
+./$BUILD_TEST/bin/mmojo-server --model ~/$DOWNLOAD_DIR/Google-Gemma-1B-Instruct-v3-q8_0.gguf \
     --path completion-ui/ --default-ui-endpoint "chat" --host 0.0.0.0 --port 8080 --batch-size 64 \
     --threads-http 8 --ctx-size 0 --mlock
 ```
@@ -100,7 +99,7 @@ chat
 --mlock
 ...
 EOF
-./$BUILD_NATIVE/bin/mmojo-server 
+./$BUILD_TEST/bin/mmojo-server 
 ```
 
 #### Verify that there is a `mmojo-server-args` file.
@@ -137,7 +136,7 @@ chat
 --mlock
 ...
 EOF
-./$BUILD_NATIVE/bin/mmojo-server 
+./$BUILD_TEST/bin/mmojo-server 
 ```
 
 #### Verify that there is a `mmojo-server-support` folder.
@@ -165,8 +164,7 @@ sudo cp -r completion-ui-original /mnt/mmojo/web-apps/completion-ui
 ```
 
 ---
-### Next Step: Build Cross Platform
-
-You've built the `mmojo-server` application for your native build environment platform.
-
-Next step: [5c. Build Cross-Platform](5c-Build-Cross-Platform.md).
+### Proceed
+- **Next:** [33. Build APE](NEW-33-Build-APE.md)
+- **Previous:** [31. Prepare to Build](NEW-31-Prepare-to-Build.md)
+- **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)

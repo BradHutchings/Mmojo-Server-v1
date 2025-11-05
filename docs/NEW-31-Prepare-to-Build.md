@@ -1,4 +1,4 @@
-## 5a. Prepare to Build
+## 31. Prepare to Build
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
@@ -6,15 +6,16 @@ brad@bradhutchings.com
 ---
 ### About this Step
 
-The fifth step in building Mmojo Server is to build the Mmojo Server.
+In this step, we will clone this Mmojo-Server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
 
-In this first substep, we will clone the mmojo-server repo, fix problems that affect building with Cosmopolitan, and add some features for Mmojo Server.
+**Where:** Perform this step in both your x86_64 and your aarch64 (arm64) build environments.
 
 ---
 ### Environment Variables
 
 Let's define some environment variables:
 ```
+cd ~
 DOWNLOAD_DIR="21-DOWNLOAD"
 BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
 BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
@@ -32,7 +33,6 @@ _Note that if you copy each code block from the guide and paste it into your ter
 ---
 ### Create Build Mmojo Directory
 ```
-cd ~
 mkdir -p ~/$BUILD_MMOJO_SERVER_DIR
 cd ~/$BUILD_MMOJO_SERVER_DIR
 printf "\n**********\n*\n* FINISHED: Create Build Mmojo Directory.\n*\n**********\n\n"
@@ -42,7 +42,6 @@ printf "\n**********\n*\n* FINISHED: Create Build Mmojo Directory.\n*\n*********
 ### Clone this Repo Locally
 Clone this repo and repos this repo depends on into a `~\5-BUILD-mmojo` directory.
 ```
-cd ~
 git clone https://github.com/BradHutchings/mmojo-server.git ~/$BUILD_MMOJO_SERVER_DIR
 cd ~/$BUILD_MMOJO_SERVER_DIR
 git clone https://github.com/nlohmann/json.git nlohmann-json
@@ -105,8 +104,7 @@ cd ~/$BUILD_MMOJO_SERVER_DIR
 ```
 
 ---
-### Next Step: Build mmojo-server
-
-You've cloned the Mmojo Server repo and fixed a couple Cosmopolitan-related issues. You are ready to build Mmojo Server now.
-
-Next step: [5b. Build Native](5b-Build-Native.md).
+### Proceed
+- **Next:** [32. Build Test](NEW-32-Build-Test.md)
+- **Previous:** This is the first article in this section.
+- **Up:** [30. Build Mmojo Server](NEW-30-Build-Mmojo-Server.md)

@@ -15,12 +15,13 @@ If you would like to package `mmojo-server` without an embedded `.gguf` model fi
 
 Let's define some environment variables:
 ```
-DOWNLOAD_DIR="1-DOWNLOAD"
-BUILD_COSMOPOLITAN_DIR="2-BUILD-cosmopolitan"
-BUILD_LLAMAFILE_DIR="3-BUILD-llamafile"
-BUILD_OPENSSSL_DIR="4-BUILD-openssl"
-BUILD_MMOJO_SERVER_DIR="5-BUILD-mmojo"
-PACKAGE_DIR="6b-PACKAGE-mmojo-server-one"
+DOWNLOAD_DIR="21-DOWNLOAD"
+BUILD_COSMOPOLITAN_DIR="22-BUILD-cosmopolitan"
+BUILD_LLAMAFILE_DIR="23-BUILD-llamafile"
+BUILD_OPENSSSL_DIR="24-BUILD-openssl"
+BUILD_MMOJO_SERVER_DIR="30-BUILD-mmojo"
+BUILD_COSMO_DIR="$BUILD_MMOJO_SERVER_DIR/build-cosmo"
+PACKAGE_DIR="42-PACKAGE-mmojo-server-one"
 
 ZIPALIGN=~/$BUILD_LLAMAFILE_DIR/bin/zipalign
 MODEL_FILE=Google-Gemma-1B-Instruct-v3-q8_0.gguf
@@ -49,7 +50,7 @@ Next, let's create a directory where we'll package `mmojo-server`. We copy `mmoj
 cd ~
 rm -r -f ~/$PACKAGE_DIR
 mkdir -p $PACKAGE_DIR
-cp ~/$BUILD_MMOJO_SERVER_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
+cp ~/$BUILD_COSMO_DIR/$MMOJO_SERVER_COSMO ~/$PACKAGE_DIR/$MMOJO_SERVER_ONE_ZIP
 cd ~/$PACKAGE_DIR
 printf "\n**********\n*\n* FINISHED: Create PACKAGE Directory.\n*\n**********\n\n"
 ```
