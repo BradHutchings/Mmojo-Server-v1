@@ -278,6 +278,7 @@ struct common_params {
     int32_t n_ctx                 =  4096; // context size
     int32_t n_batch               =  2048; // logical batch size for prompt processing (must be >=32 to use BLAS)
     // mmojo-server START
+    // This could be automated by searching for "int32_t n_batch " and inserting this block immediately below. -Brad 2025-11-05
     int32_t n_batch_sleep_ms          =     0; // delay in milliseconds after processing each batch.
     std::string default_ui_endpoint   =    ""; // endpoint for chat UI
     // mmojo-server END
@@ -410,6 +411,8 @@ struct common_params {
     bool mmproj_use_gpu = true;     // use GPU for multimodal model
     bool no_mmproj = false;         // explicitly disable multimodal model
     std::vector<std::string> image; // path to image file(s)
+    int image_min_tokens = -1;
+    int image_max_tokens = -1;
 
     // finetune
     struct lr_opt lr;
@@ -509,6 +512,10 @@ struct common_params {
     // return false from callback to abort model loading or true to continue
     llama_progress_callback load_progress_callback = NULL;
     void *                  load_progress_callback_user_data = NULL;
+
+    bool has_speculative() const {
+        return !speculative.model.path.empty() || !speculative.model.hf_repo.empty();
+    }
 };
 
 // call once at the start of a program if it uses libcommon
