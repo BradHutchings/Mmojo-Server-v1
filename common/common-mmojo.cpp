@@ -890,6 +890,7 @@ std::string fs_get_cache_directory() {
 #elif defined(_WIN32)
         cache_directory = std::getenv("LOCALAPPDATA");
 // mmojo-server START
+// This could be automated by searching for "error Unknown architecture" and inserting the block 2 lines before. -Brad 2025-11-05
 #elif defined(COSMOCC)
         // We don't know what OS we are running on at compile time, just CPU architecture.
         // try various environment variables, fall back to ~/.cache.
