@@ -29,6 +29,12 @@ mkdir -p ~/$DOWNLOAD_DIR
 mkdir -p ~/$BUILD_COSMOPOLITAN_DIR
 git clone https://github.com/jart/cosmopolitan.git $BUILD_COSMOPOLITAN_DIR
 cd ~/$BUILD_COSMOPOLITAN_DIR
+
+# Roll the Cosmopolitan repo back to last known working.
+# Up through: https://github.com/jart/cosmopolitan/commit/f1e83d52403060d674161944e849b51f95707c9a
+# f1e83d52403060d674161944e849b51f95707c9a 
+git checkout f1e83d52403060d674161944e849b51f95707c9a 
+
 # Edit the memchr_sse() function to check params.
 sed -i '39i \  if ((s == NULL) || (n == 0)) return 0;' libc/intrin/memchr.c
 tool/cosmocc/package.sh
