@@ -55,11 +55,13 @@ cp -r ~/$BUILD_OPENSSSL_DIR/openssl .
 printf "\n**********\n*\n* FINISHED: Clone this Repo and Dependent Repos Locally.\n*\n**********\n\n"
 ```
 
+<!--
 **Optional:** Use the `work-in-progress` branch where I implement and test my own changes and where I test upstream changes from `llama.cpp`.
 ```
 git checkout work-in-progress
 printf "\n**********\n*\n* FINISHED: Checkout work-in-progress.\n*\n**********\n\n"
 ```
+-->
 
 ---
 ### Patch llama.cpp Source Code and Build Code
