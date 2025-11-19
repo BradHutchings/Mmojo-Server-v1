@@ -1,8 +1,18 @@
-## Mmojo Server
+## Mmojo Server (version 1) (archived)
 Based on [llama.cpp](https://github.com/ggml-org/llama.cpp).
 
 Brad Hutchings<br/>
 brad@bradhutchings.com
+
+---
+### Please Use Mmojo Server version 2
+The repo you're looking at has been moved to [this new URL](https://github.com/BradHutchings/Mmojo-Server-v1) and should be considered "archived". I will not be making further updates to it. I leave it here as a record of what I did when Mozilla Foundation stopped actively supporting llamafile. Their project, their choice, of course. But some of us appreciated what it gave us and made business decisions based on it continuing to be a thing. 
+
+This version of Mmojo Server was a clone of llama.cpp, manually modified on an ongoing basis to build the same Actually Portable Executable (APE) files that llamafile built. The new version doesn't clone llama.cpp. It downloads llama.cpp, Cosmopolitan, and other pieces needed to build things. It provides working instructions to make them all work together and build interesting things. It is more maintainable, and more capable of supporting optimized builds.
+
+So, please jump over to [Mmojo Server v2](https://github.com/BradHutchings/Mmojo-Server) and get started working with it!
+
+-Brad
 
 ---
 ### Project Goals
@@ -103,6 +113,7 @@ In no particular order of importance, these are the things that bother me:
 - ~~Make a `.gitattributes` file so we can set the default file to be displayed and keep the README.md from llama.cpp. This will help in syncing changes continually from upstream. Reference: https://git-scm.com/docs/gitattributes~~ -- This doesn't actually work.
 - ~~Cosmo needs libssl and libcrypto. Building these from scratch gets an error about Cosco not liking assembly files. Sort this out.~~ Implemented.
 - ~~The `--ctx-size` parameter doesn't seem quite right given that new models have the training (or max) context size in their metadata. That size should be used subject to a maximum in a passed parameter. E.g. So a 128K model can run comfortably on a smaller device.~~ `--ctx-size 0` uses the training size.
+
 
 
 
