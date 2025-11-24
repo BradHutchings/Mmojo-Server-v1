@@ -43,7 +43,7 @@ printf "\n**********\n*\n* FINISHED: Create Build Mmojo Directory.\n*\n*********
 Clone this repo and repos this repo depends on into a `~\5-BUILD-mmojo` directory.
 ```
 cd ~
-git clone https://github.com/BradHutchings/mmojo-server.git ~/$BUILD_MMOJO_SERVER_DIR
+git clone https://github.com/BradHutchings/mmojo-server-v1.git ~/$BUILD_MMOJO_SERVER_DIR
 cd ~/$BUILD_MMOJO_SERVER_DIR
 git clone https://github.com/nlohmann/json.git nlohmann-json
 git clone https://github.com/google/minja.git google-minja
